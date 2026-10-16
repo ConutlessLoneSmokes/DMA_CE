@@ -1,0 +1,64 @@
+{
+  "label": "smoke_connectivity_only",
+  "seed": 20261017,
+  "device": "cuda",
+  "timeout_seconds": 1800,
+  "system": {
+    "carrier_hz": 300000000000.0,
+    "bandwidths_hz": [
+      30000000000.0
+    ],
+    "antennas": 16,
+    "tones": 16,
+    "spacing_wavelengths": 0.5,
+    "configurations": [
+      4,
+      8
+    ],
+    "snrs_db": [
+      10.0
+    ],
+    "quality_factor": 50.0,
+    "tuning_bandwidth_hz": 30000000000.0,
+    "waveguide_effective_index": 1.4,
+    "waveguide_end_power_fraction": 0.8,
+    "rf_noise_fraction": 0.05
+  },
+  "channel": {
+    "paths": 3,
+    "range_min_m": 0.03,
+    "range_max_m": 0.1,
+    "angle_limit_deg": 60.0,
+    "include_absorption": false
+  },
+  "data": {
+    "train": 16,
+    "validation": 8,
+    "screen": 8
+  },
+  "sbl": {
+    "angle_points": 17,
+    "range_points": 4,
+    "iterations": 20,
+    "tolerance": 0.001,
+    "batch_size": 8
+  },
+  "learning": {
+    "steps": 20,
+    "batch_size": 8,
+    "width": 16,
+    "learning_rate": 0.001,
+    "diffusion_steps": 100,
+    "sampling_steps": 10,
+    "log_every": 10
+  },
+  "evaluation": {
+    "batch_size": 8,
+    "dc_multipliers": [
+      0.1,
+      1.0,
+      10.0
+    ],
+    "bootstrap_samples": 200
+  }
+}

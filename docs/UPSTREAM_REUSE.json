@@ -1,0 +1,40 @@
+[
+  {
+    "source_repository": "ConutlessLoneSmokes/THz_DMA",
+    "source_commit": "c3a856c5716ab8d20e91fa5d24961ef2129f99fb",
+    "source_path": "src/thz_dma/channels/atmosphere.py",
+    "source_sha256": "45db4c5afbe0fac2bc8e053fed2f3fc8e2c959ede7f338733da4524ffeceecb6",
+    "destination": "src/dma_ce/_upstream/atmosphere.py",
+    "destination_sha256": "45db4c5afbe0fac2bc8e053fed2f3fc8e2c959ede7f338733da4524ffeceecb6",
+    "changes": []
+  },
+  {
+    "source_repository": "ConutlessLoneSmokes/THz_DMA",
+    "source_commit": "c3a856c5716ab8d20e91fa5d24961ef2129f99fb",
+    "source_path": "src/thz_dma/channels/geometry.py",
+    "source_sha256": "1b59a0430d5867bcca38603ce76e9691cea34be9168c92b9f9baf206354e50bc",
+    "destination": "src/dma_ce/_upstream/geometry.py",
+    "destination_sha256": "1b59a0430d5867bcca38603ce76e9691cea34be9168c92b9f9baf206354e50bc",
+    "changes": []
+  },
+  {
+    "source_repository": "ConutlessLoneSmokes/THz_DMA",
+    "source_commit": "c3a856c5716ab8d20e91fa5d24961ef2129f99fb",
+    "source_path": "src/thz_dma/surfaces/dma.py",
+    "source_sha256": "a0b88f7ac6ae500fbdc72040cf9f6081bad09eb79ac3274e0a1bb9de69abccc9",
+    "destination": "src/dma_ce/_upstream/dma.py",
+    "destination_sha256": "ba667d0a19d80a356f11d2d58d5c14f4d6b5c910437b5c43ddfc377a17eed69c",
+    "changes": [
+      "Only the package-relative import of C0_M_PER_S changed."
+    ]
+  },
+  {
+    "source_repository": "ConutlessLoneSmokes/THz_DMA",
+    "source_commit": "c3a856c5716ab8d20e91fa5d24961ef2129f99fb",
+    "source_path": "src/zhou2025_repro/ddpm.py",
+    "source_sha256": "35d435278cb7c5f849f91ec94fb4ebf0c77e103232b36cde2ac822a630df6543",
+    "destination": "src/dma_ce/_upstream/ddpm.py",
+    "destination_sha256": "35d435278cb7c5f849f91ec94fb4ebf0c77e103232b36cde2ac822a630df6543",
+    "changes": []
+  }
+]

@@ -1,0 +1,19 @@
+{
+  ".gitignore": "3438cd7d9fcc8eb653609000af3c71f8e4f922c2c8ea71abaad4a9575df98d99",
+  "AGENTS.md": "eb29b8ca7088c6053cdfa8d744b0429bd4a85c21896f6bd3969c0e6ff2791eb7",
+  "pyproject.toml": "afd9bb930fe35ef73d25bf40238d84969d5e0217710ae6671d5aef01a0d491ef",
+  "src/dma_ce/conditional.py": "95b186348457b280082dcb4872451cbfec2a490c0108912d47d6be15c5aa9ee1",
+  "src/dma_ce/data.py": "e7dda7f9973e68982f2b0b9d148e8bc362f2cd11fcb093686d0e744cf424b089",
+  "src/dma_ce/experiment.py": "9060d0d45da67e8862b322be83b269f94f447545eba4fd4f047627f2cc45372d",
+  "src/dma_ce/sbl.py": "0daeb7cbf53f204a23eac347f4aa968f0ac62baf7a7f22efa4c708e6b48cdfbd",
+  "src/dma_ce/__init__.py": "b639b35c4e623952e62c5633c888d31b7107042a999fdae65d6ed2ce5100bedf",
+  "src/dma_ce/_upstream/atmosphere.py": "45db4c5afbe0fac2bc8e053fed2f3fc8e2c959ede7f338733da4524ffeceecb6",
+  "src/dma_ce/_upstream/ddpm.py": "35d435278cb7c5f849f91ec94fb4ebf0c77e103232b36cde2ac822a630df6543",
+  "src/dma_ce/_upstream/dma.py": "ba667d0a19d80a356f11d2d58d5c14f4d6b5c910437b5c43ddfc377a17eed69c",
+  "src/dma_ce/_upstream/geometry.py": "1b59a0430d5867bcca38603ce76e9691cea34be9168c92b9f9baf206354e50bc",
+  "src/dma_ce/_upstream/__init__.py": "2ce696ff49d731d23cc426ac63688bce357500403dfe6354533bec195ed6cceb",
+  "scripts/run_experiment.py": "ac1284957064269482aa10719e9fa0c727090faed2c3558b18c2a1d31cee8ab3",
+  "configs/pilot.json": "9815e16f16a82785fca43bd880974fe7ffdd5dcfaf4ff19e5bcf9e8b387eca02",
+  "configs/smoke.json": "1fc9d7cdfb615f273abdf522e03256610c2d721967e67e6f78c608f0aed834c6",
+  "tests/test_core.py": "ffca688760289104bd57c71564582dd3245fd25cb0d0539646ddce30736ba4e8"
+}
