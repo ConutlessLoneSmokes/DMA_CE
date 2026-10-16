@@ -1,0 +1,9 @@
+target,reference,geometry_blocks,mean_paired_db,ci95_low_db,ci95_high_db,interpretation
+deterministic,deterministic_no_reliability,8,-0.00832512229681015,-0.015194505080580711,-0.0017846819013357155,descriptive_single_training_seed
+deterministic_dc,deterministic_no_reliability_dc,8,-0.00832512229681015,-0.0157108623534441,-0.0011068943887948953,descriptive_single_training_seed
+deterministic_shuffled,deterministic,8,0.004159703850746155,-0.0017966318875551224,0.008876777812838554,descriptive_single_training_seed
+deterministic_shuffled_dc,deterministic_dc,8,0.004159703850746155,-0.0018483005464076995,0.00879893470555544,descriptive_single_training_seed
+deterministic_no_reliability,coarse,8,0.00821143388748169,-0.008122786320745945,0.024461677670478823,descriptive_single_training_seed
+deterministic,coarse,8,-0.0001136884093284607,-0.01843883953988552,0.018601278588175778,descriptive_single_training_seed
+deterministic_no_reliability_dc,coarse_dc,8,0.00821143388748169,-0.007583481352776289,0.025224589742720138,descriptive_single_training_seed
+deterministic_dc,coarse_dc,8,-0.0001136884093284607,-0.019827467761933802,0.018356556445360186,descriptive_single_training_seed

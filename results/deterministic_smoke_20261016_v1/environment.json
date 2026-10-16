@@ -1,0 +1,17 @@
+{
+  "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.26300-SP0",
+  "torch": "2.11.0+cu128",
+  "numpy": "1.26.4",
+  "device": "cuda",
+  "cuda": "12.8",
+  "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+  "command": [
+    "scripts/run_experiment.py",
+    "--config",
+    "configs/deterministic_smoke.json",
+    "--run-id",
+    "deterministic_smoke_20261016_v1"
+  ],
+  "training_seed": 20261017
+}

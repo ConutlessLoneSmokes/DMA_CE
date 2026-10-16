@@ -55,7 +55,8 @@ def build_hardware(config, bandwidth, bank):
 
 
 def sample_scenes(config, split_index, count):
-    rng = np.random.default_rng(np.random.SeedSequence([config["seed"], split_index, 113]))
+    seed = config["data"].get("screen_seed", config["seed"]) if split_index == 2 else config["seed"]
+    rng = np.random.default_rng(np.random.SeedSequence([seed, split_index, 113]))
     channel = config["channel"]
     shape = (count, channel["paths"])
     ranges = rng.uniform(channel["range_min_m"], channel["range_max_m"], shape)
@@ -125,7 +126,8 @@ def prepare(config, device, log):
                 count = config["data"][split]
                 truth = physical[split][band_index] / scale
                 clean = torch.einsum("kjn,bkn->bkj", matrix, truth)
-                noise_rng = np.random.default_rng(np.random.SeedSequence([config["seed"], split_index, band_index, 811]))
+                seed = config["data"].get("screen_seed", config["seed"]) if split == "screen" else config["seed"]
+                noise_rng = np.random.default_rng(np.random.SeedSequence([seed, split_index, band_index, 811]))
                 shape = (count, system["tones"], len(bank))
                 standard = (noise_rng.normal(size=shape) + 1j * noise_rng.normal(size=shape)) / np.sqrt(2)
                 noise = torch.tensor(standard[:, :, :configurations], dtype=torch.complex64) * np.sqrt(variance)

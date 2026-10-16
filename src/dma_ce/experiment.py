@@ -16,7 +16,7 @@ import zipfile
 import numpy as np
 import torch
 
-from .conditional import VARIANTS, predict, train_model, reliability_features
+from .conditional import VARIANTS, SUPPORTED_VARIANTS, predict, train_model, reliability_features
 from ._upstream.ddpm import VPSchedule
 from .data import encode, prepare, sync, tensor_hash
 from .sbl import consistency
@@ -35,6 +35,16 @@ def validate_config(config):
         if type(config["data"][name]) is not int or config["data"][name] < 2:
             raise ValueError("at least two independent scenes per split required")
     system, channel, learning = config["system"], config["channel"], config["learning"]
+    variants = learning.get("variants", VARIANTS)
+    grid = config["evaluation"]["dc_multipliers"]
+    if (not isinstance(variants, (list, tuple)) or not variants or len(set(variants)) != len(variants)
+            or any(v not in SUPPORTED_VARIANTS for v in variants)
+            or config["evaluation"].get("dc_selection_model", "residual") not in variants
+            or not grid or not all(np.isfinite(grid)) or min(grid) < 0
+            or type(config["data"].get("screen_seed", config["seed"])) is not int
+            or config["data"].get("screen_seed", config["seed"]) < 0
+            or type(config["evaluation"].get("correct_coarse", False)) is not bool):
+        raise ValueError("invalid model controls, correction grid, or screening seed")
     if (system["antennas"] < 4 or system["tones"] < 4 or not system["configurations"]
             or any(type(j) is not int or not 1 <= j <= system["antennas"] for j in system["configurations"])
             or any(not 0 < b < 2 * system["carrier_hz"] for b in system["bandwidths_hz"])
@@ -43,8 +53,7 @@ def validate_config(config):
             or not 0 < channel["angle_limit_deg"] < 90 or channel["paths"] < 1
             or channel["include_absorption"] is not False
             or not 2 <= learning["sampling_steps"] <= learning["diffusion_steps"]
-            or min(learning["steps"], learning["batch_size"], learning["log_every"], config["timeout_seconds"]) < 1
-            or min(config["evaluation"]["dc_multipliers"]) <= 0):
+            or min(learning["steps"], learning["batch_size"], learning["log_every"], config["timeout_seconds"]) < 1):
         raise ValueError("invalid physical, training, or evaluation configuration")
     for values in (system["configurations"], system["bandwidths_hz"], system["snrs_db"]):
         if len(set(values)) != len(values):
@@ -71,6 +80,8 @@ def predict_entry(config, cache, model, variant, entry, device, *, seed, shuffle
 
 
 def apply_dc(estimate, entry, context, prior_variance, device):
+    if prior_variance == 0:
+        return estimate.clone(), 0.
     sync(device)
     started = time.perf_counter()
     output = consistency(estimate.to(device), context["matrix"].to(device), entry["observation"].to(device),
@@ -85,9 +96,10 @@ def nmse(truth, estimate):
 
 def freeze_correction(config, cache, models, device, log):
     grid = config["evaluation"]["dc_multipliers"]
+    variant = config["evaluation"].get("dc_selection_model", "residual")
     scores = {value: [] for value in grid}
     for index, entry in enumerate(cache["splits"]["validation"]):
-        estimate, _ = predict_entry(config, cache, models["residual"], "residual", entry, device,
+        estimate, _ = predict_entry(config, cache, models[variant], variant, entry, device,
             seed=config["seed"] + 7000 + index * 1000)
         for value in grid:
             corrected, _ = apply_dc(estimate, entry, cache["contexts"][index],
@@ -97,7 +109,7 @@ def freeze_correction(config, cache, models, device, log):
     means = {value: float(np.mean(values)) for value, values in scores.items()}
     choice = min(grid, key=lambda value: (means[value], value))
     return {"selected_multiplier": choice, "prior_complex_variance": choice * cache["dc_reference_complex_variance"],
-        "selection_split": "validation", "selection_model": "residual", "shared_by_all_methods": True,
+        "selection_split": "validation", "selection_model": variant, "shared_by_all_methods": True,
         "validation_mean_nmse_linear": means, "screening_used": False}
 
 
@@ -163,9 +175,18 @@ def summarize(rows, config):
     comparisons = [("reliable_residual", "residual"), ("reliable_residual_dc", "residual_dc"),
         ("reliable_residual_shuffled", "reliable_residual"),
         ("reliable_residual_shuffled_dc", "reliable_residual_dc"),
-        ("deterministic_dc", "reliable_residual_dc")]
+        ("deterministic_dc", "reliable_residual_dc"),
+        ("deterministic", "deterministic_no_reliability"),
+        ("deterministic_dc", "deterministic_no_reliability_dc"),
+        ("deterministic_shuffled", "deterministic"),
+        ("deterministic_shuffled_dc", "deterministic_dc"),
+        ("deterministic_no_reliability", "coarse"), ("deterministic", "coarse"),
+        ("deterministic_no_reliability_dc", "coarse_dc"), ("deterministic_dc", "coarse_dc")]
+    available = {r["method"] for r in rows}
     rng = np.random.default_rng(config["seed"] + 391)
     for target, reference in comparisons:
+        if target not in available or reference not in available:
+            continue
         differences = {}
         lookup = {(r["context"], r["scene"], r["method"]): r["nmse_db"] for r in rows}
         for row in rows:
@@ -202,6 +223,9 @@ def plot_results(path, summary, calibration):
     matplotlib.use("Agg")
     from matplotlib import pyplot as plt
     methods = ("coarse", "residual", "reliable_residual", "residual_dc", "reliable_residual_dc", "deterministic_dc")
+    if any(x["method"] == "deterministic_no_reliability" for x in summary):
+        methods = ("coarse", "coarse_dc", "deterministic_no_reliability", "deterministic",
+            "deterministic_shuffled", "deterministic_no_reliability_dc", "deterministic_dc", "deterministic_shuffled_dc")
     bands, snrs = sorted({x["bandwidth_hz"] for x in summary}), sorted({x["snr_db"] for x in summary})
     figure, axes = plt.subplots(len(snrs), len(bands), figsize=(5 * len(bands), 3.5 * len(snrs)), squeeze=False)
     for row, snr in enumerate(snrs):
@@ -271,8 +295,8 @@ def run(config_path, run_id, root, device_override=None):
             "gpu": torch.cuda.get_device_name(device) if device.type == "cuda" else None,
             "command": sys.argv, "training_seed": config["seed"]}
         write_json(path / "environment.json", environment)
-        sources = [root / ".gitignore", root / "AGENTS.md", root / "pyproject.toml"]
-        for folder in ("src", "scripts", "configs", "tests"):
+        sources = [root / ".gitignore", root / ".gitattributes", root / "AGENTS.md", root / "README.md", root / "pyproject.toml"]
+        for folder in ("src", "scripts", "configs", "tests", "docs"):
             sources.extend(p for p in (root / folder).rglob("*") if p.is_file() and "__pycache__" not in p.parts)
         with zipfile.ZipFile(path / "source.zip", "w", compression=zipfile.ZIP_DEFLATED) as archive:
             for source in sources:
@@ -288,9 +312,15 @@ def run(config_path, run_id, root, device_override=None):
         cache_hash = file_hash(path / "data.pt")
         log("data_complete", data_sha256=cache_hash)
         write_json(path / "status.json", {"status": "training", "label": config["label"]})
-        models = {variant: train_model(config, cache, variant, device, path / "models" / f"{variant}.pt", log) for variant in VARIANTS}
+        variants = config["learning"].get("variants", VARIANTS)
+        models = {variant: train_model(config, cache, variant, device, path / "models" / f"{variant}.pt", log) for variant in variants}
+        shuffle_variant = next((v for v in ("reliable_residual", "deterministic") if v in models), None)
+        methods = ["coarse"] + (["coarse_dc"] if config["evaluation"].get("correct_coarse", False) else [])
+        methods += [name for variant in variants for name in (variant, variant + "_dc")]
+        if shuffle_variant:
+            methods += [shuffle_variant + "_shuffled", shuffle_variant + "_shuffled_dc"]
         frozen = freeze_correction(config, cache, models, device, log)
-        frozen.update({"data_sha256": cache_hash, "models": {v: file_hash(path / "models" / f"{v}.pt") for v in VARIANTS},
+        frozen.update({"data_sha256": cache_hash, "models": {v: file_hash(path / "models" / f"{v}.pt") for v in variants}, "methods": methods,
             "frozen_at_unix": time.time(), "geometry_hashes": cache["geometry_hashes"]})
         write_json(path / "frozen_validation.json", frozen)
         freeze_hash = file_hash(path / "frozen_validation.json")
@@ -301,18 +331,24 @@ def run(config_path, run_id, root, device_override=None):
         for index, entry in enumerate(cache["splits"]["screen"]):
             context = cache["contexts"][index]
             estimates = {"coarse": (entry["coarse"], 0., 0)}
-            for variant in VARIANTS:
+            if "coarse_dc" in methods:
+                corrected, dc_ms = apply_dc(entry["coarse"], entry, context, frozen["prior_complex_variance"], device)
+                estimates["coarse_dc"] = (corrected, dc_ms, 0)
+            for variant in variants:
                 estimate, ms = predict_entry(config, cache, models[variant], variant, entry, device,
                     seed=config["seed"] + 17000 + index * 1000)
-                calls = 1 if variant == "deterministic" else config["learning"]["sampling_steps"]
+                calls = 1 if variant.startswith("deterministic") else config["learning"]["sampling_steps"]
                 estimates[variant] = (estimate, ms, calls)
                 corrected, dc_ms = apply_dc(estimate, entry, context, frozen["prior_complex_variance"], device)
                 estimates[variant + "_dc"] = (corrected, ms + dc_ms, calls)
-            estimate, ms = predict_entry(config, cache, models["reliable_residual"], "reliable_residual", entry, device,
-                seed=config["seed"] + 17000 + index * 1000, shuffled=True)
-            estimates["reliable_residual_shuffled"] = (estimate, ms, config["learning"]["sampling_steps"])
-            corrected, dc_ms = apply_dc(estimate, entry, context, frozen["prior_complex_variance"], device)
-            estimates["reliable_residual_shuffled_dc"] = (corrected, ms + dc_ms, config["learning"]["sampling_steps"])
+            if shuffle_variant:
+                estimate, ms = predict_entry(config, cache, models[shuffle_variant], shuffle_variant, entry, device,
+                    seed=config["seed"] + 17000 + index * 1000, shuffled=True)
+                calls = 1 if shuffle_variant.startswith("deterministic") else config["learning"]["sampling_steps"]
+                estimates[shuffle_variant + "_shuffled"] = (estimate, ms, calls)
+                corrected, dc_ms = apply_dc(estimate, entry, context, frozen["prior_complex_variance"], device)
+                estimates[shuffle_variant + "_shuffled_dc"] = (corrected, ms + dc_ms, calls)
+            assert set(estimates) == set(methods)
             for method, (estimate, ms, calls) in estimates.items():
                 rows.extend(metric_rows(config, entry, context, estimate, method, ms, calls))
                 errors = (estimate - entry["truth"]).abs().square().sum(-1)
@@ -322,7 +358,7 @@ def run(config_path, run_id, root, device_override=None):
                         "mean_nmse_linear": float((errors / energy)[:, tone].mean())})
             predictions.append({method: values[0] for method, values in estimates.items()})
             log("screen", context=index, methods=len(estimates), samples=len(entry["truth"]))
-        expected = len(cache["contexts"]) * config["data"]["screen"] * 11
+        expected = len(cache["contexts"]) * config["data"]["screen"] * len(methods)
         assert len(rows) == expected, (len(rows), expected)
         assert file_hash(path / "frozen_validation.json") == freeze_hash
         torch.save(predictions, path / "predictions.pt")
@@ -342,9 +378,10 @@ def run(config_path, run_id, root, device_override=None):
         for name in ("config_resolved.json", "environment.json", "version.json", "source_manifest.json", "frozen_validation.json", "source.zip"):
             (export / name).write_bytes((path / name).read_bytes())
         plot_results(export, summary, calibration)
-        lines = ["# 首轮条件生成实验", "", "## Material Passport", "", "- Origin Skill: ARS-Codex experiment-agent",
+        title = "确定性残差与可靠度对照" if "deterministic_no_reliability" in models else "首轮条件生成实验"
+        lines = ["# " + title, "", "## Material Passport", "", "- Origin Skill: ARS-Codex experiment-agent",
             "- Origin Mode: run", "- Origin Date: 2026-10-16", "- Verification Status: ANALYZED",
-            "- Version Label: pilot_v1", "", f"状态：完成。标签：{config['label']}。",
+            f"- Version Label: {run_id}", "", f"状态：完成。标签：{config['label']}。",
             f"独立筛选几何{config['data']['screen']}个，条件{len(cache['contexts'])}组，逐场景指标{len(rows)}行。",
             "同一几何的条件按块配对；区间仅描述该单训练种子下的几何差异。",
             "", "| 对照 | 配对平均差/dB | 描述性95%区间/dB |", "|---|---:|---|",]

@@ -2,7 +2,7 @@
 import torch
 
 
-def posterior(y, sensing, dictionary, variance, gamma):
+def posterior(y, sensing, dictionary, variance, gamma, *, channel_moments=True):
     """Return coefficient and channel posterior moments for a proper complex Gaussian model."""
     if (y.ndim != 3 or sensing.ndim != 3 or dictionary.ndim != 3
             or sensing.shape[:2] != y.shape[1:] or dictionary.shape[0] != y.shape[1]
@@ -19,12 +19,15 @@ def posterior(y, sensing, dictionary, variance, gamma):
     mean_g = gamma[:, None] * torch.einsum("kjg,bkj->bkg", sensing.conj(), solved_y)
     solved_b = torch.cholesky_solve(sensing[None].expand(len(y), -1, -1, -1), factor)
     var_g = gamma[:, None] - gamma[:, None].square() * (sensing.conj()[None] * solved_b).sum(-2).real
+    var_g = var_g.clamp_min(1e-10)
+    if not channel_moments:
+        return mean_g, var_g, None, None
     mean_h = torch.einsum("kng,bkg->bkn", dictionary, mean_g)
     cross = torch.einsum("kng,bg,kjg->bknj", dictionary, gamma, sensing.conj())
     solved_cross = torch.cholesky_solve(cross.mH, factor)
     var_h = torch.einsum("kng,bg->bkn", dictionary.abs().square(), gamma)
     var_h = var_h - (cross * solved_cross.transpose(-2, -1)).sum(-1).real
-    return mean_g, var_g.clamp_min(1e-10), mean_h, var_h.clamp_min(1e-10)
+    return mean_g, var_g, mean_h, var_h.clamp_min(1e-10)
 
 
 @torch.no_grad()
@@ -39,7 +42,8 @@ def joint_sbl(y, sensing, dictionary, variance, *, iterations=100, tolerance=1e-
     counts = torch.full((len(y),), iterations, dtype=torch.int64, device=y.device)
     relative = torch.full_like(initial, float("inf"))
     for step in range(iterations):
-        mean, diagonal, _, _ = posterior(y, sensing, dictionary, variance, gamma)
+        # EM uses coefficient moments; channel covariance is needed only at the final iterate.
+        mean, diagonal, _, _ = posterior(y, sensing, dictionary, variance, gamma, channel_moments=False)
         update = .5 * gamma + .5 * (mean.abs().square() + diagonal).mean(1)
         update = update.clamp_min(1e-8)
         change = (update - gamma).norm(dim=-1) / gamma.norm(dim=-1).clamp_min(1e-12)

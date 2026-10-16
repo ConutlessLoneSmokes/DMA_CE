@@ -25,6 +25,7 @@ def audit(run_id):
     status = json.loads((result / "status.json").read_text())
     config = json.loads((result / "config_resolved.json").read_text())
     frozen = json.loads((result / "frozen_validation.json").read_text())
+    assert set(frozen["models"]) == set(config["learning"].get("variants", VARIANTS))
     assert status["status"] == "complete"
     assert file_hash(run / "data.pt") == status["data_sha256"] == frozen["data_sha256"]
     assert file_hash(result / "frozen_validation.json") == status["frozen_validation_sha256"]
@@ -58,7 +59,8 @@ def audit(run_id):
     assert np.isclose(float(torch.stack([x["truth"].abs().square().mean() for x in train]).mean()), 2.)
     with (result / "metrics.csv").open(newline="") as stream:
         rows = list(csv.DictReader(stream))
-    expected = len(cache["contexts"]) * config["data"]["screen"] * 11
+    methods = frozen.get("methods", list(predictions[0]))
+    expected = len(cache["contexts"]) * config["data"]["screen"] * len(methods)
     assert len(rows) == expected == status["metrics_rows"]
     lookup = {(int(r["context"]), r["method"], int(r["scene"])): r for r in rows}
     assert len(lookup) == expected
@@ -66,7 +68,7 @@ def audit(run_id):
     decomposition = []
     for context, saved in enumerate(predictions):
         entry = cache["splits"]["screen"][context]
-        assert len(saved) == 11
+        assert set(saved) == set(methods)
         residual = entry["truth"] - entry["coarse"]
         energy = entry["truth"].abs().square().sum((1, 2))
         baseline = residual.abs().square().sum((1, 2)) / energy
@@ -88,7 +90,7 @@ def audit(run_id):
                 assert np.isclose(error, float(row["nmse_linear"]), rtol=2e-6, atol=1e-7)
                 assert np.isclose(float(row["row_nmse_linear"]) + float(row["null_nmse_linear"]), error, rtol=2e-4, atol=2e-4)
     parameters, training_seconds = {}, {}
-    for variant in VARIANTS:
+    for variant in frozen["models"]:
         model_path = run / "models" / f"{variant}.pt"
         assert file_hash(model_path) == frozen["models"][variant]
         checkpoint = torch.load(model_path, map_location="cpu", weights_only=True)
@@ -101,14 +103,15 @@ def audit(run_id):
     torch.use_deterministic_algorithms(True)
     device = torch.device(config["device"])
     model = ConditionalCNN(config["learning"]["width"]).to(device)
-    checkpoint = torch.load(run / "models/reliable_residual.pt", map_location=device, weights_only=True)
+    replay_variant = "reliable_residual" if "reliable_residual" in frozen["models"] else "deterministic"
+    checkpoint = torch.load(run / "models" / f"{replay_variant}.pt", map_location=device, weights_only=True)
     model.load_state_dict(checkpoint["state_dict"])
     batch = config["evaluation"]["batch_size"]
     entry = cache["splits"]["screen"][0]
     replay_entry = {key: value[:batch] if torch.is_tensor(value) and value.ndim else value for key, value in entry.items()}
-    replay, _ = predict_entry(config, cache, model, "reliable_residual", replay_entry, device, seed=config["seed"] + 17000)
-    replay_difference = float((replay - predictions[0]["reliable_residual"][:batch]).abs().max())
-    assert torch.allclose(replay, predictions[0]["reliable_residual"][:batch], atol=2e-6, rtol=2e-6)
+    replay, _ = predict_entry(config, cache, model, replay_variant, replay_entry, device, seed=config["seed"] + 17000)
+    replay_difference = float((replay - predictions[0][replay_variant][:batch]).abs().max())
+    assert torch.allclose(replay, predictions[0][replay_variant][:batch], atol=2e-6, rtol=2e-6)
     write_csv(result / "residual_decomposition.csv", decomposition)
     report = {"status": "passed", "metrics_recomputed": expected, "observation_hashes_checked": expected,
         "disjoint_geometry_splits": True, "training_only_scales_recomputed": True,

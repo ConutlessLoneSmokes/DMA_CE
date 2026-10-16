@@ -17,9 +17,14 @@ python scripts/run_experiment.py --config configs/smoke.json --run-id smoke_001
 python scripts/run_experiment.py --config configs/pilot.json --run-id pilot_001
 python scripts/audit_experiment.py pilot_001
 python scripts/diagnose_validation.py pilot_001 validation_probe_001
+python scripts/select_sbl_budget.py pilot_001 budget_001
+python scripts/run_experiment.py --config configs/deterministic.json --run-id deterministic_001
+python scripts/audit_experiment.py deterministic_001
 ```
 
 每个运行ID只能创建一次；新实验使用新ID。运行保存在被Git忽略的 runs/；紧凑逐场景指标、图和报告另保存 results/，可提交到私有研究仓库。
+
+第二轮的控制变量、迭代预算选择规则与新筛选集安排见[实验预声明](docs/SECOND_STAGE_PLAN.md)。
 
 ## 结果状态
 

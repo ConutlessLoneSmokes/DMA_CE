@@ -11,6 +11,7 @@ from .data import encode, decode, sync
 
 
 VARIANTS = ("conditional", "residual", "reliable_residual", "deterministic")
+SUPPORTED_VARIANTS = VARIANTS + ("deterministic_no_reliability",)
 
 
 class ConditionalCNN(DenoisingCNN):
@@ -36,7 +37,7 @@ def make_bundle(entries, cache, device):
 
 
 def training_target(bundle, variant, residual_scale):
-    if variant not in VARIANTS or residual_scale <= 0:
+    if variant not in SUPPORTED_VARIANTS or residual_scale <= 0:
         raise ValueError("known model and positive training residual scale required")
     return bundle["truth"] if variant == "conditional" else (bundle["truth"] - bundle["coarse"]) / residual_scale
 
@@ -63,7 +64,7 @@ def train_model(config, cache, variant, device, model_path, log):
     for step in range(settings["steps"]):
         indices = torch.randint(len(target), (settings["batch_size"],), device=device, generator=generator)
         clean = target[indices]
-        if variant == "deterministic":
+        if variant.startswith("deterministic"):
             state, times = torch.zeros_like(clean), torch.zeros(len(clean), device=device)
             predicted = model(state, bundle["coarse"][indices], reliability[indices], times)
             loss = F.mse_loss(predicted, clean)
@@ -97,14 +98,14 @@ def train_model(config, cache, variant, device, model_path, log):
 @torch.no_grad()
 def predict(model, schedule, coarse, reliability, variant, residual_scale, sampling_steps, *, seed):
     """Inputs contain estimates and known reliability only; no target CSI is accepted."""
-    if (variant not in VARIANTS or coarse.ndim != 4 or coarse.shape[1] != 2
+    if (variant not in SUPPORTED_VARIANTS or coarse.ndim != 4 or coarse.shape[1] != 2
             or reliability.shape != (len(coarse), 1, *coarse.shape[-2:])
             or not torch.isfinite(coarse).all() or not torch.isfinite(reliability).all()
             or not 2 <= sampling_steps <= len(schedule.beta)):
         raise ValueError("compatible finite conditions and valid sampling budget required")
     model.eval()
     condition = reliability if variant in ("reliable_residual", "deterministic") else torch.zeros_like(reliability)
-    if variant == "deterministic":
+    if variant.startswith("deterministic"):
         target = model(torch.zeros_like(coarse), coarse, condition, torch.zeros(len(coarse), device=coarse.device))
     else:
         generator = torch.Generator(device=coarse.device).manual_seed(seed)

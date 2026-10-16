@@ -1,0 +1,11 @@
+{
+  "selection": {
+    "selected_iterations": 1000,
+    "checked_against": 2000,
+    "maximum_nmse_change_db": 0.0018711090087890625,
+    "maximum_variance_relative_change": 0.0035502350803905403,
+    "overall_convergence": 0.98046875,
+    "minimum_context_convergence": 0.921875
+  },
+  "selection_split": "validation"
+}
