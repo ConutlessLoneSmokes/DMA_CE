@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "metrics_recomputed": 8192,
+  "observation_hashes_checked": 8192,
+  "disjoint_geometry_splits": true,
+  "training_only_scales_recomputed": true,
+  "freeze_before_screen": true,
+  "source_zip_and_model_hashes_verified": true,
+  "maximum_metric_difference": 0.0,
+  "sampler_replay_maximum_difference": 0.0,
+  "posthoc_residual_decomposition_checked": true,
+  "model_parameters": {
+    "deterministic_no_reliability": 15428,
+    "deterministic": 15428
+  },
+  "training_seconds": {
+    "deterministic_no_reliability": 12.210850799998298,
+    "deterministic": 12.066109499999584
+  },
+  "sbl_screen_converged": 1013,
+  "sbl_screen_total": 1024
+}

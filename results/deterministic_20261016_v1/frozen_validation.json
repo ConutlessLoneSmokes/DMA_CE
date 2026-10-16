@@ -1,0 +1,35 @@
+{
+  "selected_multiplier": 0.0,
+  "prior_complex_variance": 0.0,
+  "selection_split": "validation",
+  "selection_model": "deterministic_no_reliability",
+  "shared_by_all_methods": true,
+  "validation_mean_nmse_linear": {
+    "0.0": 0.09634962109885237,
+    "0.1": 0.09668056607415565,
+    "1.0": 0.10498482278671872,
+    "10.0": 0.14396025526002632
+  },
+  "screening_used": false,
+  "data_sha256": "bd7ea1640ac83cd50470eb89eeca02c21b252c7e8df5e5c8f5f5254be1792395",
+  "models": {
+    "deterministic_no_reliability": "7b27cf17754eda5b42ace5bc4d4681ad7c114815bab4866300bad9ad6b4b3893",
+    "deterministic": "e2d0629adf4aa0b385cbec62aa0ba2f41723c6905a82149b43dbba138f2b0379"
+  },
+  "methods": [
+    "coarse",
+    "coarse_dc",
+    "deterministic_no_reliability",
+    "deterministic_no_reliability_dc",
+    "deterministic",
+    "deterministic_dc",
+    "deterministic_shuffled",
+    "deterministic_shuffled_dc"
+  ],
+  "frozen_at_unix": 1792144060.252665,
+  "geometry_hashes": {
+    "train": "280b0576663295e69690de1c1e2382f2abfe1c72cb748af07f0c4d3ff9d54e74",
+    "validation": "3bcc3034585475e3871403f6d39b633d65e7f46ce5f4a534e1398bd296de3b96",
+    "screen": "6592e1196b49958d397d7c806d8026d1d8ac4a4d763f0830e5cf68b010f4d743"
+  }
+}

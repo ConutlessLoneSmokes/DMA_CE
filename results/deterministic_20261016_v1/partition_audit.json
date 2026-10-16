@@ -1,0 +1,10 @@
+{
+  "preserved_train_and_validation_geometry": true,
+  "preserved_train_and_validation_observations": true,
+  "old_new_screen_geometry_overlap": 0,
+  "new_screen_geometry_sha256": "6592e1196b49958d397d7c806d8026d1d8ac4a4d763f0830e5cf68b010f4d743",
+  "old_screen_geometry_sha256": "b3d98264c195cb347126460fb41180ce8ef04ef7523625afe8895024657ca6a3",
+  "budget_selection_bound_and_matched": true,
+  "analysis_status": "posthoc_fixed_models_no_selection",
+  "analysis_source_sha256": "81acbe760d8584363cf39eace00db7532969833329d85d78ad2dd94b626c3973"
+}
