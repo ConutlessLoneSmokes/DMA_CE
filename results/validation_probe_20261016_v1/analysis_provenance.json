@@ -1,0 +1,8 @@
+{
+  "design_status": "posthoc_after_reading_parent_screening_results",
+  "numeric_evaluation_split": "validation",
+  "independent_geometries": 32,
+  "conditions": 8,
+  "parent_main_parameters_or_predictions_changed": false,
+  "status_field_screening_used_explanation": "The diagnostic evaluated validation inputs only; its design was informed by parent screening findings."
+}

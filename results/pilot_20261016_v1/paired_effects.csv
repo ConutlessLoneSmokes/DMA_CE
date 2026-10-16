@@ -1,0 +1,6 @@
+target,reference,geometry_blocks,mean_paired_db,ci95_low_db,ci95_high_db,interpretation
+reliable_residual,residual,128,-0.8376083067380478,-1.017217389507988,-0.660028179454298,descriptive_single_training_seed
+reliable_residual_dc,residual_dc,128,-0.676904026309785,-0.8301493850693987,-0.5218896573629991,descriptive_single_training_seed
+reliable_residual_shuffled,reliable_residual,128,0.22165136484534287,-0.06142675268397966,0.4990297618217766,descriptive_single_training_seed
+reliable_residual_shuffled_dc,reliable_residual_dc,128,0.2099727762963539,-0.008482698590756853,0.43709884961684214,descriptive_single_training_seed
+deterministic_dc,reliable_residual_dc,128,-3.745592880824006,-3.8700298938887956,-3.6314031362583368,descriptive_single_training_seed

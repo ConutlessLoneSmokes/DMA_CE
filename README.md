@@ -15,10 +15,16 @@ python -m pip install -e .
 python -m unittest discover -s tests -v
 python scripts/run_experiment.py --config configs/smoke.json --run-id smoke_001
 python scripts/run_experiment.py --config configs/pilot.json --run-id pilot_001
+python scripts/audit_experiment.py pilot_001
+python scripts/diagnose_validation.py pilot_001 validation_probe_001
 ```
 
 每个运行ID只能创建一次；新实验使用新ID。运行保存在被Git忽略的 runs/；紧凑逐场景指标、图和报告另保存 results/，可提交到私有研究仓库。
 
 ## 结果状态
 
-13项数学/物理/数据边界检查通过。[GPU短训练](results/smoke_20261016_v1/report.md)完整跑通SBL、四个网络、验证冻结及11组评价，共176条逐场景指标、约12秒。它只验证连通性；候选A的首轮方法筛选继续进行。
+13项数学/物理/数据边界检查通过。[首轮筛选](results/pilot_20261016_v1/report.md)完成8个条件、128个独立筛选几何和11组方法，共11,264条逐场景指标，GPU用时207秒。全部指标及保存模型重放复核一致。
+
+当前可靠度残差扩散仍弱于SBL；确定性残差网络在3 GHz下改善0.50–1.66 dB，在30 GHz下改善0.02–0.26 dB。可靠度自身的独立收益尚待确定性网络的完整对照。
+
+[验证集诊断](results/validation_probe_20261016_v1/report.md)另完成1,280条指标：增加SBL迭代明显改善粗估；平均16次生成输出降低误差，但仍未超过原100次SBL。诊断在查看主结果后设计，未用于重选主实验参数。训练数据、模型和完整预测保存在本地runs/。

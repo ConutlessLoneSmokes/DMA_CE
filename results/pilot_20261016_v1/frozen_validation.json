@@ -1,0 +1,26 @@
+{
+  "selected_multiplier": 1.0,
+  "prior_complex_variance": 0.28758081793785095,
+  "selection_split": "validation",
+  "selection_model": "residual",
+  "shared_by_all_methods": true,
+  "validation_mean_nmse_linear": {
+    "0.1": 0.494412119507615,
+    "1.0": 0.45441037759155734,
+    "10.0": 0.4695089503074996
+  },
+  "screening_used": false,
+  "data_sha256": "d0caa0fb82b4468d452da4444d53d4bd32f1c2838aa3076c42cd04a95783e6e4",
+  "models": {
+    "conditional": "f1313846251071e7cb59a03ed3487e3d6e10cda865337c16ebf400b4359e6654",
+    "residual": "30a3783579ee7919ce571cf74ea0e5809d1f00da8fce86b5f401807fbb694426",
+    "reliable_residual": "9877a900e4fc914a87ea0d474074c10cd0d1dd9429e0f8e4398a60e8d12130ee",
+    "deterministic": "62ef4fd7728aa0a45264c40f24a889734bcec619bbb250044b8bcfccf743392b"
+  },
+  "frozen_at_unix": 1792140238.2695515,
+  "geometry_hashes": {
+    "train": "280b0576663295e69690de1c1e2382f2abfe1c72cb748af07f0c4d3ff9d54e74",
+    "validation": "3bcc3034585475e3871403f6d39b633d65e7f46ce5f4a534e1398bd296de3b96",
+    "screen": "b3d98264c195cb347126460fb41180ce8ef04ef7523625afe8895024657ca6a3"
+  }
+}

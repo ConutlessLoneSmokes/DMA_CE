@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "metrics_recomputed": 11264,
+  "observation_hashes_checked": 11264,
+  "disjoint_geometry_splits": true,
+  "training_only_scales_recomputed": true,
+  "freeze_before_screen": true,
+  "source_zip_and_model_hashes_verified": true,
+  "maximum_metric_difference": 0.0,
+  "sampler_replay_maximum_difference": 0.0,
+  "posthoc_residual_decomposition_checked": true,
+  "model_parameters": {
+    "conditional": 15428,
+    "residual": 15428,
+    "reliable_residual": 15428,
+    "deterministic": 15428
+  },
+  "training_seconds": {
+    "conditional": 12.697580799998832,
+    "residual": 11.743337200001406,
+    "reliable_residual": 11.623486899999989,
+    "deterministic": 11.30427839999902
+  },
+  "sbl_screen_converged": 22,
+  "sbl_screen_total": 1024
+}

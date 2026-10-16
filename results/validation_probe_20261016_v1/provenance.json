@@ -1,0 +1,14 @@
+{
+  "models": {
+    "conditional": "f1313846251071e7cb59a03ed3487e3d6e10cda865337c16ebf400b4359e6654",
+    "residual": "30a3783579ee7919ce571cf74ea0e5809d1f00da8fce86b5f401807fbb694426",
+    "reliable_residual": "9877a900e4fc914a87ea0d474074c10cd0d1dd9429e0f8e4398a60e8d12130ee",
+    "deterministic": "62ef4fd7728aa0a45264c40f24a889734bcec619bbb250044b8bcfccf743392b"
+  },
+  "parent_source_zip_sha256": "7ab05f863837df2128e7cab2703ec722f32b240690bef99374b5720193c890f8",
+  "diagnostic_script_sha256": "959737bc61f5e49d6a3e17fe888025f378145bacd134e11c057dfe5e11b648a1",
+  "parent_version": {
+    "git_commit": "5459615890fca33b5f5190032ff01549810661b7",
+    "source_zip_sha256": "7ab05f863837df2128e7cab2703ec722f32b240690bef99374b5720193c890f8"
+  }
+}
