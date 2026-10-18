@@ -16,18 +16,30 @@ SUPPORTED_VARIANTS = VARIANTS + ("deterministic_no_reliability",)
 
 class ConditionalCNN(DenoisingCNN):
     """Reuse the upstream time-modulated CNN; all controls have the same five input channels."""
-    def __init__(self, width=32):
+    def __init__(self, width=32, architecture="cross_frequency"):
         super().__init__(channels=2, width=width, time_dim=16)
         self.pre[0] = nn.Conv2d(5, width // 2, 3, padding=1)
+        if architecture not in ("cross_frequency", "per_tone"):
+            raise ValueError("unknown convolution architecture")
+        if architecture == "per_tone":
+            for layers in (self.pre, self.post):
+                for index, layer in enumerate(layers):
+                    if isinstance(layer, nn.Conv2d):
+                        layers[index] = nn.Conv2d(layer.in_channels, layer.out_channels, (3, 1), padding=(1, 0))
 
     def forward(self, state, coarse, reliability, step):
         return super().forward(torch.cat((state, coarse, reliability), dim=1), step)
 
 
-def reliability_features(diagonal, cache):
+def reliability_features(diagonal, cache, mode="map"):
+    if mode not in ("none", "scalar", "map"):
+        raise ValueError("unknown reliability representation")
+    if mode == "scalar":
+        diagonal = diagonal.mean((-1, -2), keepdim=True).expand_as(diagonal)
     value = (diagonal * cache["reliability_scale"]).clamp_min(1e-10).log10()
     value = (value - cache["reliability_log_mean"]) / cache["reliability_log_std"]
-    return value.transpose(-1, -2)[:, None].contiguous()
+    image = value.transpose(-1, -2)[:, None].contiguous()
+    return torch.zeros_like(image) if mode == "none" else image
 
 
 def make_bundle(entries, cache, device):

@@ -1,0 +1,45 @@
+{
+  "status": "complete",
+  "selection": {
+    "architecture": "per_tone",
+    "loss": "uniform",
+    "steps": 2,
+    "validation_mean_nmse_linear": {
+      "none": 1.089245766401291,
+      "scalar": 1.090298218652606,
+      "map": 1.0901211109012365
+    },
+    "parameters": {
+      "cross_frequency_uniform": 1484,
+      "cross_frequency_condition": 1484,
+      "per_tone_uniform": 1550,
+      "per_tone_condition": 1550
+    },
+    "selection": "mean over the paired no-reliability/map controls and training seeds",
+    "reliability": "none",
+    "shuffle_seeds": [
+      301,
+      302
+    ],
+    "iterations": 2,
+    "cache_id": "budget_2",
+    "mean_nmse_linear": 1.0682671964168549,
+    "mean_total_ms": 6.702440625304007,
+    "candidates": [
+      {
+        "iterations": 2,
+        "cache_id": "budget_2",
+        "mean_nmse_linear": 1.0682671964168549,
+        "mean_total_ms": 6.702440625304007
+      },
+      {
+        "iterations": 5,
+        "cache_id": "budget_5",
+        "mean_nmse_linear": 1.089245766401291,
+        "mean_total_ms": 12.43761874957272
+      }
+    ],
+    "rule": "least measured total amortized time within declared dB tolerance of the best validation refinement"
+  },
+  "completed_at_unix": 1792295297.310282
+}

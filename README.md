@@ -26,7 +26,18 @@ python scripts/audit_experiment.py deterministic_001
 
 第二轮的控制变量、迭代预算选择规则与新筛选集安排见[实验预声明](docs/SECOND_STAGE_PLAN.md)。
 
+五步后续实验已提供分阶段入口，包括字典/迭代、训练预算、结构与损失、可靠度、扩散、规模和通信验证。完整说明与服务器命令见[RESEARCH_STUDY.md](docs/RESEARCH_STUDY.md)。
+
+```text
+python scripts/run_research.py --config configs/research_smoke.json --run-id research_smoke_001
+python scripts/audit_research.py research_smoke_001
+python scripts/run_research.py --config configs/research.json --run-id research_001
+python scripts/audit_research.py research_001
+```
+
 ## 结果状态
+
+[五步流程短验证](results/research_smoke_20261018_v2/report.md)已完成7个阶段、3种小尺寸和9组匹配/失配评价，耗时44秒。29项检查通过，4,608条最终指标重算及15次模型重放完全一致，阶段恢复检查通过。[128×128双样本检查](results/research_shape128_20261018_v2/report.md)也通过两种字典、两种结构及确定性/扩散训练和推理；完整数据量的分位数标定边界已修复并加入回归检查。这些是实现验证，正式多种子实验由服务器运行。
 
 [第二轮可靠度对照](results/deterministic_20261016_v1/report.md)已完成。验证选定SBL上限1000次，新筛选集1013/1024个场景×条件收敛；8条管线共8192条指标，运行763秒。17项检查通过，逐场景指标、来源和模型重放复核一致。
 

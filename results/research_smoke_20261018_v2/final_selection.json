@@ -1,0 +1,42 @@
+{
+  "status": "complete",
+  "selection": {
+    "profiles": [
+      {
+        "profile": "base",
+        "status": "complete",
+        "training_seeds": 2,
+        "freeze_sha256": "15aec98527855bb9497213e6cf81a6e3ba38a71a12bd0105fb0e686bf3bc5577",
+        "rayleigh_distance_m": 0.024483050736666668,
+        "distance_range_m": [
+          0.005,
+          0.02
+        ]
+      },
+      {
+        "profile": "n16_k8",
+        "status": "complete",
+        "training_seeds": 2,
+        "freeze_sha256": "49f22a85d25fd8d2279bc160779410ab6fe38d50a643cf89a9b163556d6d8ad9",
+        "rayleigh_distance_m": 0.11242217175,
+        "distance_range_m": [
+          0.022959183673469385,
+          0.09183673469387754
+        ]
+      },
+      {
+        "profile": "n16_k16",
+        "status": "complete",
+        "training_seeds": 2,
+        "freeze_sha256": "5395c97f55312f2e875e59bcc5bb93505125e7c9e99001827ba49f158f981e87",
+        "rayleigh_distance_m": 0.11242217175,
+        "distance_range_m": [
+          0.022959183673469385,
+          0.09183673469387754
+        ]
+      }
+    ],
+    "test_selection_used": false
+  },
+  "completed_at_unix": 1792295331.891623
+}
