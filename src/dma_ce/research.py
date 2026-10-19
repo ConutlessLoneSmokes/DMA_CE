@@ -50,6 +50,11 @@ def learning_rate(base, step, horizon):
     return base * (.1 + .9 * (1 + math.cos(math.pi * min(step, horizon) / horizon)) / 2)
 
 
+def checkpoint_budgets(config, kind):
+    study = config["research"]
+    return study.get("diffusion_checkpoints", study["checkpoints"]) if kind == "diffusion" else study["checkpoints"]
+
+
 def load_model(checkpoint, device):
     spec = checkpoint["recipe"]
     model = ConditionalCNN(spec["width"], spec["architecture"]).to(device)
@@ -97,8 +102,9 @@ def train_job(config, cache, cache_id, cache_hash, spec, seed, steps, models_pat
     """Resume at an archived optimizer/RNG state; keep data on CPU and move only each minibatch."""
     settings, study = config["learning"], config["research"]
     horizon = max(study["checkpoints"])
-    if not 1 <= steps <= horizon:
-        raise ValueError("training budget must lie within the declared schedule")
+    checkpoints = checkpoint_budgets(config, spec["kind"])
+    if not 1 <= steps <= max(checkpoints):
+        raise ValueError("training budget must lie within the declared checkpoints")
     path = models_path / cache_id / digest(spec)[:12] / f"seed_{seed}"
     path.mkdir(parents=True, exist_ok=True)
     identity = {"recipe": spec, "seed": seed, "cache_sha256": cache_hash, "horizon": horizon,
@@ -128,8 +134,10 @@ def train_job(config, cache, cache_id, cache_hash, spec, seed, steps, models_pat
         noises.set_state(last["noise_rng"])
     for name in ("loss.jsonl", "curve.jsonl"):
         if (path / name).exists():
-            records = [json.loads(line) for line in (path / name).read_text().splitlines()]
-            (path / name).write_text("".join(json.dumps(r) + "\n" for r in records if r["step"] <= first))
+            raw = (path / name).read_bytes()
+            kept = b"".join(line for line in raw.splitlines(keepends=True) if json.loads(line)["step"] <= first)
+            if kept != raw:
+                (path / name).write_bytes(kept)
     entries = cache["splits"]["train"]
     weights = loss_weights(entries, spec["loss"])
     sizes = [len(e["truth"]) for e in entries]
@@ -175,7 +183,7 @@ def train_job(config, cache, cache_id, cache_hash, spec, seed, steps, models_pat
                 stream.write(json.dumps(record) + "\n")
             log("training", cache=cache_id, recipe=spec, seed=seed, **record)
             losses = []
-        evaluate = completed in study["checkpoints"] or completed % study["eval_every"] == 0 or completed == steps
+        evaluate = completed in checkpoints or completed % study["eval_every"] == 0 or completed == steps
         if evaluate:
             for split in ("train", "validation"):
                 for context, entry in enumerate(cache["splits"][split]):
@@ -194,7 +202,7 @@ def train_job(config, cache, cache_id, cache_hash, spec, seed, steps, models_pat
             state = {"state_dict": {k: v.detach().cpu() for k, v in model.state_dict().items()},
                 "recipe": spec, "seed": seed, "step": completed, "cache_sha256": cache_hash,
                 "parameters": sum(p.numel() for p in model.parameters())}
-            if completed in study["checkpoints"] or completed == steps:
+            if completed in checkpoints or completed == steps:
                 save_tensor(path / f"step_{completed}.pt", state)
             save_tensor(path / "last.pt", {**state, "optimizer": optimizer.state_dict(),
                 "batch_rng": batches.get_state(), "noise_rng": noises.get_state()})

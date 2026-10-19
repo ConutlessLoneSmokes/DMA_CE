@@ -16,13 +16,18 @@ import zipfile
 import numpy as np
 import torch
 
+from .continuation import inherit_continuation, plan_continuation, verify_lineage
 from .data import prepare, reestimate, tensor_hash
 from .experiment import apply_dc, file_hash, nmse, validate_config, write_json
-from .research import (aggregate, diagnostic_rows, digest, export_table, infer, load_model,
+from .research import (aggregate, checkpoint_budgets, diagnostic_rows, export_table, infer, load_model,
     paired_effects, plot_tradeoff, recipe, save_tensor, train_job)
 
 
 STAGES = ("baseline", "curves", "factorial", "reliability", "budget", "diffusion", "final")
+
+
+class TrainingBudgetBoundary(RuntimeError):
+    """Validation is still improving at the declared maximum; preserve it as an expected stop."""
 
 
 def validate_study(config):
@@ -41,6 +46,10 @@ def validate_study(config):
         values = study[key]
         if not values or any(type(v) is not int or v < 1 for v in values) or values != sorted(set(values)):
             raise ValueError(f"{key} must be sorted unique positive integers")
+    points = checkpoint_budgets(config, "diffusion")
+    if (any(type(v) is not int or v < 1 for v in points) or points != sorted(set(points))
+            or points[:len(study["checkpoints"])] != study["checkpoints"]):
+        raise ValueError("diffusion checkpoints must retain the original training checkpoints as a prefix")
     if len(study["baseline_iterations"]) < 2 or len(study["checkpoints"]) < 2 or study["averages"][0] != 1:
         raise ValueError("stability needs two iteration budgets; averaging must include one output")
     for key in ("training_seeds", "final_seeds", "shuffle_seeds"):
@@ -96,22 +105,46 @@ def stable_budget(previous, current, limits):
 
 
 class Study:
-    def __init__(self, root, config_path, run_id, device_override=None, parent_id=None):
+    def __init__(self, root, config_path, run_id, device_override=None, parent_id=None,
+            continue_from=None, diffusion_checkpoints=None):
         if re.fullmatch(r"[A-Za-z0-9_-]{1,80}", run_id) is None or (parent_id is not None and
-                re.fullmatch(r"[A-Za-z0-9_-]{1,80}", parent_id) is None):
+                re.fullmatch(r"[A-Za-z0-9_-]{1,80}", parent_id) is None) or (continue_from is not None and
+                re.fullmatch(r"[A-Za-z0-9_-]{1,80}", continue_from) is None):
             raise ValueError("invalid run ID")
         self.root, self.run_id = Path(root), run_id
-        self.config = json.loads(Path(config_path).read_text(encoding="utf-8"))
+        self.path, self.export = self.root / "runs" / run_id, self.root / "results" / run_id
+        plan = None
+        if continue_from:
+            if config_path is not None or parent_id is not None or continue_from == run_id:
+                raise ValueError("continuation needs a new run ID and cannot combine --config or --parent")
+            if self.path.exists():
+                if not (self.path / "continuation.json").exists():
+                    raise ValueError("incomplete continuation initialization; use a new run ID")
+                lineage = verify_lineage(self.path, self.export)
+                if lineage["parent_run_id"] != continue_from or lineage["added_checkpoints"] != diffusion_checkpoints:
+                    raise ValueError("continuation parent/checkpoints changed; use a new run ID")
+                self.config = json.loads((self.path / "config_resolved.json").read_text())
+                parent_id = lineage["parent_id"]
+            else:
+                plan = plan_continuation(self.root, continue_from, diffusion_checkpoints)
+                self.config, parent_id = plan["config"], plan["parent_id"]
+            if device_override and device_override != self.config["device"]:
+                raise ValueError("continuation must preserve the parent's RNG device")
+        else:
+            if config_path is None or diffusion_checkpoints is not None:
+                raise ValueError("select --config, or --continue-from with new --diffusion-checkpoints")
+            self.config = json.loads(Path(config_path).read_text(encoding="utf-8"))
         if device_override:
             self.config["device"] = device_override
         validate_study(self.config)
         self.device = torch.device(self.config["device"])
         if self.device.type == "cuda" and not torch.cuda.is_available():
             raise RuntimeError("CUDA unavailable; select CPU explicitly for smoke testing")
-        self.path, self.export = self.root / "runs" / run_id, self.root / "results" / run_id
         self.started = time.time()
         self.parent_id = parent_id
         identity = {"config": self.config, "parent_id": parent_id}
+        if continue_from:
+            identity["continue_from"] = continue_from
         if self.path.exists():
             if json.loads((self.path / "study_identity.json").read_text()) != identity:
                 raise ValueError("study configuration/parent changed; use a new run ID")
@@ -130,6 +163,8 @@ class Study:
             write_json(self.path / "study_identity.json", identity)
             write_json(self.path / "config_resolved.json", self.config)
             self.archive()
+            if plan is not None:
+                inherit_continuation(self.root, self.path, self.export, plan)
         self.hashes = {}
 
     def archive(self):
@@ -300,7 +335,7 @@ class Study:
         if chosen == last and improvement > study["training_stability_db"]:
             write_json(folder / "budget_boundary.json", {"last_interval_improvement_db": improvement,
                 "required_maximum_db": study["training_stability_db"], "validation_only": True})
-            raise RuntimeError("deterministic validation still improves materially at the largest training budget; extend checkpoints in a new study")
+            raise TrainingBudgetBoundary("deterministic validation still improves materially at the largest training budget; extend checkpoints in a new study")
         return {"steps": chosen, "validation_mean_nmse_linear": means,
             "best_at_largest_budget": chosen == max(means), "last_interval_improvement_db": improvement,
             "learning_rate_horizon": max(study["checkpoints"])}
@@ -379,14 +414,15 @@ class Study:
         chosen, rows, candidates = self.result("budget"), [], []
         cache = self.get_cache(chosen["cache_id"])
         modes = sorted({"none", chosen["reliability"]})
+        checkpoints = checkpoint_budgets(self.config, "diffusion")
         for mode in modes:
             spec = recipe(self.config, chosen["architecture"], chosen["loss"], mode, "diffusion")
             for seed in self.config["research"]["training_seeds"]:
-                last = self.train(cache, spec, seed, max(self.config["research"]["checkpoints"]))
-                for step in self.config["research"]["checkpoints"]:
+                last = self.train(cache, spec, seed, max(checkpoints))
+                for step in checkpoints:
                     rows += self.score(cache, last.parent / f"step_{step}.pt", f"diffusion_{mode}_step{step}",
                         averages=self.config["research"]["averages"])
-            for step, count in itertools.product(self.config["research"]["checkpoints"], self.config["research"]["averages"]):
+            for step, count in itertools.product(checkpoints, self.config["research"]["averages"]):
                 label = f"diffusion_{mode}_step{step}_avg{count}"
                 if len(self.config["research"]["averages"]) == 1:
                     label = f"diffusion_{mode}_step{step}"
@@ -397,15 +433,19 @@ class Study:
         folder = self.table("diffusion", rows)
         plot_tradeoff(folder, rows)
         selected = min(candidates, key=lambda c: (c["mean_nmse_linear"], c["mean_total_ms"], c["steps"]))
-        before = self.config["research"]["checkpoints"][-2]
+        before, last = checkpoints[-2:]
         previous = next(c for c in candidates if c["mode"] == selected["mode"] and c["average"] == selected["average"] and c["steps"] == before)
-        improvement = float(10 * np.log10(previous["mean_nmse_linear"] / selected["mean_nmse_linear"]))
-        if selected["steps"] == max(self.config["research"]["checkpoints"]) and improvement > self.config["research"]["training_stability_db"]:
-            write_json(folder / "budget_boundary.json", {"last_interval_improvement_db": improvement, "validation_only": True})
-            raise RuntimeError("diffusion validation still improves materially at the largest training budget; extend checkpoints in a new study")
+        latest = next(c for c in candidates if c["mode"] == selected["mode"] and c["average"] == selected["average"] and c["steps"] == last)
+        improvement = float(10 * np.log10(previous["mean_nmse_linear"] / latest["mean_nmse_linear"]))
+        if selected["steps"] == last and improvement > self.config["research"]["training_stability_db"]:
+            write_json(folder / "budget_boundary.json", {"last_interval_improvement_db": improvement,
+                "required_maximum_db": self.config["research"]["training_stability_db"],
+                "interval_steps": [before, last], "selected": selected, "validation_only": True})
+            raise TrainingBudgetBoundary("diffusion validation still improves materially at the largest training budget; continue from this run into a new study")
         return {"selected": selected, "candidates": candidates,
-            "best_at_largest_budget": selected["steps"] == max(self.config["research"]["checkpoints"]),
+            "best_at_largest_budget": selected["steps"] == last,
             "last_interval_improvement_db": improvement,
+            "interval_steps": [before, last], "learning_rate_horizon": max(self.config["research"]["checkpoints"]),
             "deterministic_validation_mean_nmse_linear": chosen["mean_nmse_linear"]}
 
     def final(self):
@@ -604,6 +644,12 @@ class Study:
                 write_json(path, {"status": "complete", "selection": selected, "completed_at_unix": time.time()})
                 (self.export / f"{name}_selection.json").write_bytes(path.read_bytes())
                 self.log("stage_complete", stage=name, selection=selected)
+            except TrainingBudgetBoundary as error:
+                write_json(path, {"status": "budget_limited", "error": str(error), "at_unix": time.time()})
+                (self.export / f"{name}_selection.json").write_bytes(path.read_bytes())
+                self.log("budget_limited", stage=name, reason=str(error))
+                self.write_report()
+                raise
             except Exception as error:
                 write_json(path, {"status": "failed", "error": str(error), "at_unix": time.time()})
                 (self.path / f"{name}_error.txt").write_text(traceback.format_exc(), encoding="utf-8")

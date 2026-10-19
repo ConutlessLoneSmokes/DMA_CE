@@ -29,6 +29,29 @@ python scripts/run_research.py --config configs/research.json --run-id research_
 
 同一命令可恢复已完成阶段和训练断点。每个阶段运行前检查所有前置阶段；配置、父运行或 `src/`、`scripts/` 中的执行源码有变化时必须使用新运行 ID。每个阶段的超时上限由 `timeout_seconds` 指定。失败保留状态、错误和最近的优化器、批次及扩散随机状态。
 
+### 从 research_001 延长扩散训练
+
+服务器的 `research_001` 已完成前五阶段，六个扩散模型保存在20,000步。更新代码后，在原仓库、原 CUDA 环境执行：
+
+```bash
+git pull --ff-only
+python scripts/run_research.py --continue-from research_001 --diffusion-checkpoints 30000 40000 --run-id research_002 --stage diffusion
+python scripts/audit_research.py research_002 --validation-only
+```
+
+`--diffusion-checkpoints` 只列新增预算。程序从父运行读取配置，逐字节复制训练/验证缓存、模型和前五阶段结果到新 ID，保留原始20,000步优化器与两个随机数生成器的快照。恢复已有新 ID 时使用相同命令。父运行保持原样；新运行保存 `continuation.json`，审计核对继承文件哈希和旧日志前缀。复制中断且尚未生成该来源记录时，改用新的 ID。
+
+原始20000步余弦日程和所有旧检查点保持不变；新增训练在其末端学习率继续。正式配置为 `0.001 × 0.1 = 0.0001`，不重新启动余弦衰减。确定性训练预算保持原值。最终新初始化的扩散模型也按同一原始日程加恒定末端学习率训练到验证选定步数。
+
+`validation_audit.json` 中 `status=passed` 表示来源、断点和验证重放通过；`ready_for_final=true` 表示扩散阶段已通过原稳定性规则。此时继续最终阶段：
+
+```bash
+python scripts/run_research.py --continue-from research_001 --diffusion-checkpoints 30000 40000 --run-id research_002 --stage final
+python scripts/audit_research.py research_002
+```
+
+若最大检查点仍改善超过0.1 dB，程序记录 `budget_limited`、保存验证表格和执行报告并以状态码2停止。验证审计仍可核对已完成产物，完整审计会返回 `not_ready`。需要再次延长时，以尚未开始最终评价的 `research_002` 为父运行，使用更大的新增预算和新 ID。已创建最终冻结记录或筛选预测的运行不能作为续训父运行。
+
 若服务器另有原第二轮的 `runs/deterministic_20261016_v1/data.pt` 和 `config_resolved.json`，可在第一次运行时附加 `--parent deterministic_20261016_v1`，之后每次恢复也保留这个参数。它只取训练和验证观测；物理系统、场景种子和样本数必须完全匹配。Git 不包含这些缓存，未提供父运行时程序会自行生成。
 
 正式配置保留原有512训练、64验证、128筛选几何，以便复用缓存。扩大数据量时修改 `data` 后使用新 ID。配置中的 `learning.steps` 保持兼容旧入口，新流程的实际训练预算来自 `research.checkpoints` 及阶段选择。
@@ -57,7 +80,7 @@ python scripts/run_research.py --config configs/research.json --run-id research_
 
 确定性训练预算按两种可靠度及3种初始化的验证集线性平均NMSE选择。二维对照的结构和损失也按无可靠度、完整图及种子的平均验证误差选择，避免只为某一可靠度版本选结构。可靠度形式随后单独按验证选择。SBL精修预算选择验证误差距最优精修≤0.1 dB的候选中，实测总均摊时间最短者；表格同时保留单独SBL，最终报告可据此判断精修是否有计算价值。
 
-若最优训练检查点落在最大预算，且相比倒数第二检查点仍改善超过 `training_stability_db`，相应阶段保存 `budget_boundary.json` 并停止。正式配置阈值为0.1 dB。需要扩大训练检查点、设定新的共同学习率日程后，用新 ID 重跑，不能把尚在明显改善的末点解释为训练稳定。短验证使用放宽阈值和极小迭代数，只检查执行逻辑。
+若最优训练检查点落在最大预算，且相比倒数第二检查点仍改善超过 `training_stability_db`，相应阶段保存 `budget_boundary.json` 并记录 `budget_limited`。正式配置阈值为0.1 dB。扩散训练可按上面的独立新 ID 续训入口延长；确定性训练的预算变化需要另建研究配置。最后区间始终指倒数第二检查点到末点，即使验证最优点位于更早位置也按此定义报告。短验证使用放宽阈值和极小迭代数，只检查执行逻辑。
 
 最终5个训练初始化与选择阶段的3个初始化不重合。最终保留充分迭代粗/密字典SBL、预算匹配SBL、无可靠度/完整图确定性网络，以及选定可靠度形式；扩散保留无可靠度与验证选定形式的同检查点模型，并报告1/4/16次平均。观测一致性系数在各系统的无可靠度确定性验证预测上选择，由该系统全部方法共用，原输出和修正输出都记录。
 
@@ -80,3 +103,5 @@ python scripts/run_research.py --config configs/research.json --run-id research_
 `scripts/audit_research.py` 检查源码和模型哈希、训练集标定、几何划分、同观测、冻结时间，并从保存预测重算完整CSI误差、残差分解、通信速率、配对区间及固定模型重放。短验证通过只证明实现可执行与这些一致性检查通过，不构成论文主结果。
 
 本地已完成29项检查，包含CPU与GPU的训练前缀/续训一致性、父缓存复用及物理配置失配拒绝、超过16,777,216项的可靠度标定。完整短验证通过9组场景、4,608条指标和15次精确重放，记录见 [research_smoke_20261018_v2](../results/research_smoke_20261018_v2/report.md)；完整128×128维度的双样本记录见 [research_shape128_20261018_v2](../results/research_shape128_20261018_v2/report.md)。正式配置的长训练、5种初始化性能和规模扩展比较留待服务器运行。
+
+2026-10-19补充独立续训后，33项检查通过。实际入口完成“父运行6步→新运行10步→3种小系统最终评价→同ID恢复”，480条验证指标、4,608条最终指标和15次模型重放全部核对一致；完整记录见[续训实现验证](../results/continuation_smoke_20261019_v1/implementation_verification.md)。

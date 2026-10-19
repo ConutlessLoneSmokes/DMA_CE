@@ -7,7 +7,6 @@ import os
 from pathlib import Path
 import re
 import sys
-import zipfile
 
 os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
 ROOT = Path(__file__).resolve().parents[1]
@@ -15,8 +14,9 @@ sys.path.insert(0, str(ROOT / "src"))
 import numpy as np
 import torch
 from dma_ce.data import sample_scenes, tensor_hash
+from dma_ce.continuation import FROZEN_STAGES, verify_archive, verify_lineage
 from dma_ce.experiment import apply_dc, file_hash, nmse, write_json
-from dma_ce.research import communication_rates, infer, load_model, paired_effects
+from dma_ce.research import checkpoint_budgets, communication_rates, digest, infer, load_model, paired_effects, recipe
 from dma_ce.suite import STAGES
 
 
@@ -25,20 +25,105 @@ def geometry(config, split):
     return np.concatenate((radius, angle, gain.real, gain.imag), axis=1)
 
 
-def audit(run_id, root=ROOT):
+def audit_validation(run, result, config, states, cache_count, lineage):
+    chosen = states["budget"]["selection"]
+    data = run / "cache" / f"{chosen['cache_id']}.pt"
+    cache_hash = file_hash(data)
+    cache = torch.load(data, map_location="cpu", weights_only=True)
+    assert set(cache["splits"]) == {"train", "validation"}
+    train = cache["splits"]["train"]
+    errors = torch.stack([(e["truth"] - e["coarse"]).abs().square().mean() for e in train]).mean()
+    variances = torch.stack([e["reliability"].mean() for e in train]).mean()
+    assert np.isclose(float(errors / variances), cache["reliability_scale"])
+    assert np.isclose(float((errors / 2).clamp_min(1e-12).sqrt()), cache["residual_real_scale"])
+    packed = [geometry(config, split) for split in ("train", "validation")]
+    for split, values in zip(("train", "validation"), packed):
+        assert hashlib.sha256(values.tobytes()).hexdigest() == cache["geometry_hashes"][split]
+    assert not {r.tobytes() for r in packed[0]}.intersection(r.tobytes() for r in packed[1])
+    with (result / "diffusion" / "metrics.csv").open(newline="") as stream:
+        rows = list(csv.DictReader(stream))
+    lookup = {(r["method"], int(r["seed"]), int(r["context"]), int(r["scene"])): r for r in rows}
+    assert len(lookup) == len(rows)
+    points, averages = checkpoint_budgets(config, "diffusion"), config["research"]["averages"]
+    maximum, checked, models, means = 0., 0, 0, {}
+    for mode in sorted({"none", chosen["reliability"]}):
+        spec = recipe(config, chosen["architecture"], chosen["loss"], mode, "diffusion")
+        for seed in config["research"]["training_seeds"]:
+            job = run / "models" / chosen["cache_id"] / digest(spec)[:12] / f"seed_{seed}"
+            identity = json.loads((job / "identity.json").read_text())
+            assert identity == {"recipe": spec, "seed": seed, "cache_sha256": cache_hash,
+                "horizon": max(config["research"]["checkpoints"]), "learning": config["learning"],
+                "eval_every": config["research"]["eval_every"]}
+            last = torch.load(job / "last.pt", map_location="cpu", weights_only=True)
+            assert last["step"] == max(points) and last["optimizer"]["state"]
+            assert all(torch.is_tensor(last[k]) and last[k].dtype == torch.uint8 for k in ("batch_rng", "noise_rng"))
+            for step in points:
+                saved = torch.load(job / f"step_{step}.pt", map_location="cpu", weights_only=True)
+                assert saved["recipe"] == spec and saved["seed"] == seed and saved["step"] == step
+                assert saved["cache_sha256"] == cache_hash
+                if step == max(points):
+                    assert all(torch.equal(v, last["state_dict"][k]) for k, v in saved["state_dict"].items())
+                model = load_model(saved, torch.device(config["device"]))
+                for c, entry in enumerate(cache["splits"]["validation"]):
+                    replay = infer(config, cache, model, spec, entry, torch.device(config["device"]),
+                        seed=config["seed"] + 7000 + c * 1000, averages=averages)
+                    for count in averages:
+                        label = f"diffusion_{mode}_step{step}" + (f"_avg{count}" if len(averages) > 1 else "")
+                        values = nmse(entry["truth"], replay[count][0])
+                        means.setdefault((mode, step, count), []).extend(values.tolist())
+                        for g, value in enumerate(values.tolist()):
+                            row = lookup[label, seed, c, g]
+                            maximum = max(maximum, abs(float(row["nmse_linear"]) - value))
+                            assert np.isclose(float(row["nmse_linear"]), value, rtol=2e-6, atol=1e-7)
+                            assert row["observation_sha256"] == tensor_hash(entry["observation"][g])
+                            checked += 1
+                del model
+                models += 1
+    assert checked == len(rows)
+    means = {k: float(np.mean(v)) for k, v in means.items()}
+    best = min(means, key=means.get)
+    state = states["diffusion"]
+    if state["status"] == "complete":
+        selected = state["selection"]["selected"]
+        best = (selected["mode"], selected["steps"], selected["average"])
+        assert np.isclose(means[best], min(means.values()), rtol=1e-10, atol=1e-12)
+    mode, step, count = best
+    gain = float(10 * np.log10(means[mode, points[-2], count] / means[mode, points[-1], count]))
+    limited = step == max(points) and gain > config["research"]["training_stability_db"]
+    assert limited == (state["status"] != "complete")
+    if limited:
+        boundary = json.loads((result / "diffusion" / "budget_boundary.json").read_text())
+        assert boundary["validation_only"] and np.isclose(gain, boundary["last_interval_improvement_db"])
+    report = {"status": "passed", "scope": "validation_only", "ready_for_final": not limited,
+        "diffusion_status": state["status"], "source_archive_verified": True,
+        "continuation_verified": lineage is not None, "data_caches_verified": cache_count,
+        "diffusion_checkpoints_replayed": models, "validation_metrics_recomputed": checked,
+        "maximum_metric_difference": maximum, "last_interval_improvement_db": gain,
+        "training_only_calibration": True, "training_validation_geometry_disjoint": True,
+        "screening_data_read": False}
+    write_json(result / "validation_audit.json", report)
+    print(json.dumps(report, ensure_ascii=False, indent=2))
+    return report
+
+
+def audit(run_id, root=ROOT, validation_only=False):
     if re.fullmatch(r"[A-Za-z0-9_-]{1,80}", run_id) is None:
         raise ValueError("invalid study ID")
     run, result = root / "runs" / run_id, root / "results" / run_id
     config = json.loads((run / "config_resolved.json").read_text())
-    for stage in STAGES:
-        assert json.loads((run / "stages" / f"{stage}.json").read_text())["status"] == "complete", stage
-    environment = json.loads((run / "environment.json").read_text())
-    manifest = json.loads((run / "source_manifest.json").read_text())
-    assert file_hash(run / "source.zip") == environment["source_zip_sha256"]
-    with zipfile.ZipFile(run / "source.zip") as archive:
-        assert set(archive.namelist()) == set(manifest)
-        for name, expected in manifest.items():
-            assert hashlib.sha256(archive.read(name)).hexdigest() == expected, name
+    states = {stage: json.loads((run / "stages" / f"{stage}.json").read_text())
+        if (run / "stages" / f"{stage}.json").exists() else {"status": "pending"} for stage in STAGES}
+    incomplete = [stage for stage in STAGES if states[stage]["status"] != "complete"]
+    legacy_boundary = (states["diffusion"]["status"] == "failed"
+        and "diffusion validation still improves" in states["diffusion"].get("error", ""))
+    if (not validation_only and incomplete) or (validation_only and (any(states[s]["status"] != "complete"
+            for s in FROZEN_STAGES) or states["diffusion"]["status"] not in ("complete", "budget_limited") and not legacy_boundary)):
+        report = {"status": "not_ready", "incomplete_stages": incomplete,
+            "message": "Use --validation-only after diffusion completes or reaches its declared budget boundary."}
+        print(json.dumps(report, ensure_ascii=False, indent=2))
+        return report
+    verify_archive(run)
+    lineage = verify_lineage(run, result)
     cache_count = 0
     for meta in (run / "cache").glob("*.json"):
         assert file_hash(meta.with_suffix(".pt")) == json.loads(meta.read_text())["sha256"], meta.name
@@ -47,6 +132,8 @@ def audit(run_id, root=ROOT):
     torch.backends.cudnn.benchmark = False
     torch.backends.cuda.matmul.allow_tf32 = torch.backends.cudnn.allow_tf32 = False
     torch.use_deterministic_algorithms(True)
+    if validation_only:
+        return audit_validation(run, result, config, states, cache_count, lineage)
     rows_checked = model_count = replays = scenarios = 0
     maximum_metric_difference = maximum_replay_difference = 0.
     for profile in sorted((result / "final").iterdir()):
@@ -179,7 +266,7 @@ def audit(run_id, root=ROOT):
         "maximum_metric_difference": maximum_metric_difference, "sampler_replays": replays,
         "maximum_replay_difference": maximum_replay_difference, "training_only_calibration": True,
         "fresh_geometry_and_common_observations": True, "communication_rates_recomputed": True,
-        "crossed_bootstrap_recomputed": True}
+        "crossed_bootstrap_recomputed": True, "continuation_verified": lineage is not None}
     write_json(result / "audit.json", report)
     print(json.dumps(report, ensure_ascii=False, indent=2))
     return report
@@ -188,4 +275,7 @@ def audit(run_id, root=ROOT):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("run_id")
-    audit(parser.parse_args().run_id)
+    parser.add_argument("--validation-only", action="store_true", help="Audit validation artifacts without requiring final/screening evaluation")
+    args = parser.parse_args()
+    report = audit(args.run_id, validation_only=args.validation_only)
+    sys.exit(0 if report["status"] == "passed" else 2)

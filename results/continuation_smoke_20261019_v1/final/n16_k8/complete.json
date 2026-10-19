@@ -1,0 +1,11 @@
+{
+  "profile": "n16_k8",
+  "status": "complete",
+  "training_seeds": 2,
+  "freeze_sha256": "351acb751b1fbeaed15aff4bbb213a25b8ec2cf714b94fc3c937799570a22f74",
+  "rayleigh_distance_m": 0.11242217175,
+  "distance_range_m": [
+    0.022959183673469385,
+    0.09183673469387754
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "status": "complete",
+  "selection": {
+    "architecture": "per_tone",
+    "loss": "uniform",
+    "steps": 2,
+    "validation_mean_nmse_linear": {
+      "none": 1.089245766401291,
+      "scalar": 1.090298218652606,
+      "map": 1.0901211109012365
+    },
+    "parameters": {
+      "cross_frequency_uniform": 1484,
+      "cross_frequency_condition": 1484,
+      "per_tone_uniform": 1550,
+      "per_tone_condition": 1550
+    },
+    "selection": "mean over the paired no-reliability/map controls and training seeds",
+    "reliability": "none",
+    "shuffle_seeds": [
+      301,
+      302
+    ]
+  },
+  "completed_at_unix": 1792374978.7315185
+}

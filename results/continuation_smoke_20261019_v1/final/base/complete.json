@@ -1,0 +1,11 @@
+{
+  "profile": "base",
+  "status": "complete",
+  "training_seeds": 2,
+  "freeze_sha256": "fcc0c80b8ccf2b3e3c61ce25afaa2abe86c398d752bbb2a3931adb76310c76a0",
+  "rayleigh_distance_m": 0.024483050736666668,
+  "distance_range_m": [
+    0.005,
+    0.02
+  ]
+}

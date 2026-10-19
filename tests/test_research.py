@@ -6,6 +6,7 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 import numpy as np
 os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
@@ -15,8 +16,10 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 from dma_ce.conditional import ConditionalCNN, reliability_features
 from dma_ce.data import calibrate, prepare, reestimate
-from dma_ce.research import communication_rates, learning_rate, loss_weights, matched_width, paired_effects, recipe, train_job
-from dma_ce.suite import Study, stable_budget, validate_study
+from dma_ce.continuation import verify_lineage
+from dma_ce.experiment import file_hash, write_json
+from dma_ce.research import checkpoint_budgets, communication_rates, learning_rate, loss_weights, matched_width, paired_effects, recipe, train_job
+from dma_ce.suite import Study, TrainingBudgetBoundary, stable_budget, validate_study
 
 
 class ResearchTests(unittest.TestCase):
@@ -145,6 +148,149 @@ class ResearchTests(unittest.TestCase):
         self.assertAlmostEqual(float(gross), np.log2(5), places=6)
         self.assertAlmostEqual(float(net), .7 * np.log2(5), places=6)
         self.assertTrue(torch.equal(net, oracle))
+
+    def test_diffusion_extension_preserves_prefix_optimizer_rng_and_logs(self):
+        extended = copy.deepcopy(self.config)
+        extended["research"]["diffusion_checkpoints"] = [2, 4, 6, 8, 10]
+        cache = {**self.cache, "splits": {s: values[:1] for s, values in self.cache["splits"].items()}}
+        spec = recipe(extended, reliability="none", kind="diffusion")
+        with tempfile.TemporaryDirectory() as temporary:
+            for device in (("cpu", "cuda") if torch.cuda.is_available() else ("cpu",)):
+                with self.subTest(device=device):
+                    path = Path(temporary) / device
+                    full = train_job(extended, cache, "same", "hash", spec, 77, 10, path / "full", device, lambda *a, **k: None)
+                    prefix = train_job(self.config, cache, "same", "hash", spec, 77, 6, path / "resume", device, lambda *a, **k: None)
+                    preserved = {p.name: p.read_bytes() for p in prefix.parent.iterdir() if p.name != "last.pt"}
+                    train_job(extended, cache, "same", "hash", spec, 77, 8, path / "resume", device, lambda *a, **k: None)
+                    resumed = train_job(extended, cache, "same", "hash", spec, 77, 10, path / "resume", device, lambda *a, **k: None)
+                    expected = torch.load(full.parent / "last.pt", weights_only=True)
+                    actual = torch.load(resumed.parent / "last.pt", weights_only=True)
+                    for key in ("state_dict", "batch_rng", "noise_rng", "optimizer"):
+                        def equal(a, b):
+                            if torch.is_tensor(a):
+                                return torch.equal(a, b)
+                            if isinstance(a, dict):
+                                return a.keys() == b.keys() and all(equal(a[k], b[k]) for k in a)
+                            if isinstance(a, list):
+                                return len(a) == len(b) and all(equal(x, y) for x, y in zip(a, b))
+                            return a == b
+                        self.assertTrue(equal(expected[key], actual[key]), key)
+                    for name, raw in preserved.items():
+                        self.assertTrue((prefix.parent / name).read_bytes().startswith(raw) if name.endswith(".jsonl")
+                            else (prefix.parent / name).read_bytes() == raw, name)
+                    self.assertEqual(actual["optimizer"]["param_groups"][0]["lr"], self.config["learning"]["learning_rate"] * .1)
+                    with self.assertRaises(ValueError):
+                        train_job(extended, cache, "same", "hash", recipe(extended), 77, 8, path / "det", device, lambda *a, **k: None)
+        validate_study(extended)
+        extended["research"]["diffusion_checkpoints"] = [2, 6, 8]
+        with self.assertRaises(ValueError):
+            validate_study(extended)
+
+    def continuation_parent(self, root):
+        for folder in ("src", "scripts", "tests", "configs", "docs"):
+            (root / folder).mkdir()
+        for name in ("AGENTS.md", "README.md", "pyproject.toml", ".gitignore", ".gitattributes"):
+            (root / name).write_text("test fixture", encoding="utf-8")
+        config = copy.deepcopy(self.config)
+        config["device"] = "cpu"
+        config["research"].update(training_seeds=[101], final_seeds=[201], averages=[1, 4], expansions=[], mismatches=[])
+        config_path = root / "configs" / "test.json"
+        config_path.write_text(json.dumps(config))
+        parent = Study(root, config_path, "parent")
+        parent.log = lambda *a, **k: None
+        parent.cache("base_stable", config)
+        chosen = {"cache_id": "base_stable", "architecture": "cross_frequency", "loss": "uniform",
+            "reliability": "scalar", "steps": 6, "iterations": 5, "mean_nmse_linear": 1.}
+        for stage in ("baseline", "curves", "factorial", "reliability", "budget"):
+            record = {"status": "complete", "selection": chosen}
+            write_json(parent.path / "stages" / f"{stage}.json", record)
+            write_json(parent.export / f"{stage}_selection.json", record)
+        parent.run("diffusion")
+        return parent
+
+    def test_continuation_is_independent_resumable_and_validation_auditable(self):
+        from scripts.audit_research import audit
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            parent = self.continuation_parent(root)
+            before = {p: file_hash(p) for folder in (parent.path, parent.export) for p in folder.rglob("*") if p.is_file()}
+            (root / "src" / "version.py").write_text("# new continuation implementation\n")
+            child = Study(root, None, "child", continue_from="parent", diffusion_checkpoints=[8, 10])
+            child.log = lambda *a, **k: None
+            self.assertEqual(checkpoint_budgets(child.config, "diffusion"), [2, 4, 6, 8, 10])
+            self.assertEqual(child.config["research"]["checkpoints"], [2, 4, 6])
+            for stage in ("baseline", "curves", "factorial", "reliability", "budget"):
+                self.assertEqual(child.result(stage), parent.result(stage))
+            child.run("diffusion")
+            lineage = verify_lineage(child.path, child.export)
+            self.assertEqual(len(lineage["origin_states"]), 2)
+            self.assertTrue(all(file_hash(p) == value for p, value in before.items()))
+            self.assertFalse((child.path / "cache/base_stable.pt").samefile(parent.path / "cache/base_stable.pt"))
+            Study(root, None, "child", continue_from="parent", diffusion_checkpoints=[8, 10])
+            report = audit("child", root, validation_only=True)
+            self.assertEqual(report["status"], "passed")
+            self.assertTrue(report["continuation_verified"] and report["ready_for_final"])
+            self.assertEqual(report["maximum_metric_difference"], 0.)
+            self.assertEqual(audit("child", root)["status"], "not_ready")
+            grandchild = Study(root, None, "grandchild", continue_from="child", diffusion_checkpoints=[12])
+            grandchild.log = lambda *a, **k: None
+            grandchild.run("diffusion")
+            self.assertEqual(checkpoint_budgets(grandchild.config, "diffusion"), [2, 4, 6, 8, 10, 12])
+            self.assertEqual(verify_lineage(grandchild.path, grandchild.export)["parent_run_id"], "child")
+            with self.assertRaises(ValueError):
+                Study(root, None, "child", continue_from="parent", diffusion_checkpoints=[8, 12])
+            with self.assertRaisesRegex(ValueError, "RNG device"):
+                Study(root, None, "child", "cuda", continue_from="parent", diffusion_checkpoints=[8, 10])
+            old = child.path / lineage["origin_states"][0]["snapshot_path"]
+            old.write_bytes(old.read_bytes() + b"changed")
+            with self.assertRaises(ValueError):
+                verify_lineage(child.path, child.export)
+            self.assertIsNotNone(verify_lineage(grandchild.path, grandchild.export))
+
+    def test_continuation_rejects_screening_changed_budget_and_missing_optimizer(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            parent = self.continuation_parent(root)
+            for points in (None, [6], [8, 8], [10, 8]):
+                with self.assertRaises(ValueError):
+                    Study(root, None, "invalid", continue_from="parent", diffusion_checkpoints=points)
+            final = parent.path / "stages/final.json"
+            final.write_text('{"status":"running"}')
+            with self.assertRaisesRegex(ValueError, "screening"):
+                Study(root, None, "screened", continue_from="parent", diffusion_checkpoints=[8])
+            final.unlink()
+            last = next((parent.path / "models").rglob("last.pt"))
+            saved = torch.load(last, weights_only=True)
+            saved.pop("optimizer")
+            torch.save(saved, last)
+            with self.assertRaisesRegex(ValueError, "optimizer/RNG"):
+                Study(root, None, "no_optimizer", continue_from="parent", diffusion_checkpoints=[8])
+            self.assertFalse((root / "runs/no_optimizer").exists())
+
+    def test_latest_interval_and_budget_limited_status(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            study = self.continuation_parent(root)
+            stage = study.path / "stages/diffusion.json"
+            stage.unlink()
+            study.config["research"].update(training_seeds=[101], averages=[1], training_stability_db=.1)
+            study.result = lambda name: {"cache_id": "unused", "architecture": "cross_frequency", "loss": "uniform",
+                "reliability": "none", "mean_nmse_linear": 1.}
+            study.get_cache = lambda name: {}
+            study.train = lambda *a: root / "step_6.pt"
+            study.table = lambda name, rows: study.export / "diffusion"
+            values = {2: 1., 4: 2., 6: 4.}
+            study.score = lambda cache, checkpoint, method, **kw: [{"method": method, "nmse_linear": values[int(checkpoint.stem[5:])],
+                "total_batch_ms_per_sample": 1.}]
+            with patch("dma_ce.suite.plot_tradeoff"):
+                selected = study.diffusion()
+                self.assertEqual(selected["selected"]["steps"], 2)
+                self.assertAlmostEqual(selected["last_interval_improvement_db"], 10 * np.log10(.5))
+                values.update({2: 4., 4: 2., 6: 1.})
+                with self.assertRaises(TrainingBudgetBoundary):
+                    study.run("diffusion")
+            self.assertEqual(json.loads(stage.read_text())["status"], "budget_limited")
+            self.assertTrue((study.export / "report.md").exists())
 
     def test_stability_requires_convergence_and_moment_stability(self):
         a = [{"mean_nmse_db": -10., "mean_variance": .2, "convergence_rate": .99}]

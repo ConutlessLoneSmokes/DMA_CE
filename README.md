@@ -35,7 +35,18 @@ python scripts/run_research.py --config configs/research.json --run-id research_
 python scripts/audit_research.py research_001
 ```
 
+已有 `research_001` 的扩散训练到达预算边界时，用新 ID 保留前五阶段并恢复原优化器与随机状态：
+
+```text
+python scripts/run_research.py --continue-from research_001 --diffusion-checkpoints 30000 40000 --run-id research_002 --stage diffusion
+python scripts/audit_research.py research_002 --validation-only
+```
+
+新增步骤使用原余弦日程的末端学习率0.0001。验证审计的 `ready_for_final=true` 后可运行 `final`；完整命令和继续延长的方法见[服务器续训说明](docs/RESEARCH_STUDY.md)。
+
 ## 结果状态
+
+[独立续训短验证](results/continuation_smoke_20261019_v1/implementation_verification.md)通过33项检查。父运行6步状态续训到10步，480条验证指标重放、4,608条最终指标重算和15次模型重放的最大差值均为0；CPU/GPU均通过优化器和随机状态的精确续训检查。
 
 [五步流程短验证](results/research_smoke_20261018_v2/report.md)已完成7个阶段、3种小尺寸和9组匹配/失配评价，耗时44秒。29项检查通过，4,608条最终指标重算及15次模型重放完全一致，阶段恢复检查通过。[128×128双样本检查](results/research_shape128_20261018_v2/report.md)也通过两种字典、两种结构及确定性/扩散训练和推理；完整数据量的分位数标定边界已修复并加入回归检查。这些是实现验证，正式多种子实验由服务器运行。
 

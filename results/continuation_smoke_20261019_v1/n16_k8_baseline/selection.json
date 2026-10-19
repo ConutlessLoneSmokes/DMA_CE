@@ -1,0 +1,28 @@
+{
+  "coarse": {
+    "iterations": 5,
+    "checked_against": 10,
+    "grid": {
+      "name": "coarse",
+      "angle_points": 5,
+      "range_points": 2
+    },
+    "maximum_nmse_change_db": 0.1884782314300537,
+    "maximum_variance_relative_change": 0.05729819960995908,
+    "overall_convergence": 0.125,
+    "minimum_context_convergence": 0.0
+  },
+  "dense": {
+    "iterations": 5,
+    "checked_against": 10,
+    "grid": {
+      "name": "dense",
+      "angle_points": 9,
+      "range_points": 3
+    },
+    "maximum_nmse_change_db": 0.10899347066879272,
+    "maximum_variance_relative_change": 0.027455707330169,
+    "overall_convergence": 0.125,
+    "minimum_context_convergence": 0.0
+  }
+}
