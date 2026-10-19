@@ -31,10 +31,9 @@ python scripts/run_research.py --config configs/research.json --run-id research_
 
 ### 从 research_001 延长扩散训练
 
-服务器的 `research_001` 已完成前五阶段，六个扩散模型保存在20,000步。更新代码后，在原仓库、原 CUDA 环境执行：
+服务器的 `research_001` 已完成前五阶段，六个扩散模型保存在20,000步。本轮代码已同步到 `/home/lsy/DMA_CE`；在原仓库、原 CUDA 环境执行：
 
 ```bash
-git pull --ff-only
 python scripts/run_research.py --continue-from research_001 --diffusion-checkpoints 30000 40000 --run-id research_002 --stage diffusion
 python scripts/audit_research.py research_002 --validation-only
 ```
@@ -105,3 +104,5 @@ python scripts/audit_research.py research_002
 本地已完成29项检查，包含CPU与GPU的训练前缀/续训一致性、父缓存复用及物理配置失配拒绝、超过16,777,216项的可靠度标定。完整短验证通过9组场景、4,608条指标和15次精确重放，记录见 [research_smoke_20261018_v2](../results/research_smoke_20261018_v2/report.md)；完整128×128维度的双样本记录见 [research_shape128_20261018_v2](../results/research_shape128_20261018_v2/report.md)。正式配置的长训练、5种初始化性能和规模扩展比较留待服务器运行。
 
 2026-10-19补充独立续训后，33项检查通过。实际入口完成“父运行6步→新运行10步→3种小系统最终评价→同ID恢复”，480条验证指标、4,608条最终指标和15次模型重放全部核对一致；完整记录见[续训实现验证](../results/continuation_smoke_20261019_v1/implementation_verification.md)。
+
+服务器原始20,000步断点另通过一个模型、一个更新步的恢复检查。六个断点成功继承，选定模型运行到20,001步，优化器和随机状态正确推进，原运行379个文件哈希全部保持不变。记录见[真实断点单步检查](../results/continuation_state_probe_20261019_v1/report.md)。

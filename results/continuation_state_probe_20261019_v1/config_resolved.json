@@ -1,0 +1,176 @@
+{
+  "label": "five_step_validation_selected_study",
+  "seed": 20261016,
+  "device": "cuda",
+  "timeout_seconds": 604800,
+  "system": {
+    "carrier_hz": 300000000000.0,
+    "bandwidths_hz": [
+      3000000000.0,
+      30000000000.0
+    ],
+    "antennas": 32,
+    "tones": 32,
+    "spacing_wavelengths": 0.5,
+    "configurations": [
+      8,
+      16
+    ],
+    "snrs_db": [
+      10.0,
+      20.0
+    ],
+    "quality_factor": 50.0,
+    "tuning_bandwidth_hz": 30000000000.0,
+    "waveguide_effective_index": 1.4,
+    "waveguide_end_power_fraction": 0.8,
+    "rf_noise_fraction": 0.05
+  },
+  "channel": {
+    "paths": 3,
+    "range_min_m": 0.1,
+    "range_max_m": 0.4,
+    "angle_limit_deg": 60.0,
+    "include_absorption": false
+  },
+  "data": {
+    "train": 512,
+    "validation": 64,
+    "screen": 128,
+    "screen_seed": 20261018
+  },
+  "sbl": {
+    "angle_points": 49,
+    "range_points": 7,
+    "iterations": 1000,
+    "tolerance": 0.001,
+    "batch_size": 16
+  },
+  "learning": {
+    "steps": 2000,
+    "batch_size": 32,
+    "width": 32,
+    "learning_rate": 0.001,
+    "diffusion_steps": 100,
+    "sampling_steps": 20,
+    "log_every": 500,
+    "variants": [
+      "deterministic_no_reliability",
+      "deterministic"
+    ]
+  },
+  "evaluation": {
+    "batch_size": 32,
+    "dc_multipliers": [
+      0.0,
+      0.1,
+      1.0,
+      10.0
+    ],
+    "bootstrap_samples": 2000,
+    "dc_selection_model": "deterministic_no_reliability",
+    "correct_coarse": true
+  },
+  "research": {
+    "training_seeds": [
+      101,
+      102,
+      103
+    ],
+    "final_seeds": [
+      201,
+      202,
+      203,
+      204,
+      205
+    ],
+    "shuffle_seeds": [
+      301,
+      302,
+      303,
+      304,
+      305
+    ],
+    "checkpoints": [
+      2000,
+      8000,
+      20000
+    ],
+    "eval_every": 2000,
+    "training_stability_db": 0.1,
+    "train_curve_samples": 128,
+    "grids": [
+      {
+        "name": "coarse",
+        "angle_points": 49,
+        "range_points": 7
+      },
+      {
+        "name": "dense",
+        "angle_points": 97,
+        "range_points": 13
+      }
+    ],
+    "baseline_iterations": [
+      1000,
+      2000,
+      4000,
+      8000
+    ],
+    "stability": {
+      "overall_convergence": 0.95,
+      "context_convergence": 0.9,
+      "nmse_db": 0.1,
+      "variance_relative": 0.05
+    },
+    "sbl_budgets": [
+      100,
+      300,
+      500,
+      1000
+    ],
+    "accuracy_tolerance_db": 0.1,
+    "averages": [
+      1,
+      4,
+      16
+    ],
+    "expansions": [
+      {
+        "name": "n128_k32",
+        "antennas": 128,
+        "tones": 32
+      },
+      {
+        "name": "n128_k128",
+        "antennas": 128,
+        "tones": 128
+      }
+    ],
+    "mismatches": [
+      {
+        "name": "paths5",
+        "channel": {
+          "paths": 5
+        }
+      },
+      {
+        "name": "range_shift",
+        "channel": {
+          "range_min_m": 0.2,
+          "range_max_m": 0.6
+        }
+      }
+    ],
+    "communication": {
+      "coherence_symbols": 200,
+      "switch_symbols": 0.1
+    },
+    "diffusion_checkpoints": [
+      2000,
+      8000,
+      20000,
+      20001
+    ]
+  }
+}
