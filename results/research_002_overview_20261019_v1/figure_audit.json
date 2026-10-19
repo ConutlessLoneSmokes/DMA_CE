@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "source_csv_group_means_match_all_30_diffusion_candidates": true,
+  "common_observation_pairs": 512,
+  "validation_geometries_per_context": 64,
+  "training_initializations": 3,
+  "all_method_seed_context_groups_complete": true,
+  "condition_claims_verified": true,
+  "output_sha256_verified": 3,
+  "text_clipping_check": "passed",
+  "png_size_pixels": [
+    2970,
+    1980
+  ],
+  "png_background_opaque": true,
+  "svg_contains_raster_images": false,
+  "pdf_pages": 1,
+  "pdf_dimensions_points": [
+    1188,
+    792
+  ],
+  "pdf_true_type_font_embedded": true,
+  "pdf_contains_raster_images": false,
+  "local_report_links_verified": 13
+}

@@ -46,6 +46,8 @@ python scripts/audit_research.py research_002 --validation-only
 
 ## 结果状态
 
+[research_002验证集总览](results/research_002_overview_20261019_v1/report.md)已绘制为一张四联图，提供PNG/PDF/SVG和可复现数据。32×32系统下，标量可靠度确定性精修比粗字典SBL改善0.888 dB；最佳扩散平均16次后改善0.352 dB，但在30 GHz的4种条件均弱于SBL。结果来自64个验证几何和3个训练初始化，最终阶段另用新初始化与筛选几何评价。
+
 [独立续训短验证](results/continuation_smoke_20261019_v1/implementation_verification.md)通过33项检查。父运行6步状态续训到10步，480条验证指标重放、4,608条最终指标重算和15次模型重放的最大差值均为0；CPU/GPU均通过优化器和随机状态的精确续训检查。
 
 [服务器真实断点检查](results/continuation_state_probe_20261019_v1/report.md)成功继承六个扩散状态，仅用一个模型从20,000步更新到20,001步；原运行379个文件哈希保持不变。该记录用于检查恢复接口，完整30,000/40,000步续训按上面的命令另行执行。

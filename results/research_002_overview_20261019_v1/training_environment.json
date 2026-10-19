@@ -1,0 +1,23 @@
+{
+  "python": "3.10.21 (main, Aug 27 2026, 14:42:07) [GCC 14.3.0]",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "torch": "2.11.0+cu128",
+  "numpy": "1.26.4",
+  "device": "cuda",
+  "cuda": "12.8",
+  "gpu": "NVIDIA GeForce RTX 3090",
+  "command": [
+    "scripts/run_research.py",
+    "--continue-from",
+    "research_001",
+    "--diffusion-checkpoints",
+    "30000",
+    "40000",
+    "--run-id",
+    "research_002",
+    "--stage",
+    "diffusion"
+  ],
+  "git_commit": "824baa5541eb38863d32c2bdaaf8820555e372af",
+  "source_zip_sha256": "bf7d3535ab9cda78d526910b9fba718b151b0bbf60f75bb0f9db5c465b1c90c4"
+}

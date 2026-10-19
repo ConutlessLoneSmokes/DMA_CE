@@ -1,0 +1,43 @@
+{
+  "run_id": "research_002",
+  "source_directory": "C:\\Users\\Milo\\Desktop\\DMA_CE\\runs\\research_002_overview_20261019_v1\\source_tables",
+  "remote_source_directory": "/home/lsy/DMA_CE/results/research_002",
+  "files": {
+    "config_resolved.json": {
+      "sha256": "000da86a94b7371996b2585c91d5e777d0ca32e341927ecfa460661c9b2a8c14",
+      "bytes": 3137
+    },
+    "diffusion_selection.json": {
+      "sha256": "f70b1c55812e3926ec231a3abfadcfa2779a7e9fff385cac53b2ec837a2f3fc3",
+      "bytes": 5962
+    },
+    "base_baseline/selection.json": {
+      "sha256": "d8409d6b3eb7791248a96aceb147e44f392a6c13ca6c0423c1620f2e8e1d7a59",
+      "bytes": 732
+    },
+    "validation_audit.json": {
+      "sha256": "8e9af7665e04bb77ff57a77a3493e934d2ca65f743595279b7216b0ac65c4572",
+      "bytes": 505
+    },
+    "base_baseline/metrics.csv": {
+      "sha256": "8dca315d4212765c1512141634784c6a4378dbf4f773e318b5787d3a6d4b4899",
+      "bytes": 435150
+    },
+    "reliability/metrics.csv": {
+      "sha256": "f3d416ae5dfe4fa95d636115107f53c2dd0fd7579d81e4dc5b7849b366884ecc",
+      "bytes": 5137754
+    },
+    "diffusion/metrics.csv": {
+      "sha256": "f94402fcd0f0f1b9c6948aa77b0a72539111ebebba6056b0ac7cb68d84a66166",
+      "bytes": 20114464
+    },
+    "download_manifest.json": {
+      "sha256": "5a9e70df0a2f67647397dbaf073272da0ea7a18784b37462edbc4a0f98a9ecb7",
+      "bytes": 2086
+    },
+    "reliability_selection.json": {
+      "sha256": "c4072351999bf9706ac5dc0d19d73b4a4d707125691a4106dca3b1666f36563f",
+      "bytes": 699
+    }
+  }
+}

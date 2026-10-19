@@ -1,0 +1,41 @@
+{
+  "scope": "validation_only",
+  "source_run": "research_002",
+  "created_at_utc": "2026-10-19T03:20:38.844351+00:00",
+  "independent_validation_geometries": 64,
+  "training_geometries": 512,
+  "contexts_per_geometry": 8,
+  "training_seeds": [
+    101,
+    102,
+    103
+  ],
+  "common_observation_hashes_verified": 512,
+  "mean": "10*log10(mean(per-sample linear NMSE)); seeds and contexts equally weighted",
+  "hollow_points": "one linear-mean NMSE per training initialization; no confidence interval",
+  "condition_gain": "10*log10(coarse-SBL mean NMSE / method mean NMSE) within each condition",
+  "diffusion_selection_recomputed_from_csv": true,
+  "smoothing": null,
+  "uncertainty_intervals": null,
+  "end_observation_consistency": "not applied in these validation tables",
+  "final_screening_data_used": false,
+  "plot_script_sha256": "927fc60de875732d941b140de2021695c676ed25184e1a8edba18c1a82cfdfa7",
+  "python": "3.10.20",
+  "matplotlib": "3.10.8",
+  "numpy": "1.26.4",
+  "font": "Microsoft YaHei",
+  "image": {
+    "width_pixels": 2970,
+    "height_pixels": 1980,
+    "dpi": [
+      180.00979999999998,
+      180.00979999999998
+    ],
+    "mode": "RGBA"
+  },
+  "outputs": {
+    "validation_overview.png": "1f9836c943d8534978980f723696b4ed3ea4040699d15ffc1f3f33a811d4c28e",
+    "validation_overview.pdf": "b767d4b81dbaac5a6b26cacc6b602c43d89cd447908293d258c7b355fdfb9e13",
+    "validation_overview.svg": "84c159b62e6af86ff502324701ef61e98865002c1274268c3cec6593fd5f1563"
+  }
+}
