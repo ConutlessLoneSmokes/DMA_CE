@@ -202,5 +202,6 @@ for folder, title, mode in [(probe,'原LS及LMMSE事后诊断','validate'),(coun
     (folder/'report.md').write_text('## Material Passport\n\n- Origin Skill: academic-research-suite / experiment-agent\n'
         f'- Origin Mode: {mode}\n- Origin Date: 2026-10-21\n- Verification Status: VERIFIED\n- Version Label: {folder.name}\n\n'
         f'# {title}\n\n执行配置、源码与数据哈希随目录保存。分析与适用范围见[完整复查报告](../linear_baselines_20261020_v1/report.md)。\n',encoding='utf-8')
-shutil.copyfile(__file__, main/'analysis.py')
+if Path(__file__).resolve() != (main/'analysis.py').resolve():
+    shutil.copyfile(__file__, main/'analysis.py')
 print(json.dumps({'verified_server_files':len(hashes),'new_screen_metrics':len(metrics),'report':str(main/'report.md')}))
