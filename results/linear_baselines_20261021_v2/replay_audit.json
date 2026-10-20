@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "regenerated_observation_contexts": 36,
+  "frozen_prediction_replays": 144,
+  "recomputed_metric_rows": 36864,
+  "selected_covariance_refits": 4,
+  "maximum_prediction_difference": 0.0,
+  "maximum_five_metric_difference": 0.0,
+  "maximum_refit_statistics_difference": 0.0,
+  "source_statistics_sha256": "2a776058d95594f35a7d7c57a317b706a99649aa3b126bcf06be4a3cbac03a0a",
+  "audit_source_sha256": "50a5be40d0c6476087e3653dec2e255a33e4c88e8c4f07c2c5ff4923b83449c1"
+}

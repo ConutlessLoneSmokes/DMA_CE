@@ -1,0 +1,9 @@
+{
+  "training_scenes": 6,
+  "validation_scenes": 4,
+  "screen_scenes": 4,
+  "screen_seed": 20269022,
+  "frequency_shrinkage_grid": [0.0, 0.5, 1.0],
+  "timeout_seconds": 120,
+  "implementation_only": true
+}

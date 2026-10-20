@@ -1,0 +1,8 @@
+{
+  "purpose": "posthoc baseline diagnosis, no model selection",
+  "source_run": "snr_comparison_20261020_v1",
+  "source_cache_sha256": "240081814e1090cfa8ab30852466fc20a8dffa310cd84ffa789b594fe252967f",
+  "source_statistics_sha256": "4c6be51a142cd796df189fd9dd5f1eb789192e58bfc988494c5746ef1279b2db",
+  "code_sha256": "7ed1c3c423bb62c007c14ced4db9755fa53cc5c5fe5df24751a3efaa3074eb54",
+  "old_screen_used_only_for_diagnosis": true
+}

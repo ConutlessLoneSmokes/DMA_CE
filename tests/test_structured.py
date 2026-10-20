@@ -103,6 +103,38 @@ class StructuredTests(unittest.TestCase):
         result = apply_lmmse(statistics, torch.randn(2, 2, 1, dtype=torch.complex64))
         self.assertTrue(torch.equal(result, training[:2]))
 
+    def test_frequency_shrinkage_matches_dense_covariance_mixture(self):
+        training = torch.randn(9, 3, 4, dtype=torch.complex128)
+        training[:, 1] += (1 + 2j) * training[:, 0]
+        matrix = torch.randn(3, 2, 4, dtype=training.dtype)
+        centered = training.flatten(1) - training.flatten(1).mean(0)
+        covariance = centered.T @ centered.conj() / 8
+        blocks = torch.block_diag(*(covariance[k*4:(k+1)*4, k*4:(k+1)*4] for k in range(3)))
+        operator = torch.block_diag(*matrix.unbind())
+        for strength in (0., .1, .25, .9, 1.):
+            mixed = (1 - strength) * covariance + strength * blocks
+            cross = mixed @ operator.mH
+            system = operator @ cross + .3 * torch.eye(6, dtype=training.dtype)
+            gain = cross @ torch.linalg.inv(system)
+            diagonal = (mixed - gain @ cross.mH).diagonal().real.reshape(3, 4)
+            actual = lmmse_statistics(training, matrix, .3, frequency_shrinkage=strength)
+            self.assertTrue(torch.allclose(actual["gain"], gain, atol=2e-12, rtol=2e-12))
+            self.assertTrue(torch.allclose(actual["diagonal"], diagonal, atol=2e-12, rtol=2e-12))
+            self.assertGreaterEqual(float(actual["diagonal"].min()), 0.)
+
+    def test_full_frequency_shrinkage_equals_independent_per_tone_fits(self):
+        training = torch.randn(7, 3, 4, dtype=torch.complex64)
+        matrix = torch.randn(3, 2, 4, dtype=training.dtype)
+        y = torch.randn(5, 3, 2, dtype=training.dtype)
+        stats = lmmse_statistics(training, matrix, .2, frequency_shrinkage=1.)
+        actual = apply_lmmse(stats, y)
+        expected = torch.cat([apply_lmmse(lmmse_statistics(training[:, k:k+1], matrix[k:k+1], .2),
+            y[:, k:k+1]) for k in range(3)], 1)
+        self.assertTrue(torch.equal(actual, expected))
+        for value in (-.1, 1.1, float("nan"), float("inf"), True, "0.5", None):
+            with self.assertRaises(ValueError):
+                lmmse_statistics(training, matrix, .2, frequency_shrinkage=value)
+
     def test_variance_network_initialization_and_bounded_multipliers(self):
         mean, _, _, variance, diagonal = self.gaussian(torch.complex64)
         updater = VarianceUpdate(4)

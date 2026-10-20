@@ -1,0 +1,7 @@
+{
+  "ls_orthogonal_decomposition_checks": 108,
+  "pseudoinverse_checks": 108,
+  "noise_and_formula_dtype": "complex128",
+  "elapsed_seconds": 9.127054929733276,
+  "training_cache_unchanged": true
+}

@@ -1,0 +1,12 @@
+{
+  "metrics_rows": 192,
+  "maximum_recomputed_nmse_difference": 0.0,
+  "maximum_original_statistics_difference": 1.6196978165585978e-12,
+  "ls_decomposition_checks": 48,
+  "maximum_ls_decomposition_difference": 5.684341886080802e-14,
+  "fresh_independent_geometries": 4,
+  "validation_frozen_before_screen": true,
+  "common_observation_checks": 48,
+  "statistics_and_source_cache_unchanged": true,
+  "elapsed_seconds": 2.804253101348877
+}

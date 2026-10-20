@@ -1,0 +1,15 @@
+{
+  "unit_tests": 60,
+  "unit_tests_status": "passed",
+  "command": "python -m unittest discover -s tests -v",
+  "mathematical_checks": "complex128 dense covariance mixture and per-tone equivalence",
+  "smoke_run": "linear_baselines_smoke_20261020_v2",
+  "smoke_nmse_difference": 0.0,
+  "source_files_match_archived_manifest": true,
+  "server_exports_byte_verified": 32,
+  "figures_visually_checked": [
+    "linear_baselines.png",
+    "diagnostic_checks.png"
+  ],
+  "measurement_timing": "not measured"
+}

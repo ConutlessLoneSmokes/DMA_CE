@@ -48,13 +48,15 @@ def gaussian_update(mean, matrix, observation, variance, diagonal):
 
 
 @torch.no_grad()
-def lmmse_statistics(training, matrix, variance):
-    """Joint-frequency unbiased sample covariance; caller supplies only training channels."""
+def lmmse_statistics(training, matrix, variance, *, frequency_shrinkage=0.):
+    """Training sample covariance, optionally shrunk toward its per-tone blocks."""
     if (not _complex(training, 3) or len(training) < 2 or not _complex(matrix, 3)
             or matrix.shape[0] != training.shape[1] or matrix.shape[2] != training.shape[2]
             or matrix.device != training.device or isinstance(variance, bool)
-            or not isinstance(variance, Real) or not math.isfinite(variance) or variance <= 0):
-        raise ValueError("at least two compatible finite training channels and positive noise variance required")
+            or not isinstance(variance, Real) or not math.isfinite(variance) or variance <= 0
+            or isinstance(frequency_shrinkage, bool) or not isinstance(frequency_shrinkage, Real)
+            or not math.isfinite(frequency_shrinkage) or not 0 <= frequency_shrinkage <= 1):
+        raise ValueError("compatible training channels, positive noise variance and shrinkage in [0, 1] required")
     h = training.to(torch.complex128)
     observed = torch.einsum("kjn,bkn->bkj", matrix.to(torch.complex128), h)
     mean, observed_mean = h.mean(0), observed.mean(0)
@@ -62,6 +64,13 @@ def lmmse_statistics(training, matrix, variance):
     centered_y = (observed - observed_mean).flatten(1)
     cross = centered.T @ centered_y.conj() / (len(training) - 1)
     covariance_y = centered_y.T @ centered_y.conj() / (len(training) - 1)
+    if frequency_shrinkage:
+        tone = torch.arange(h.shape[1], device=h.device)
+        observed_tone = tone.repeat_interleave(matrix.shape[1])
+        cross = cross * (1 - frequency_shrinkage * (
+            tone.repeat_interleave(h.shape[2])[:, None] != observed_tone[None]).to(h.real.dtype))
+        covariance_y = covariance_y * (1 - frequency_shrinkage * (
+            observed_tone[:, None] != observed_tone[None]).to(h.real.dtype))
     covariance_y = covariance_y + variance * torch.eye(
         covariance_y.shape[0], dtype=covariance_y.dtype, device=covariance_y.device)
     gain = torch.cholesky_solve(cross.mH, torch.linalg.cholesky(covariance_y)).mH

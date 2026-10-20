@@ -1,0 +1,13 @@
+{
+  "selected_frequency_shrinkage": {
+    "3000000000.0": 0.5,
+    "30000000000.0": 1.0
+  },
+  "selection_split": "validation",
+  "screening_used": false,
+  "frozen_at_unix": 1792511653.8139913,
+  "statistics_sha256": "7e465095ec086406e96f82c783adc81d17235b7a6100cab858a144f8009fbdf4",
+  "training_cache_sha256": "95146c3c1dca9c3774f8bdc8a97dcfc8969d8371741d18796f9b14ed41f37303",
+  "source_snr_freeze_sha256": "b127c512cdc1364d5a2e44e460c858004d7510fb8166268747faa653d4b6bd92",
+  "validation_scores_sha256": "88cdd819423d9439b20785f5bd4e27bd3173bf5a920ceb9bc294eb7d54e01a92"
+}

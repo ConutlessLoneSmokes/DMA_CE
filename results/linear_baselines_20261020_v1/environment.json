@@ -1,0 +1,20 @@
+{
+  "python": "3.10.21 (main, Aug 27 2026, 14:42:07) [GCC 14.3.0]",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "torch": "2.11.0+cu128",
+  "numpy": "1.26.4",
+  "device": "cuda",
+  "cuda": "12.8",
+  "gpu": "NVIDIA GeForce RTX 3090",
+  "command": [
+    "scripts/run_linear_baselines.py",
+    "--config",
+    "configs/linear_baselines.json",
+    "--parent",
+    "snr_comparison_20261020_v1",
+    "--run-id",
+    "linear_baselines_20261020_v1"
+  ],
+  "git_commit": "48a6094779f4a22c3894f1f0707b4f8f18c4df2a",
+  "source_zip_sha256": "dd5fcee1ea13fe3e786259305313523121e9a43d9742e52d3574be60b4659fe6"
+}

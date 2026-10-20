@@ -1,0 +1,15 @@
+{
+  "previous_run": "linear_baselines_20261020_v1",
+  "reason": "remove implicit float32 mask conversion for non-binary covariance shrinkage coefficients",
+  "same_observations_and_geometries": true,
+  "candidate_grid_and_validation_selection_rule_unchanged": true,
+  "maximum_linear_nmse_change": 2.384185791015625e-07,
+  "old_shrinkage": {
+    "3000000000.0": 0.1,
+    "30000000000.0": 0.9
+  },
+  "new_shrinkage": {
+    "3000000000.0": 0.1,
+    "30000000000.0": 0.9
+  }
+}
