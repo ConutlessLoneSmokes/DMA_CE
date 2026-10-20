@@ -25,6 +25,6 @@ if __name__ == "__main__":
         result = Study(ROOT, args.config, args.run_id, args.device, args.parent,
             args.continue_from, args.diffusion_checkpoints).run(args.stage)
     except TrainingBudgetBoundary as error:
-        print(f"Budget limited: {error}. Saved validation results and continuation state; final evaluation remains pending.", file=sys.stderr)
+        print(f"Budget limited: {error}. Validation results are saved; extend the solver/training budget in a new study before final evaluation.", file=sys.stderr)
         sys.exit(2)
     print(result)

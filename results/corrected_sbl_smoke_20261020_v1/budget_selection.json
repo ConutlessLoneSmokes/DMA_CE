@@ -1,0 +1,32 @@
+{
+  "status": "complete",
+  "selection": {
+    "architecture": "cross_frequency",
+    "loss": "condition",
+    "reliability": "none",
+    "kind": "deterministic",
+    "width": 8,
+    "steps": 6,
+    "selection": "fixed cross-frequency/condition-loss recipe; retain only the no-reliability refinement",
+    "iterations": 2,
+    "cache_id": "budget_2",
+    "mean_nmse_linear": 1.12749152071774,
+    "mean_total_ms": 6.619834373850608,
+    "candidates": [
+      {
+        "iterations": 2,
+        "cache_id": "budget_2",
+        "mean_nmse_linear": 1.12749152071774,
+        "mean_total_ms": 6.619834373850608
+      },
+      {
+        "iterations": 5,
+        "cache_id": "budget_5",
+        "mean_nmse_linear": 1.265274502336979,
+        "mean_total_ms": 9.44544687627058
+      }
+    ],
+    "rule": "least measured total amortized time within declared dB tolerance of the best validation refinement"
+  },
+  "completed_at_unix": 1792463147.5643177
+}

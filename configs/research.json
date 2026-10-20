@@ -1,5 +1,5 @@
 {
-  "label": "five_step_validation_selected_study",
+  "label": "bounded_corrected_sbl_single_refinement",
   "seed": 20261016,
   "device": "cuda",
   "timeout_seconds": 604800,
@@ -25,7 +25,7 @@
     "include_absorption": false
   },
   "data": {"train": 512, "validation": 64, "screen": 128, "screen_seed": 20261018},
-  "sbl": {"angle_points": 49, "range_points": 7, "iterations": 1000, "tolerance": 0.001, "batch_size": 16},
+  "sbl": {"angle_points": 49, "range_points": 7, "iterations": 1000, "tolerance": 0.001, "batch_size": 16, "early_stopping": false},
   "learning": {
     "steps": 2000,
     "batch_size": 32,
@@ -34,7 +34,7 @@
     "diffusion_steps": 100,
     "sampling_steps": 20,
     "log_every": 500,
-    "variants": ["deterministic_no_reliability", "deterministic"]
+    "variants": ["deterministic_no_reliability"]
   },
   "evaluation": {
     "batch_size": 32,
@@ -55,18 +55,14 @@
       {"name": "coarse", "angle_points": 49, "range_points": 7},
       {"name": "dense", "angle_points": 97, "range_points": 13}
     ],
-    "baseline_iterations": [1000, 2000, 4000, 8000],
+    "baseline_iterations": [1000, 2000, 4000, 8000, 16000],
     "stability": {"overall_convergence": 0.95, "context_convergence": 0.9, "nmse_db": 0.1, "variance_relative": 0.05},
     "sbl_budgets": [100, 300, 500, 1000],
     "accuracy_tolerance_db": 0.1,
     "averages": [1, 4, 16],
-    "expansions": [
-      {"name": "n128_k32", "antennas": 128, "tones": 32},
-      {"name": "n128_k128", "antennas": 128, "tones": 128}
-    ],
+    "expansions": [],
     "mismatches": [
-      {"name": "paths5", "channel": {"paths": 5}},
-      {"name": "range_shift", "channel": {"range_min_m": 0.2, "range_max_m": 0.6}}
+      {"name": "paths5", "channel": {"paths": 5}}
     ],
     "communication": {"coherence_symbols": 200, "switch_symbols": 0.1}
   }

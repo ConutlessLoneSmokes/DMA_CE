@@ -13,38 +13,42 @@
 ```text
 python -m pip install -e .
 python -m unittest discover -s tests -v
-python scripts/run_experiment.py --config configs/smoke.json --run-id smoke_001
-python scripts/run_experiment.py --config configs/pilot.json --run-id pilot_001
-python scripts/audit_experiment.py pilot_001
-python scripts/diagnose_validation.py pilot_001 validation_probe_001
-python scripts/select_sbl_budget.py pilot_001 budget_001
-python scripts/run_experiment.py --config configs/deterministic.json --run-id deterministic_001
-python scripts/audit_experiment.py deterministic_001
 ```
 
 每个运行ID只能创建一次；新实验使用新ID。运行保存在被Git忽略的 runs/；紧凑逐场景指标、图和报告另保存 results/，可提交到私有研究仓库。
 
 第二轮的控制变量、迭代预算选择规则与新筛选集安排见[实验预声明](docs/SECOND_STAGE_PLAN.md)。
 
-五步后续实验已提供分阶段入口，包括字典/迭代、训练预算、结构与损失、可靠度、扩散、规模和通信验证。完整说明与服务器命令见[RESEARCH_STUDY.md](docs/RESEARCH_STUDY.md)。
+当前比较保持±60°和0.1–0.4 m范围，使用修正后的SBL，并只保留无可靠度确定性精修。完整说明与服务器命令见[RESEARCH_STUDY.md](docs/RESEARCH_STUDY.md)，求解与收敛依据见[SBL_SOLVER.md](docs/SBL_SOLVER.md)。
 
 ```text
-python scripts/run_research.py --config configs/research_smoke.json --run-id research_smoke_001
-python scripts/audit_research.py research_smoke_001
-python scripts/run_research.py --config configs/research.json --run-id research_001
-python scripts/audit_research.py research_001
+python scripts/run_research.py --config configs/research_smoke.json --run-id server_smoke_20261020
+python scripts/audit_research.py server_smoke_20261020
+python scripts/run_research.py --config configs/research.json --run-id research_003 --stage baseline
 ```
 
-已有 `research_001` 的扩散训练到达预算边界时，用新 ID 保留前五阶段并恢复原优化器与随机状态：
+基线通过后，同一ID运行完整比较：
 
 ```text
-python scripts/run_research.py --continue-from research_001 --diffusion-checkpoints 30000 40000 --run-id research_002 --stage diffusion
-python scripts/audit_research.py research_002 --validation-only
+python scripts/run_research.py --config configs/research.json --run-id research_003
+```
+
+旧 `research_001/002` 使用原SBL，不作为本版本的续训父运行。新 `research_003` 若在扩散预算边界停止，可在新ID恢复它的优化器与随机状态：
+
+```text
+python scripts/run_research.py --continue-from research_003 --diffusion-checkpoints 30000 40000 --run-id research_004 --stage diffusion
+python scripts/audit_research.py research_004 --validation-only
 ```
 
 新增步骤使用原余弦日程的末端学习率0.0001。验证审计的 `ready_for_final=true` 后可运行 `final`；完整命令和继续延长的方法见[服务器续训说明](docs/RESEARCH_STUDY.md)。
 
 ## 结果状态
+
+2026-10-20：SBL采用同一边缘似然目标的凸上界更新，以归一化一阶条件检查收敛；预算比较强制执行全部更新。确定性只保留无可靠度版本，跳过方差输入变换。[本轮39项检查及完整短流程](results/corrected_sbl_smoke_20261020_v1/report.md)通过，4,032条指标、12次模型重放均一致。正式配置暂缓尺寸扩展和范围偏移，先在原范围重建缓存、训练和比较。
+
+[原SBL排序异常诊断](results/sbl_dictionary_diagnostic_20261019_v1/report.md)确认原单步变化阈值会提前停止。以下历史性能数值均对应原SBL；修正后增益需重新核实。
+
+[修正后的固定观测复查](results/sbl_corrected_probe_20261020_v1/report.md)使用原两个验证几何和四种条件。8,000次更新后全部16个粗/密输出通过一阶条件，密字典比粗字典改善0.455–1.499 dB。4,000到8,000次的条件均值变化最多0.00196 dB。完整64几何和精修模型重训练由新服务器运行核实。
 
 [research_002验证集总览](results/research_002_overview_20261019_v1/report.md)已绘制为一张四联图，提供PNG/PDF/SVG和可复现数据。32×32系统下，标量可靠度确定性精修比粗字典SBL改善0.888 dB；最佳扩散平均16次后改善0.352 dB，但在30 GHz的4种条件均弱于SBL。结果来自64个验证几何和3个训练初始化，最终阶段另用新初始化与筛选几何评价。
 

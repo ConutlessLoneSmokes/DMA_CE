@@ -34,12 +34,14 @@ class ConditionalCNN(DenoisingCNN):
 def reliability_features(diagonal, cache, mode="map"):
     if mode not in ("none", "scalar", "map"):
         raise ValueError("unknown reliability representation")
+    if mode == "none":
+        return diagonal.new_zeros((len(diagonal), 1, diagonal.shape[-1], diagonal.shape[-2]))
     if mode == "scalar":
         diagonal = diagonal.mean((-1, -2), keepdim=True).expand_as(diagonal)
     value = (diagonal * cache["reliability_scale"]).clamp_min(1e-10).log10()
     value = (value - cache["reliability_log_mean"]) / cache["reliability_log_std"]
     image = value.transpose(-1, -2)[:, None].contiguous()
-    return torch.zeros_like(image) if mode == "none" else image
+    return image
 
 
 def make_bundle(entries, cache, device):

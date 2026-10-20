@@ -1,0 +1,18 @@
+{
+  "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.26300-SP0",
+  "torch": "2.11.0+cu128",
+  "numpy": "1.26.4",
+  "device": "cuda",
+  "cuda": "12.8",
+  "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+  "command": [
+    ".\\scripts\\run_research.py",
+    "--config",
+    ".\\configs\\research_smoke.json",
+    "--run-id",
+    "corrected_sbl_smoke_20261020_v1"
+  ],
+  "git_commit": "a77d5d15f1b1ca48726bfdddfe0ec6da549201f2",
+  "source_zip_sha256": "95b35bbe5ac4e96d8c7bb26d96ec46f2d29afe38677000f3e1ca0b716bc63ee8"
+}

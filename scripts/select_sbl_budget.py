@@ -16,6 +16,7 @@ import torch
 from dma_ce.data import build_hardware, sync
 from dma_ce.experiment import file_hash, nmse, write_csv, write_json
 from dma_ce.sbl import joint_sbl
+from dma_ce.suite import stable_budget
 
 
 def select(parent_id, run_id):
@@ -26,7 +27,7 @@ def select(parent_id, run_id):
     settings = {"parent": parent_id, "split": "validation", "budgets": [500, 1000, 2000, 4000],
         "minimum_overall_convergence": .95, "minimum_context_convergence": .90,
         "maximum_nmse_change_db": .1, "maximum_variance_relative_change": .05,
-        "parent_config": config, "parent_data_sha256": file_hash(parent / "data.pt")}
+        "parent_config": config, "parent_data_sha256": file_hash(parent / "data.pt"), "early_stopping": False}
     run.mkdir(parents=True, exist_ok=False)
     export.mkdir(parents=True, exist_ok=False)
     write_json(run / "config_resolved.json", settings)
@@ -69,7 +70,8 @@ def select(parent_id, run_id):
                 for start in range(0, len(entry["truth"]), config["sbl"]["batch_size"]):
                     stop = start + config["sbl"]["batch_size"]
                     mean, variance, info = joint_sbl(entry["observation"][start:stop].to(device), sensing, dictionary,
-                        entry["variance"][start:stop].to(device), iterations=budget, tolerance=config["sbl"]["tolerance"])
+                        entry["variance"][start:stop].to(device), iterations=budget, tolerance=config["sbl"]["tolerance"],
+                        early_stopping=False)
                     estimates.append(mean.cpu()); variances.append(variance.cpu())
                     converged.append(info["converged"].cpu()); iterations.append(info["iterations"].cpu())
                 values = nmse(entry["truth"], torch.cat(estimates))
@@ -78,6 +80,7 @@ def select(parent_id, run_id):
                 row = {"budget": budget, "context": index, "samples": len(values),
                     "mean_nmse_db": float(10 * values.mean().log10()),
                     "convergence_rate": float(flags.float().mean()), "mean_variance": float(diagonal.mean()),
+                    "full_budget_executed": bool((counts == budget).all()),
                     "mean_iterations": float(counts.float().mean()), "maximum_iterations": int(counts.max())}
                 current.append(row); summary.append(row)
                 rows.extend({"budget": budget, "context": index, "scene": scene,
@@ -88,15 +91,11 @@ def select(parent_id, run_id):
                     stream.write(json.dumps(event) + "\n")
                 print(json.dumps(event), flush=True)
             if previous is not None:
-                max_nmse_change = max(abs(a["mean_nmse_db"] - b["mean_nmse_db"]) for a, b in zip(current, previous))
-                max_variance_change = max(abs(a["mean_variance"] / b["mean_variance"] - 1) for a, b in zip(current, previous))
-                if (np.mean([x["convergence_rate"] for x in previous]) >= .95
-                        and min(x["convergence_rate"] for x in previous) >= .90
-                        and max_nmse_change <= .1 and max_variance_change <= .05):
+                passed, changes = stable_budget(previous, current, {"overall_convergence": .95,
+                    "context_convergence": .90, "nmse_db": .1, "variance_relative": .05})
+                if passed:
                     selection = {"selected_iterations": previous[0]["budget"], "checked_against": budget,
-                        "maximum_nmse_change_db": max_nmse_change, "maximum_variance_relative_change": max_variance_change,
-                        "overall_convergence": float(np.mean([x["convergence_rate"] for x in previous])),
-                        "minimum_context_convergence": min(x["convergence_rate"] for x in previous)}
+                        **changes}
                     break
             previous = current
         write_csv(export / "metrics.csv", rows)

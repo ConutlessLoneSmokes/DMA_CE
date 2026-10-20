@@ -73,7 +73,8 @@ def diagnose(parent_id, run_id):
             assert torch.equal(hardware[band]["matrix"][:, :context["configurations"]], context["matrix"])
             sensing = context["matrix"].to(device) @ dictionary
             mean, variance, info = joint_sbl(subset["observation"].to(device), sensing, dictionary,
-                subset["variance"].to(device), iterations=500, tolerance=config["sbl"]["tolerance"])
+                subset["variance"].to(device), iterations=500, tolerance=config["sbl"]["tolerance"],
+                early_stopping=config["sbl"].get("early_stopping", True))
             mean = mean.cpu()
             methods = {"sbl_100": subset["coarse"], "sbl_500": mean}
             total = torch.zeros_like(subset["coarse"])

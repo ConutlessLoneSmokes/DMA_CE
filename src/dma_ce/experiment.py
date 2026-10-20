@@ -43,7 +43,8 @@ def validate_config(config):
             or not grid or not all(np.isfinite(grid)) or min(grid) < 0
             or type(config["data"].get("screen_seed", config["seed"])) is not int
             or config["data"].get("screen_seed", config["seed"]) < 0
-            or type(config["evaluation"].get("correct_coarse", False)) is not bool):
+            or type(config["evaluation"].get("correct_coarse", False)) is not bool
+            or type(config["sbl"].get("early_stopping", True)) is not bool):
         raise ValueError("invalid model controls, correction grid, or screening seed")
     if (system["antennas"] < 4 or system["tones"] < 4 or not system["configurations"]
             or any(type(j) is not int or not 1 <= j <= system["antennas"] for j in system["configurations"])
@@ -130,7 +131,7 @@ def metric_rows(config, entry, context, estimate, method, refine_ms, network_cal
     if not torch.allclose(errors, row_errors + null_errors, atol=2e-4, rtol=2e-4):
         raise AssertionError("row/null error decomposition failed")
     for scene in range(len(truth)):
-        yield {"scene": scene, "context": entry["context_index"], "method": method,
+        row = {"scene": scene, "context": entry["context_index"], "method": method,
             "bandwidth_hz": context["bandwidth_hz"], "configurations": context["configurations"],
             "pilot_re": context["pilot_re"], "snr_db": context["snr_db"],
             "realized_snr_db": float(entry["realized_snr_db"][scene]),
@@ -145,6 +146,11 @@ def metric_rows(config, entry, context, estimate, method, refine_ms, network_cal
             "coarse_batch_ms_per_sample": entry["coarse_ms_per_sample"],
             "refine_batch_ms_per_sample": refine_ms,
             "network_calls": network_calls}
+        if "sbl_optimality_residual" in entry:
+            row.update(sbl_optimality_residual=float(entry["sbl_optimality_residual"][scene]),
+                sbl_objective_per_tone=float(entry["sbl_objective_per_tone"][scene]),
+                sbl_solver=entry["sbl_solver"], sbl_early_stopping=entry["sbl_early_stopping"])
+        yield row
 
 
 def write_csv(path, rows):

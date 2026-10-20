@@ -1,0 +1,67 @@
+test_coefficient_only_posterior_preserves_moments (test_core.CoreTests) ... ok
+test_config_and_run_path_boundary (test_core.CoreTests) ... ok
+test_consistency_reduces_observation_residual (test_core.CoreTests) ... ok
+test_ddim_analytical_denoiser_recovers_its_target (test_core.CoreTests) ... ok
+test_deterministic_zero_reliability_control (test_core.CoreTests) ... ok
+test_more_noise_increases_gaussian_uncertainty (test_core.CoreTests) ... ok
+test_negative_noise_is_rejected (test_core.CoreTests) ... ok
+test_new_screen_seed_preserves_training_and_validation (test_core.CoreTests) ... ok
+test_posterior_matches_dense_channel_conditioning (test_core.CoreTests) ... ok
+test_reliability_uses_frozen_training_constants (test_core.CoreTests) ... ok
+test_same_sampler_seed_and_capacity (test_core.CoreTests) ... ok
+test_sbl_evidence_decreases_and_forced_budgets_really_execute (test_core.CoreTests) ... ok
+test_sbl_is_unchanged_by_four_identical_column_copies (test_core.CoreTests) ... ok
+test_sbl_matches_analytic_independent_component_optimum (test_core.CoreTests) ... ok
+test_sbl_recovers_a_sparse_observed_channel (test_core.CoreTests) ... ok
+test_sbl_rejects_invalid_budgets_and_unobservable_system (test_core.CoreTests) ... ok
+test_scene_splits_and_complex_layout (test_core.CoreTests) ... ok
+test_shared_tuning_produces_frequency_diversity (test_core.CoreTests) ... ok
+test_spherical_response_has_far_field_limit (test_core.CoreTests) ... ok
+test_upstream_provenance (test_core.CoreTests) ... ok
+test_validation_can_select_no_observation_correction (test_core.CoreTests) ... ok
+test_calibration_exceeds_torch_quantile_element_limit (test_research.ResearchTests) ... ok
+test_condition_loss_equalizes_training_residual_energy (test_research.ResearchTests) ... ok
+test_continuation_is_independent_resumable_and_validation_auditable (test_research.ResearchTests) ... ok
+test_continuation_rejects_legacy_sbl_cache (test_research.ResearchTests) ... ok
+test_continuation_rejects_screening_changed_budget_and_missing_optimizer (test_research.ResearchTests) ... ok
+test_crossed_bootstrap_keeps_geometry_conditions_paired (test_research.ResearchTests) ... ok
+test_diffusion_extension_preserves_prefix_optimizer_rng_and_logs (test_research.ResearchTests) ... ok
+test_fresh_mismatch_uses_training_scale_noise_and_states (test_research.ResearchTests) ... ok
+test_latest_interval_and_budget_limited_status (test_research.ResearchTests) ... ok
+test_parent_cache_reuse_and_physical_mismatch_rejection (test_research.ResearchTests) ... ok
+test_per_tone_has_no_cross_frequency_dependency (test_research.ResearchTests) ... ok
+test_rate_uses_one_shared_state_and_pilot_overhead (test_research.ResearchTests) ... ok
+test_reestimation_preserves_observations_and_recalibrates_on_train (test_research.ResearchTests) ... ok
+test_scalar_averages_variance_before_log (test_research.ResearchTests) ... ok
+test_server_and_smoke_configuration_boundaries (test_research.ResearchTests) ... ok
+test_single_refinement_policy_needs_no_ablation_training (test_research.ResearchTests) ... ok
+test_stability_requires_convergence_and_moment_stability (test_research.ResearchTests) ... ok
+test_training_prefix_and_resume_are_exact (test_research.ResearchTests) ... ok
+
+----------------------------------------------------------------------
+Ran 39 tests in 19.549s
+
+OK
+{
+  "status": "passed",
+  "scope": "validation_only",
+  "ready_for_final": true,
+  "diffusion_status": "complete",
+  "source_archive_verified": true,
+  "continuation_verified": true,
+  "data_caches_verified": 1,
+  "diffusion_checkpoints_replayed": 10,
+  "validation_metrics_recomputed": 320,
+  "maximum_metric_difference": 0.0,
+  "last_interval_improvement_db": 0.000603794980073896,
+  "training_only_calibration": true,
+  "training_validation_geometry_disjoint": true,
+  "screening_data_read": false
+}
+{
+  "status": "not_ready",
+  "incomplete_stages": [
+    "final"
+  ],
+  "message": "Use --validation-only after diffusion completes or reaches its declared budget boundary."
+}

@@ -1,0 +1,86 @@
+{
+  "status": "complete",
+  "selection": {
+    "selected": {
+      "mode": "none",
+      "steps": 6,
+      "average": 16,
+      "mean_nmse_linear": 1.6796725410968065,
+      "mean_total_ms": 56.88391875173693
+    },
+    "candidates": [
+      {
+        "mode": "none",
+        "steps": 2,
+        "average": 1,
+        "mean_nmse_linear": 9.500222392380238,
+        "mean_total_ms": 8.331590624493401
+      },
+      {
+        "mode": "none",
+        "steps": 2,
+        "average": 4,
+        "mean_nmse_linear": 3.5520354993641376,
+        "mean_total_ms": 17.16537499896731
+      },
+      {
+        "mode": "none",
+        "steps": 2,
+        "average": 16,
+        "mean_nmse_linear": 1.6842786949127913,
+        "mean_total_ms": 51.623731246309035
+      },
+      {
+        "mode": "none",
+        "steps": 4,
+        "average": 1,
+        "mean_nmse_linear": 9.498320370912552,
+        "mean_total_ms": 8.361365624296013
+      },
+      {
+        "mode": "none",
+        "steps": 4,
+        "average": 4,
+        "mean_nmse_linear": 3.5488782711327076,
+        "mean_total_ms": 16.68497812579517
+      },
+      {
+        "mode": "none",
+        "steps": 4,
+        "average": 16,
+        "mean_nmse_linear": 1.6810649950057268,
+        "mean_total_ms": 49.2326250023325
+      },
+      {
+        "mode": "none",
+        "steps": 6,
+        "average": 1,
+        "mean_nmse_linear": 9.497401110827923,
+        "mean_total_ms": 8.584640624576423
+      },
+      {
+        "mode": "none",
+        "steps": 6,
+        "average": 4,
+        "mean_nmse_linear": 3.5475102439522743,
+        "mean_total_ms": 18.57760000075359
+      },
+      {
+        "mode": "none",
+        "steps": 6,
+        "average": 16,
+        "mean_nmse_linear": 1.6796725410968065,
+        "mean_total_ms": 56.88391875173693
+      }
+    ],
+    "best_at_largest_budget": true,
+    "last_interval_improvement_db": 0.003598823633545905,
+    "interval_steps": [
+      4,
+      6
+    ],
+    "learning_rate_horizon": 6,
+    "deterministic_validation_mean_nmse_linear": 1.12749152071774
+  },
+  "completed_at_unix": 1792463153.737018
+}

@@ -10,6 +10,7 @@ import torch
 
 from .experiment import file_hash, write_json
 from .research import checkpoint_budgets, digest, recipe
+from .sbl import SOLVER_VERSION
 
 
 FROZEN_STAGES = ("baseline", "curves", "factorial", "reliability", "budget")
@@ -74,6 +75,9 @@ def plan_continuation(root, parent_id, added):
             raise ValueError(f"parent cache hash mismatch: {meta.name}")
     chosen = json.loads((parent / "stages" / "budget.json").read_text())["selection"]
     cache_hash = json.loads((parent / "cache" / f"{chosen['cache_id']}.json").read_text())["sha256"]
+    cache = torch.load(parent / "cache" / f"{chosen['cache_id']}.pt", map_location="cpu", weights_only=True)
+    if any(entry.get("sbl_solver") != SOLVER_VERSION for split in ("train", "validation") for entry in cache["splits"][split]):
+        raise ValueError("parent uses an older SBL solver; rebuild baselines and refinements in a new study")
     origins = []
     for mode in sorted({"none", chosen["reliability"]}):
         spec = recipe(config, chosen["architecture"], chosen["loss"], mode, "diffusion")

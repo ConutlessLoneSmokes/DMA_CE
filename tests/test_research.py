@@ -52,6 +52,7 @@ class ResearchTests(unittest.TestCase):
         actual = reliability_features(diagonal, constants, "scalar")
         self.assertTrue(torch.allclose(actual, torch.full_like(actual, np.log10(5))))
         self.assertEqual(float(reliability_features(diagonal, constants, "none").abs().max()), 0.)
+        self.assertTrue(torch.equal(reliability_features(diagonal, {}, "none"), torch.zeros(1, 1, 2, 2)))
 
     def test_condition_loss_equalizes_training_residual_energy(self):
         entries = [{"truth": torch.ones(2, 2, 2) * value, "coarse": torch.zeros(2, 2, 2)} for value in (1., 4.)]
@@ -68,6 +69,9 @@ class ResearchTests(unittest.TestCase):
             for a, b in zip(changed["splits"][split], self.cache["splits"][split]):
                 for key in ("truth", "observation", "variance"):
                     self.assertTrue(torch.equal(a[key], b[key]))
+                self.assertFalse(a["sbl_early_stopping"])
+                self.assertTrue((a["sbl_iterations"] == 10).all())
+                self.assertIn("sbl_optimality_residual", a)
         train = changed["splits"]["train"]
         errors = torch.stack([(e["truth"] - e["coarse"]).abs().square().mean() for e in train]).mean()
         predicted = torch.stack([e["reliability"].mean() for e in train]).mean()
@@ -267,6 +271,21 @@ class ResearchTests(unittest.TestCase):
                 Study(root, None, "no_optimizer", continue_from="parent", diffusion_checkpoints=[8])
             self.assertFalse((root / "runs/no_optimizer").exists())
 
+    def test_continuation_rejects_legacy_sbl_cache(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            parent = self.continuation_parent(root)
+            path = parent.path / "cache/base_stable.pt"
+            cache = torch.load(path, weights_only=True)
+            cache["splits"]["train"][0].pop("sbl_solver")
+            torch.save(cache, path)
+            meta = json.loads(path.with_suffix(".json").read_text())
+            meta["sha256"] = file_hash(path)
+            write_json(path.with_suffix(".json"), meta)
+            with self.assertRaisesRegex(ValueError, "older SBL solver"):
+                Study(root, None, "legacy", continue_from="parent", diffusion_checkpoints=[8])
+            self.assertFalse((root / "runs/legacy").exists())
+
     def test_latest_interval_and_budget_limited_status(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -293,11 +312,23 @@ class ResearchTests(unittest.TestCase):
             self.assertTrue((study.export / "report.md").exists())
 
     def test_stability_requires_convergence_and_moment_stability(self):
-        a = [{"mean_nmse_db": -10., "mean_variance": .2, "convergence_rate": .99}]
+        a = [{"mean_nmse_db": -10., "mean_variance": .2, "convergence_rate": .99, "full_budget_executed": True}]
         limits = {"nmse_db": .1, "variance_relative": .05, "overall_convergence": .95, "context_convergence": .9}
         self.assertTrue(stable_budget(a, a, limits)[0])
         self.assertFalse(stable_budget([{**a[0], "convergence_rate": .8}], a, limits)[0])
         self.assertFalse(stable_budget(a, [{**a[0], "mean_variance": .3}], limits)[0])
+        self.assertFalse(stable_budget(a, [{**a[0], "convergence_rate": .8}], limits)[0])
+        self.assertFalse(stable_budget(a, [{**a[0], "full_budget_executed": False}], limits)[0])
+
+    def test_single_refinement_policy_needs_no_ablation_training(self):
+        study = Study.__new__(Study)
+        study.config = self.config
+        study.result = lambda stage: {"steps": 6}
+        policy = study.factorial()
+        self.assertEqual((policy["architecture"], policy["loss"], policy["reliability"]),
+            ("cross_frequency", "condition", "none"))
+        study.result = lambda stage: policy
+        self.assertEqual(study.reliability(), policy)
 
     def test_crossed_bootstrap_keeps_geometry_conditions_paired(self):
         rows = [{"method": method, "seed": seed, "scene": scene, "context": context,
@@ -309,7 +340,14 @@ class ResearchTests(unittest.TestCase):
 
     def test_server_and_smoke_configuration_boundaries(self):
         validate_study(self.config)
-        validate_study(json.loads((ROOT / "configs/research.json").read_text()))
+        server = json.loads((ROOT / "configs/research.json").read_text())
+        validate_study(server)
+        self.assertEqual(server["channel"], {"paths": 3, "range_min_m": .1,
+            "range_max_m": .4, "angle_limit_deg": 60., "include_absorption": False})
+        self.assertFalse(server["sbl"]["early_stopping"])
+        self.assertEqual(server["research"]["expansions"], [])
+        self.assertTrue(all(not {"range_min_m", "range_max_m", "angle_limit_deg"}.intersection(x["channel"])
+            for x in server["research"]["mismatches"]))
         changed = copy.deepcopy(self.config)
         changed["research"]["final_seeds"] = changed["research"]["training_seeds"]
         with self.assertRaises(ValueError):

@@ -9,7 +9,7 @@ import torch
 from ._upstream.atmosphere import C0_M_PER_S, free_space_amplitude
 from ._upstream.geometry import ofdm_frequencies, ula_positions, los_element_channel, rayleigh_distance_m
 from ._upstream.dma import dma_weight_matrix
-from .sbl import joint_sbl
+from .sbl import SOLVER_VERSION, joint_sbl
 
 
 def encode(channel):
@@ -87,21 +87,26 @@ CALIBRATION_KEYS = ("reliability_scale", "residual_real_scale", "dc_reference_co
 def estimate_entry(entry, context, dictionary, settings, device, log):
     if (type(settings["iterations"]) is not int or settings["iterations"] < 1
             or type(settings["batch_size"]) is not int or settings["batch_size"] < 1
-            or not np.isfinite(settings["tolerance"]) or settings["tolerance"] <= 0):
+            or not np.isfinite(settings["tolerance"]) or settings["tolerance"] <= 0
+            or type(settings.get("early_stopping", True)) is not bool):
         raise ValueError("positive SBL iterations, batch size and finite tolerance required")
     sensing = context["matrix"].to(device) @ dictionary
-    output = {key: [] for key in ("coarse", "reliability", "sbl_iterations", "sbl_converged", "sbl_relative_change")}
+    output = {key: [] for key in ("coarse", "reliability", "sbl_iterations", "sbl_converged", "sbl_relative_change",
+        "sbl_optimality_residual", "sbl_objective_per_tone")}
     sync(device)
     started = time.perf_counter()
     for start in range(0, len(entry["observation"]), settings["batch_size"]):
         stop = start + settings["batch_size"]
         mean, diagonal, info = joint_sbl(entry["observation"][start:stop].to(device), sensing, dictionary,
-            entry["variance"][start:stop].to(device), iterations=settings["iterations"], tolerance=settings["tolerance"])
-        for key, value in zip(output, (mean, diagonal, info["iterations"], info["converged"], info["relative_change"])):
+            entry["variance"][start:stop].to(device), iterations=settings["iterations"], tolerance=settings["tolerance"],
+            early_stopping=settings.get("early_stopping", True))
+        for key, value in zip(output, (mean, diagonal, info["iterations"], info["converged"], info["relative_change"],
+                info["optimality_residual"], info["objective_per_tone"])):
             output[key].append(value.cpu())
         log("coarse_batch", context=entry["context_index"], completed=min(stop, len(entry["observation"])))
     sync(device)
     return {**entry, **{key: torch.cat(values) for key, values in output.items()},
+        "sbl_solver": SOLVER_VERSION, "sbl_early_stopping": settings.get("early_stopping", True),
         "coarse_ms_per_sample": (time.perf_counter() - started) * 1000 / len(entry["observation"])}
 
 

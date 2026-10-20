@@ -1,0 +1,183 @@
+{
+  "status": "complete",
+  "metrics_rows": 448,
+  "scenario": {
+    "name": "paths3",
+    "channel": {
+      "paths": 3
+    }
+  },
+  "test_config": {
+    "label": "corrected_sbl_single_refinement_smoke_implementation_only",
+    "seed": 20261018,
+    "device": "cuda",
+    "timeout_seconds": 1800,
+    "system": {
+      "carrier_hz": 300000000000.0,
+      "bandwidths_hz": [
+        3000000000.0,
+        30000000000.0
+      ],
+      "antennas": 16,
+      "tones": 8,
+      "spacing_wavelengths": 0.5,
+      "configurations": [
+        2,
+        4
+      ],
+      "snrs_db": [
+        10.0
+      ],
+      "quality_factor": 50.0,
+      "tuning_bandwidth_hz": 30000000000.0,
+      "waveguide_effective_index": 1.4,
+      "waveguide_end_power_fraction": 0.8,
+      "rf_noise_fraction": 0.05
+    },
+    "channel": {
+      "paths": 3,
+      "range_min_m": 0.022959183673469385,
+      "range_max_m": 0.09183673469387754,
+      "angle_limit_deg": 60.0,
+      "include_absorption": false
+    },
+    "data": {
+      "train": 6,
+      "validation": 4,
+      "screen": 4,
+      "screen_seed": 20261120
+    },
+    "sbl": {
+      "angle_points": 5,
+      "range_points": 2,
+      "iterations": 2,
+      "tolerance": 0.001,
+      "batch_size": 2,
+      "early_stopping": false
+    },
+    "learning": {
+      "steps": 2,
+      "batch_size": 2,
+      "width": 8,
+      "learning_rate": 0.001,
+      "diffusion_steps": 10,
+      "sampling_steps": 3,
+      "log_every": 2,
+      "variants": [
+        "deterministic_no_reliability"
+      ]
+    },
+    "evaluation": {
+      "batch_size": 2,
+      "dc_multipliers": [
+        0.0,
+        0.1,
+        1.0
+      ],
+      "bootstrap_samples": 50,
+      "dc_selection_model": "deterministic_no_reliability",
+      "correct_coarse": true
+    },
+    "research": {
+      "training_seeds": [
+        101,
+        102
+      ],
+      "final_seeds": [
+        201,
+        202
+      ],
+      "shuffle_seeds": [
+        301,
+        302
+      ],
+      "checkpoints": [
+        2,
+        4,
+        6
+      ],
+      "eval_every": 2,
+      "training_stability_db": 100.0,
+      "train_curve_samples": 4,
+      "grids": [
+        {
+          "name": "coarse",
+          "angle_points": 5,
+          "range_points": 2
+        },
+        {
+          "name": "dense",
+          "angle_points": 9,
+          "range_points": 3
+        }
+      ],
+      "baseline_iterations": [
+        5,
+        10
+      ],
+      "stability": {
+        "overall_convergence": 0.0,
+        "context_convergence": 0.0,
+        "nmse_db": 100.0,
+        "variance_relative": 100.0
+      },
+      "sbl_budgets": [
+        2,
+        5
+      ],
+      "accuracy_tolerance_db": 0.1,
+      "averages": [
+        1,
+        4,
+        16
+      ],
+      "expansions": [
+        {
+          "name": "n16_k8",
+          "antennas": 16,
+          "tones": 8
+        },
+        {
+          "name": "n16_k16",
+          "antennas": 16,
+          "tones": 16
+        }
+      ],
+      "mismatches": [
+        {
+          "name": "paths3",
+          "channel": {
+            "paths": 3
+          }
+        },
+        {
+          "name": "range_shift",
+          "channel": {
+            "range_min_m": 0.01,
+            "range_max_m": 0.03
+          }
+        }
+      ],
+      "communication": {
+        "coherence_symbols": 40,
+        "switch_symbols": 0.1
+      }
+    }
+  },
+  "observation_file_sha256": "c87b8b7fa451e1c0fe717fd3917380a8320de0f88ac92f0ea24cdf7664787b6f",
+  "geometry_hashes": {
+    "screen": "74f0509a068c187950257646abfe94bb3cffe171011761ea2671b01372275ea2"
+  },
+  "prediction_sha256": {
+    "n16_k8_paths3_deterministic_none_201.pt": "571dc5fddbffa781b5b58ffd2fc33be910505abeb9a1951cb74686d72f85ce93",
+    "n16_k8_paths3_deterministic_none_202.pt": "03475ad886b30572da34cffc3e43e6c8e90de42677e415051bfc610061d74947",
+    "n16_k8_paths3_diffusion_none_201.pt": "ba8969f1843c5296bb0e1cf18462bc214e9cf849ed2a39689067b9e105a12ab8",
+    "n16_k8_paths3_diffusion_none_202.pt": "88eecd9c7106e7041608f7491db151a371559b62030063f00319508f661a5f86",
+    "n16_k8_paths3_sbl_budget.pt": "6838ecc1846e3df77696b53909e630092fa9daeff0168ab85c4cae6629ce0666",
+    "n16_k8_paths3_sbl_stable.pt": "fe5cce5ae44ba1c03bebbd56f95c29788e2954913332e1520f62217c893221b3",
+    "n16_k8_paths3_sbl_dense.pt": "e9186a4e72957f33f5221399629d7b7aaece1f72ca59e02900dce90687c64fb0"
+  },
+  "frozen_validation_sha256": "8c86947fd4fa9fdfe3411387496ce85ad7b0970ff8cca441e40239f5201ca3ab",
+  "scored_at_unix": 1792463171.7115583,
+  "communication": "single-user, one RF chain, one shared feasible state chosen from the J pilot states; training plus switching overhead"
+}

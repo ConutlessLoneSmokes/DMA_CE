@@ -1,0 +1,25 @@
+{
+  "source_archive_and_current_source_hashes_match": true,
+  "original_observation_hash_pairs": 16,
+  "original_output_replays": 32,
+  "duplicate_output_replays": 4,
+  "forced_trace_rows": 140,
+  "source_files_checked": 26,
+  "maximum_original_replay_difference": 4.053554221172817e-06,
+  "all_four_condition_rankings_reversed": true,
+  "aggregation": "mean linear NMSE over the same two geometries, then 10 log10",
+  "duplicate_context_3": {
+    "coarse": {
+      "default_db": -18.243735310673195,
+      "forced_8000_db": -19.495152291590912
+    },
+    "coarse_four_identical_copies": {
+      "default_db": -14.053589290306427,
+      "forced_8000_db": -19.574536985838883
+    },
+    "dense": {
+      "default_db": -16.607566339480762,
+      "forced_8000_db": -20.566089036784312
+    }
+  }
+}

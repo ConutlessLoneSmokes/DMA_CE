@@ -1,0 +1,54 @@
+{
+  "nested_grids": [
+    {
+      "context": 0,
+      "nested_max_abs_difference": 0.0,
+      "matrix_max_abs_difference": 0.0
+    },
+    {
+      "context": 1,
+      "nested_max_abs_difference": 0.0,
+      "matrix_max_abs_difference": 0.0
+    },
+    {
+      "context": 2,
+      "nested_max_abs_difference": 0.0,
+      "matrix_max_abs_difference": 0.0
+    },
+    {
+      "context": 3,
+      "nested_max_abs_difference": 0.0,
+      "matrix_max_abs_difference": 0.0
+    },
+    {
+      "context": 4,
+      "nested_max_abs_difference": 0.0,
+      "matrix_max_abs_difference": 0.0
+    },
+    {
+      "context": 5,
+      "nested_max_abs_difference": 0.0,
+      "matrix_max_abs_difference": 0.0
+    },
+    {
+      "context": 6,
+      "nested_max_abs_difference": 0.0,
+      "matrix_max_abs_difference": 0.0
+    },
+    {
+      "context": 7,
+      "nested_max_abs_difference": 0.0,
+      "matrix_max_abs_difference": 0.0
+    }
+  ],
+  "trace_matches_core_20_updates_exactly": true,
+  "duplicate_initial_channel_max_difference": 2.709336597301462e-14,
+  "duplicate_aggregate_update_max_difference": 5.551115123125783e-17,
+  "duplicate_change_ratio": [
+    0.24999999999999978,
+    0.25000000000000044
+  ],
+  "original_gamma_tolerance": 0.001,
+  "forced_iterations": 8000,
+  "diagnostic_only": true
+}

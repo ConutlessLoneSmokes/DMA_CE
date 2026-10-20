@@ -1,0 +1,32 @@
+{
+  "source_run": "research_002",
+  "source_files": {
+    "coarse": {
+      "path": "/home/lsy/DMA_CE/runs/research_002/cache/base_coarse_v1000.pt",
+      "sha256": "7e9cb46c4564be978616b1bdbc807604cd37941ed0a6b9a424f872196d65433e"
+    },
+    "dense": {
+      "path": "/home/lsy/DMA_CE/runs/research_002/cache/base_dense_v2000.pt",
+      "sha256": "f54f6fbd1cc0ae9788c5465ad598d8e22fc331aa687dbd364d2d26eacb695fc6"
+    }
+  },
+  "diagnostic_only": true,
+  "input_sha256": "be98e4df6e50e1a47a53e86036acfdedc54fe9e58cea4fdba3bba1f72bc6e594",
+  "geometries": [
+    0,
+    1
+  ],
+  "contexts": [
+    0,
+    3,
+    4,
+    7
+  ],
+  "budgets": [
+    2000,
+    4000,
+    8000
+  ],
+  "solver": "convex_bound_kkt_v1",
+  "early_stopping": false
+}

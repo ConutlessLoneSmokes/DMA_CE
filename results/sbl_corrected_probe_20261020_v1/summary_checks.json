@@ -1,0 +1,10 @@
+{
+  "geometries": 2,
+  "contexts": 4,
+  "metrics_rows": 48,
+  "solver_outputs_at_8000": 16,
+  "all_8000_outputs_pass_optimality": true,
+  "maximum_optimality_residual_at_8000": 0.00024330615997314453,
+  "maximum_4000_to_8000_nmse_change_db": 0.0019554225912301604,
+  "maximum_4000_to_8000_variance_relative_change": 0.0004764756580364349
+}

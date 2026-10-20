@@ -6,4 +6,6 @@
 - Carlson等，Wideband Dynamic Metasurface Antenna Performance With Practical Design Characteristics，TWC 2026：[公开原文](https://arxiv.org/abs/2510.07827)。有限谐振调谐和频变馈线模型依据。
 - Peng等，Improving Diffusion Models for Inverse Problems Using Optimal Posterior Covariance，ICML 2024：[正式论文](https://proceedings.mlr.press/v235/peng24h.html)。高斯一致性和协方差处理的通用先例；本仓库不将该通用公式列为原创。
 
-SBL粗估采用常规复高斯后验和跨频共享方差的EM更新。可靠度是该近似模型给出的误差代理；其有效性由实际误差校准和打乱消融检验。
+- Hashemi等，Unification of sparse Bayesian learning algorithms for electromagnetic brain imaging with the majorization minimization framework，NeuroImage 2021：[公开原文](https://pmc.ncbi.nlm.nih.gov/articles/PMC8433122/)。标准SBL凸上界更新与下降性质的依据；本仓库采用复数、跨频字典共享方差版本。
+
+SBL粗估采用常规复高斯后验和跨频共享方差。2026-10-20起使用凸上界更新及归一化一阶条件，推导与预算检查见 [SBL_SOLVER.md](SBL_SOLVER.md)。可靠度是该近似模型给出的不确定度代理；当前比较只保留无可靠度确定性精修，旧可靠度对照保留在历史结果中。

@@ -1,0 +1,13 @@
+{
+  "status": "complete",
+  "selection": {
+    "architecture": "cross_frequency",
+    "loss": "condition",
+    "reliability": "none",
+    "kind": "deterministic",
+    "width": 8,
+    "steps": 6,
+    "selection": "fixed cross-frequency/condition-loss recipe; retain only the no-reliability refinement"
+  },
+  "completed_at_unix": 1792463145.1715364
+}

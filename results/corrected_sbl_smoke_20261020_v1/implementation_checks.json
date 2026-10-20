@@ -1,0 +1,11 @@
+{
+  "unit_tests": 39,
+  "stages_reused": 7,
+  "all_trained_recipes_no_reliability": true,
+  "all_trained_recipes_cross_frequency_condition_loss": true,
+  "training_jobs": 20,
+  "cached_solver_outputs_checked": 432,
+  "all_cached_actual_iterations_equal_declared_budget": true,
+  "working_execution_source_matches_run_archive": true,
+  "main_scope": "32x32, +/-60 degrees, 0.1-0.4 m"
+}

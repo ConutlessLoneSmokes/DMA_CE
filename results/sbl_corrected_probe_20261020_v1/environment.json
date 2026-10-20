@@ -1,0 +1,8 @@
+{
+  "python": "3.10.20",
+  "torch": "2.11.0+cu128",
+  "numpy": "1.26.4",
+  "device": "cuda",
+  "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+  "script_sha256": "7cf70e09624402158e5ebdd15ee6fe0f9958db414dc6d341e00281f8c1a385da"
+}

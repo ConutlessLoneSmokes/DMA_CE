@@ -1,0 +1,27 @@
+{
+  "physical_checks": [
+    {
+      "context": 0,
+      "nested_dictionary_difference": 0.0,
+      "physical_matrix_difference": 0.0
+    },
+    {
+      "context": 3,
+      "nested_dictionary_difference": 0.0,
+      "physical_matrix_difference": 0.0
+    },
+    {
+      "context": 4,
+      "nested_dictionary_difference": 0.0,
+      "physical_matrix_difference": 0.0
+    },
+    {
+      "context": 7,
+      "nested_dictionary_difference": 0.0,
+      "physical_matrix_difference": 0.0
+    }
+  ],
+  "all_actual_counts_equal_budgets": true,
+  "metrics_rows": 48,
+  "source_input_unchanged": true
+}

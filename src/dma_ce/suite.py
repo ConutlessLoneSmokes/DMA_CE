@@ -21,13 +21,14 @@ from .data import prepare, reestimate, tensor_hash
 from .experiment import apply_dc, file_hash, nmse, validate_config, write_json
 from .research import (aggregate, checkpoint_budgets, diagnostic_rows, export_table, infer, load_model,
     paired_effects, plot_tradeoff, recipe, save_tensor, train_job)
+from .sbl import SOLVER_VERSION
 
 
 STAGES = ("baseline", "curves", "factorial", "reliability", "budget", "diffusion", "final")
 
 
 class TrainingBudgetBoundary(RuntimeError):
-    """Validation is still improving at the declared maximum; preserve it as an expected stop."""
+    """Validation has not met its declared solver/training budget; preserve the expected stop."""
 
 
 def validate_study(config):
@@ -40,6 +41,7 @@ def validate_study(config):
             or not np.isfinite(learning["learning_rate"]) or learning["learning_rate"] <= 0
             or type(sbl["batch_size"]) is not int or sbl["batch_size"] < 1
             or not np.isfinite(sbl["tolerance"]) or sbl["tolerance"] <= 0
+            or type(sbl.get("early_stopping", True)) is not bool
             or config["evaluation"]["bootstrap_samples"] < 2):
         raise ValueError("invalid study seed, learning rate, width, SBL or bootstrap setting")
     for key in ("checkpoints", "baseline_iterations", "sbl_budgets", "averages"):
@@ -95,12 +97,14 @@ def validate_study(config):
 def stable_budget(previous, current, limits):
     changes = {"maximum_nmse_change_db": max(abs(a["mean_nmse_db"] - b["mean_nmse_db"]) for a, b in zip(previous, current)),
         "maximum_variance_relative_change": max(abs(a["mean_variance"] / b["mean_variance"] - 1) for a, b in zip(previous, current)),
-        "overall_convergence": float(np.mean([r["convergence_rate"] for r in previous])),
-        "minimum_context_convergence": min(r["convergence_rate"] for r in previous)}
+        "overall_convergence": min(float(np.mean([r["convergence_rate"] for r in rows])) for rows in (previous, current)),
+        "minimum_context_convergence": min(r["convergence_rate"] for r in [*previous, *current]),
+        "full_budgets_executed": all(r["full_budget_executed"] for r in [*previous, *current])}
     passed = (changes["maximum_nmse_change_db"] <= limits["nmse_db"]
         and changes["maximum_variance_relative_change"] <= limits["variance_relative"]
         and changes["overall_convergence"] >= limits["overall_convergence"]
-        and changes["minimum_context_convergence"] >= limits["context_convergence"])
+        and changes["minimum_context_convergence"] >= limits["context_convergence"]
+        and changes["full_budgets_executed"])
     return passed, changes
 
 
@@ -269,7 +273,8 @@ class Study:
             previous, selected = None, None
             for iterations in config["research"]["baseline_iterations"]:
                 candidate = copy.deepcopy(config)
-                candidate["sbl"].update({k: grid[k] for k in ("angle_points", "range_points")}, iterations=iterations)
+                candidate["sbl"].update({k: grid[k] for k in ("angle_points", "range_points")},
+                    iterations=iterations, early_stopping=False)
                 cache = self.cache(f"{prefix}_{grid['name']}_v{iterations}", candidate, observations, ["validation"])
                 current = []
                 for context, entry in enumerate(cache["splits"]["validation"]):
@@ -278,9 +283,16 @@ class Study:
                         "mean_nmse_db": float(10 * values.mean().log10()),
                         "mean_variance": float(entry["reliability"].mean()),
                         "convergence_rate": float(entry["sbl_converged"].float().mean()),
+                        "full_budget_executed": bool((entry["sbl_iterations"] == iterations).all()),
+                        "minimum_actual_iterations": int(entry["sbl_iterations"].min()),
+                        "maximum_optimality_residual": float(entry["sbl_optimality_residual"].max()),
+                        "mean_objective_per_tone": float(entry["sbl_objective_per_tone"].mean()),
                         "ms_per_sample": entry["coarse_ms_per_sample"]}
                     current.append(row)
                     all_rows += [{**row, "scene": i, "nmse_linear": float(v),
+                        "actual_iterations": int(entry["sbl_iterations"][i]),
+                        "optimality_residual": float(entry["sbl_optimality_residual"][i]),
+                        "objective_per_tone": float(entry["sbl_objective_per_tone"][i]),
                         "observation_sha256": tensor_hash(entry["observation"][i])} for i, v in enumerate(values)]
                 diagnostics += current
                 if previous is not None:
@@ -297,7 +309,7 @@ class Study:
         export_table(folder, "summary.csv", diagnostics)
         write_json(folder / "selection.json", selections)
         if any(v is None for v in selections.values()):
-            raise RuntimeError("no stable SBL budget for at least one grid; inspect baseline tables and use a new configuration/ID")
+            raise TrainingBudgetBoundary("no stable SBL budget for at least one grid; inspect baseline tables and extend budgets in a new study")
         return selections
 
     def baseline(self):
@@ -306,7 +318,7 @@ class Study:
         original = self.cache("base_observations", config)
         selections = self.profile_baselines("base", self.config, original)
         chosen = copy.deepcopy(self.config)
-        chosen["sbl"].update(iterations=selections["coarse"]["iterations"])
+        chosen["sbl"].update(iterations=selections["coarse"]["iterations"], early_stopping=False)
         chosen["sbl"].update({k: selections["coarse"]["grid"][k] for k in ("angle_points", "range_points")})
         cache = self.cache("base_stable", chosen, original)
         return {"baselines": selections, "cache_id": cache["_cache_id"], "screening_used": False}
@@ -315,8 +327,9 @@ class Study:
         cache = self.get_cache(self.result("baseline")["cache_id"])
         study, scores = self.config["research"], []
         curve_rows, loss_rows = [], []
-        for mode, seed in itertools.product(("none", "map"), study["training_seeds"]):
-            spec = recipe(self.config, reliability=mode)
+        for seed in study["training_seeds"]:
+            mode = "none"
+            spec = recipe(self.config, loss="condition", reliability=mode)
             last = self.train(cache, spec, seed, max(study["checkpoints"]))
             curve_rows += [{**json.loads(line), "reliability": mode} for line in (last.parent / "curve.jsonl").read_text().splitlines()]
             loss_rows += [{**json.loads(line), "reliability": mode, "seed": seed}
@@ -341,45 +354,12 @@ class Study:
             "learning_rate_horizon": max(study["checkpoints"])}
 
     def factorial(self):
-        cache = self.get_cache(self.result("baseline")["cache_id"])
         steps = self.result("curves")["steps"]
-        rows, scores, parameters = [], {}, {}
-        for architecture, loss in itertools.product(("cross_frequency", "per_tone"), ("uniform", "condition")):
-            label = architecture + "_" + loss
-            local = []
-            for mode, seed in itertools.product(("none", "map"), self.config["research"]["training_seeds"]):
-                spec = recipe(self.config, architecture, loss, mode)
-                checkpoint = self.train(cache, spec, seed, steps)
-                values = self.score(cache, checkpoint, label + "_" + mode)
-                local += values
-                parameters[label] = torch.load(checkpoint, map_location="cpu", weights_only=True)["parameters"]
-            rows += local
-            scores[label] = float(np.mean([r["nmse_linear"] for r in local]))
-        self.table("factorial", rows)
-        best = min(scores, key=lambda k: (scores[k], k))
-        architecture, loss = best.rsplit("_", 1)
-        return {"architecture": architecture, "loss": loss, "steps": steps,
-            "validation_mean_nmse_linear": scores, "parameters": parameters,
-            "selection": "mean over the paired no-reliability/map controls and training seeds"}
+        return {**recipe(self.config, loss="condition", reliability="none"), "steps": steps,
+            "selection": "fixed cross-frequency/condition-loss recipe; retain only the no-reliability refinement"}
 
     def reliability(self):
-        cache = self.get_cache(self.result("baseline")["cache_id"])
-        base = self.result("factorial")
-        rows, scores, shuffled = [], {}, []
-        for mode in ("none", "scalar", "map"):
-            local = []
-            for seed in self.config["research"]["training_seeds"]:
-                spec = recipe(self.config, base["architecture"], base["loss"], mode)
-                checkpoint = self.train(cache, spec, seed, base["steps"])
-                local += self.score(cache, checkpoint, mode)
-                if mode == "map":
-                    for shuffle in self.config["research"]["shuffle_seeds"]:
-                        shuffled += self.score(cache, checkpoint, f"map_shuffle_{shuffle}", shuffle_seed=shuffle)
-            rows += local
-            scores[mode] = float(np.mean([r["nmse_linear"] for r in local]))
-        self.table("reliability", rows + shuffled)
-        return {**base, "reliability": min(scores, key=lambda k: (scores[k], k)),
-            "validation_mean_nmse_linear": scores, "shuffle_seeds": self.config["research"]["shuffle_seeds"]}
+        return self.result("factorial")
 
     def budget(self):
         original = self.get_cache("base_observations")
@@ -472,7 +452,7 @@ class Study:
                 cache = self.cache(f"{size['name']}_observations", config)
                 baselines = self.profile_baselines(size["name"], config, cache)
             policies = []
-            modes = sorted({"none", "map", chosen["reliability"]})
+            modes = ("none",)
             for mode in modes:
                 policies.append((f"deterministic_{mode}", recipe(self.config, chosen["architecture"], chosen["loss"], mode), chosen["steps"], (1,)))
             for mode in sorted({"none", diffusion["selected"]["mode"]}):
@@ -604,7 +584,7 @@ class Study:
         matplotlib.use("Agg")
         from matplotlib import pyplot as plt
         figure, axis = plt.subplots(figsize=(7, 4))
-        for mode, split in itertools.product(("none", "map"), ("train", "validation")):
+        for mode, split in itertools.product(sorted({r["reliability"] for r in rows}), ("train", "validation")):
             steps = sorted({r["step"] for r in rows})
             values = [10 * np.log10(np.mean([r["mean_nmse_linear"] for r in rows
                 if r["reliability"] == mode and r["split"] == split and r["step"] == step])) for step in steps]
@@ -661,7 +641,9 @@ class Study:
 
     def write_report(self):
         states = {p.stem: json.loads(p.read_text()) for p in (self.path / "stages").glob("*.json") if p.stem in STAGES}
-        lines = ["# 五步实验执行记录", "", f"运行：{self.run_id}。标签：{self.config['label']}。", "",
+        lines = ["# 有界场景方法比较执行记录", "", f"运行：{self.run_id}。标签：{self.config['label']}。", "",
+            f"SBL求解器：{SOLVER_VERSION}。基线检查强制执行完整预算，收敛标记来自边缘似然的一阶条件。",
+            "确定性精修只保留无可靠度版本，采用跨频卷积和按条件归一化的训练损失。", "",
             "各选择只使用训练/验证数据；最终各系统在保存模型和参数哈希后生成新的筛选几何。",
             "独立重复为训练初始化种子和几何场景；同一几何的带宽、配置与SNR按块配对。", "",
             "| 阶段 | 状态 |", "|---|---|"]

@@ -48,7 +48,7 @@ class CoreTests(unittest.TestCase):
         large = posterior(y, sensing, dictionary, torch.tensor([1.]), gamma)[3]
         self.assertTrue((large >= small - 1e-9).all())
 
-    def test_coefficient_only_posterior_preserves_sbl_updates(self):
+    def test_coefficient_only_posterior_preserves_moments(self):
         dictionary = torch.randn(2, 5, 9, dtype=torch.complex128)
         sensing = torch.randn(2, 3, 9, dtype=torch.complex128)
         y = torch.randn(3, 2, 3, dtype=torch.complex128)
@@ -60,10 +60,62 @@ class CoreTests(unittest.TestCase):
             fast = posterior(y, sensing, dictionary, variance, gamma, channel_moments=False)
             self.assertTrue(torch.equal(mean, fast[0]) and torch.equal(diagonal, fast[1]))
             gamma = (.5 * gamma + .5 * (mean.abs().square() + diagonal).mean(1)).clamp_min(1e-8)
-        expected = posterior(y, sensing, dictionary, variance, gamma)
-        actual = joint_sbl(y, sensing, dictionary, variance, iterations=20, tolerance=1e-12)
-        self.assertTrue(torch.equal(actual[0], expected[2]))
-        self.assertTrue(torch.equal(actual[1], expected[3]))
+
+    def test_sbl_matches_analytic_independent_component_optimum(self):
+        dictionary = torch.eye(3, dtype=torch.complex128)[None].expand(2, -1, -1)
+        y = torch.tensor([[[1 + 1j, 2., .1], [1 - 1j, 2j, .1j]]], dtype=torch.complex128)
+        noise = torch.tensor([.2], dtype=torch.float64)
+        gamma = (y.abs().square().mean(1) - noise[:, None]).clamp_min(1e-8 / 3)
+        expected_mean = gamma[:, None] / (gamma[:, None] + noise[:, None, None]) * y
+        expected_variance = (gamma * noise[:, None] / (gamma + noise[:, None]))[:, None].expand_as(y.real)
+        mean, variance, info = joint_sbl(y, dictionary, dictionary, noise, iterations=300, tolerance=1e-7)
+        self.assertTrue(info["converged"].all())
+        self.assertTrue(torch.allclose(mean, expected_mean, atol=1e-6, rtol=1e-6))
+        self.assertTrue(torch.allclose(variance, expected_variance, atol=1e-6, rtol=1e-6))
+        expected_objective = ((gamma + noise[:, None]).log()
+            + y.abs().square().mean(1) / (gamma + noise[:, None])).sum(-1)
+        self.assertTrue(torch.allclose(info["objective_per_tone"], expected_objective, atol=1e-6, rtol=1e-6))
+
+    def test_sbl_evidence_decreases_and_forced_budgets_really_execute(self):
+        dictionary = torch.randn(2, 5, 9, dtype=torch.complex128)
+        sensing = torch.randn(2, 3, 5, dtype=torch.complex128) @ dictionary
+        y = torch.randn(2, 2, 3, dtype=torch.complex128)
+        noise = torch.full((2,), .2, dtype=torch.float64)
+        previous = None
+        for steps in (1, 2, 5, 20):
+            _, _, info = joint_sbl(y, sensing, dictionary, noise, iterations=steps,
+                tolerance=100., early_stopping=False)
+            self.assertTrue((info["iterations"] == steps).all())
+            if previous is not None:
+                self.assertTrue((info["objective_per_tone"] <= previous + 1e-10).all())
+            previous = info["objective_per_tone"]
+        _, _, early = joint_sbl(y, sensing, dictionary, noise, iterations=20, tolerance=100.)
+        self.assertTrue((early["iterations"] == 0).all())
+        self.assertTrue((previous < early["objective_per_tone"] - 1e-4).all())
+
+    def test_sbl_is_unchanged_by_four_identical_column_copies(self):
+        dictionary = torch.randn(2, 5, 9, dtype=torch.complex128)
+        sensing = torch.randn(2, 3, 5, dtype=torch.complex128) @ dictionary
+        y = torch.randn(2, 2, 3, dtype=torch.complex128)
+        noise = torch.full((2,), .2, dtype=torch.float64)
+        for stopping in (False, True):
+            args = {"iterations": 1000, "tolerance": .003, "early_stopping": stopping}
+            mean, variance, info = joint_sbl(y, sensing, dictionary, noise, **args)
+            repeated = joint_sbl(y, sensing.repeat(1, 1, 4), dictionary.repeat(1, 1, 4), noise, **args)
+            self.assertTrue(torch.allclose(mean, repeated[0], atol=1e-9, rtol=1e-9))
+            self.assertTrue(torch.allclose(variance, repeated[1], atol=1e-9, rtol=1e-9))
+            self.assertTrue(torch.equal(info["iterations"], repeated[2]["iterations"]))
+            for key in ("optimality_residual", "objective_per_tone"):
+                self.assertTrue(torch.allclose(info[key], repeated[2][key], atol=1e-9, rtol=1e-9))
+
+    def test_sbl_rejects_invalid_budgets_and_unobservable_system(self):
+        dictionary = torch.ones(1, 1, 1, dtype=torch.complex128)
+        y, noise = torch.ones(1, 1, 1, dtype=torch.complex128), torch.ones(1)
+        for args in ({"iterations": True}, {"tolerance": float("nan")}, {"early_stopping": 1}):
+            with self.assertRaises(ValueError):
+                joint_sbl(y, dictionary, dictionary, noise, **args)
+        with self.assertRaises(ValueError):
+            joint_sbl(y, torch.zeros_like(dictionary), dictionary, noise)
 
     def test_sbl_recovers_a_sparse_observed_channel(self):
         dictionary = torch.eye(6, dtype=torch.complex128)[None].expand(3, -1, -1)
