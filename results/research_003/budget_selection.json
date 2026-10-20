@@ -1,0 +1,50 @@
+{
+  "status": "complete",
+  "selection": {
+    "architecture": "cross_frequency",
+    "loss": "condition",
+    "reliability": "none",
+    "kind": "deterministic",
+    "width": 32,
+    "steps": 20000,
+    "selection": "fixed cross-frequency/condition-loss recipe; retain only the no-reliability refinement",
+    "iterations": 100,
+    "cache_id": "budget_100",
+    "mean_nmse_linear": 0.07100852984270507,
+    "mean_total_ms": 9.585590027882063,
+    "candidates": [
+      {
+        "iterations": 100,
+        "cache_id": "budget_100",
+        "mean_nmse_linear": 0.07100852984270507,
+        "mean_total_ms": 9.585590027882063
+      },
+      {
+        "iterations": 300,
+        "cache_id": "budget_300",
+        "mean_nmse_linear": 0.07151710009998169,
+        "mean_total_ms": 33.77721975645424
+      },
+      {
+        "iterations": 500,
+        "cache_id": "budget_500",
+        "mean_nmse_linear": 0.07188783114035384,
+        "mean_total_ms": 45.02808258659267
+      },
+      {
+        "iterations": 1000,
+        "cache_id": "budget_1000",
+        "mean_nmse_linear": 0.07228923781932887,
+        "mean_total_ms": 90.61751405829455
+      },
+      {
+        "iterations": 4000,
+        "cache_id": "budget_4000",
+        "mean_nmse_linear": 0.07192766888048634,
+        "mean_total_ms": 362.7032035817592
+      }
+    ],
+    "rule": "least measured total amortized time within declared dB tolerance of the best validation refinement"
+  },
+  "completed_at_unix": 1792476703.7693722
+}

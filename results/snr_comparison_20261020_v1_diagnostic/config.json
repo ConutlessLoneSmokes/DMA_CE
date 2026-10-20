@@ -1,0 +1,26 @@
+{
+  "run": "snr_comparison_20261020_v1",
+  "seeds": [
+    201,
+    202,
+    203
+  ],
+  "snrs_db": [
+    -10,
+    10,
+    20,
+    30
+  ],
+  "splits": [
+    "train",
+    "validation"
+  ],
+  "scenes_per_split": 64,
+  "noise_seed": 20261020,
+  "posthoc": true,
+  "selection_or_retraining": false,
+  "truth_usage": "stage scoring and synthetic equal-MSE independent Gaussian control only",
+  "frozen_sha256": "31bf5d114f485af6b94ccfb5ecd01a4403e78890092d6df5b96807b74bb0f806",
+  "source_sha256": "5186eaa53ce37c5b514de89fbc70b163d7c221a626ae4f78b5e1229e6e071c9d",
+  "structured_source_sha256": "a95d834c684574fbe7a7b2e7f7734e3d5e58487b5c618f5b02b7d00f1ed4e7c3"
+}

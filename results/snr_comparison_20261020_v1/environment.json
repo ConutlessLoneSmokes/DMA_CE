@@ -1,0 +1,20 @@
+{
+  "python": "3.10.21 (main, Aug 27 2026, 14:42:07) [GCC 14.3.0]",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "torch": "2.11.0+cu128",
+  "numpy": "1.26.4",
+  "device": "cuda",
+  "cuda": "12.8",
+  "gpu": "NVIDIA GeForce RTX 3090",
+  "command": [
+    "scripts/run_snr_comparison.py",
+    "--config",
+    "configs/snr_comparison.json",
+    "--parent",
+    "research_003",
+    "--run-id",
+    "snr_comparison_20261020_v1"
+  ],
+  "git_commit": "2b69aa3751a3cb7b5a405e32676e7f460640e774",
+  "source_zip_sha256": "fe784ff6de231daf1c21da8fb5ed289afac8e4c041856d2ac607627d631d9551"
+}

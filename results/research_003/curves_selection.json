@@ -1,0 +1,15 @@
+{
+  "status": "complete",
+  "selection": {
+    "steps": 20000,
+    "validation_mean_nmse_linear": {
+      "2000": 0.07480846321557995,
+      "8000": 0.07293117689444746,
+      "20000": 0.07192766888048634
+    },
+    "best_at_largest_budget": true,
+    "last_interval_improvement_db": 0.06017236469445444,
+    "learning_rate_horizon": 20000
+  },
+  "completed_at_unix": 1792471435.9484599
+}

@@ -1,0 +1,24 @@
+{
+  "observation_sha256": "a3085887d8f28d961acf2aa75eb6f03f79e350032a5468aa7360a215e1da3d8f",
+  "geometry_hashes": {
+    "screen": "7349cd628c0e3df52bf53a26d72521e310f0b7e31953cca95d31c9bb559fe81f"
+  },
+  "prediction_sha256": {
+    "context_0.pt": "fae9bb86af38562f44562061597bb95ca5dc954ce00a41e6ca22c232516a6eca",
+    "context_1.pt": "9d845442ed5cd33512b09178cab2cf7aed38210c2031e466d988b58fb8bd6822",
+    "context_2.pt": "4512b8a2805cf2bf17631fb5b757eab2c3c4b8b17b7627c59f3a2bf217c109d4",
+    "context_3.pt": "d9aa6a53c8aaf307f7854efdf12fc83c1d0f09c5159c66ddb7eb2ad3f753eea4",
+    "context_4.pt": "514761c9478dea83cebf0ba200c2a8f342bd5ae58bb460d67d79a51a67eae686",
+    "context_5.pt": "482ea22288c89991ca78d0cd4af39051d529efd0049d8eb112165a9c5073a522",
+    "context_6.pt": "8c767dcc19f051838c229f80935b7d16806e5e2e27d8693ea812575ddb7eabd9",
+    "context_7.pt": "93da98b3e4a74b993ba634003987dce7135cd19d1e3cef0da1a9f8697d49827f",
+    "context_8.pt": "70d20944db35585ea3f0c6053dc85cd91ccd43abaaec549dc7ed3a37c8290394",
+    "context_9.pt": "e55a054d83aa17c64f868dabc71d18a9b1a2204ce6677920c1a100461be3b599",
+    "context_10.pt": "231a128b75e168989d8c7cc489a60923a3137ef9c6046101d5b7a5fbb920ed5d",
+    "context_11.pt": "9deb3a395535b93079a3bbd7866391ce8b5e813d70415184ca699ffe8838866d"
+  },
+  "frozen_sha256": "b127c512cdc1364d5a2e44e460c858004d7510fb8166268747faa653d4b6bd92",
+  "scored_at_unix": 1792488553.5320308,
+  "ls_pseudoinverse_setup": "known-matrix preprocessing excluded from amortized application time",
+  "lmmse_setup": "training-only joint statistics and known-matrix preprocessing excluded from amortized application time"
+}

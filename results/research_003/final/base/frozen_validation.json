@@ -1,0 +1,441 @@
+{
+  "profile": {
+    "name": "base",
+    "antennas": 32,
+    "tones": 32
+  },
+  "profile_config": {
+    "label": "bounded_corrected_sbl_single_refinement",
+    "seed": 20261016,
+    "device": "cuda",
+    "timeout_seconds": 604800,
+    "system": {
+      "carrier_hz": 300000000000.0,
+      "bandwidths_hz": [
+        3000000000.0,
+        30000000000.0
+      ],
+      "antennas": 32,
+      "tones": 32,
+      "spacing_wavelengths": 0.5,
+      "configurations": [
+        8,
+        16
+      ],
+      "snrs_db": [
+        10.0,
+        20.0
+      ],
+      "quality_factor": 50.0,
+      "tuning_bandwidth_hz": 30000000000.0,
+      "waveguide_effective_index": 1.4,
+      "waveguide_end_power_fraction": 0.8,
+      "rf_noise_fraction": 0.05
+    },
+    "channel": {
+      "paths": 3,
+      "range_min_m": 0.1,
+      "range_max_m": 0.4,
+      "angle_limit_deg": 60.0,
+      "include_absorption": false
+    },
+    "data": {
+      "train": 512,
+      "validation": 64,
+      "screen": 128,
+      "screen_seed": 20261018
+    },
+    "sbl": {
+      "angle_points": 49,
+      "range_points": 7,
+      "iterations": 100,
+      "tolerance": 0.001,
+      "batch_size": 16,
+      "early_stopping": false
+    },
+    "learning": {
+      "steps": 2000,
+      "batch_size": 32,
+      "width": 32,
+      "learning_rate": 0.001,
+      "diffusion_steps": 100,
+      "sampling_steps": 20,
+      "log_every": 500,
+      "variants": [
+        "deterministic_no_reliability"
+      ]
+    },
+    "evaluation": {
+      "batch_size": 32,
+      "dc_multipliers": [
+        0.0,
+        0.1,
+        1.0,
+        10.0
+      ],
+      "bootstrap_samples": 2000,
+      "dc_selection_model": "deterministic_no_reliability",
+      "correct_coarse": true
+    },
+    "research": {
+      "training_seeds": [
+        101,
+        102,
+        103
+      ],
+      "final_seeds": [
+        201,
+        202,
+        203,
+        204,
+        205
+      ],
+      "shuffle_seeds": [
+        301,
+        302,
+        303,
+        304,
+        305
+      ],
+      "checkpoints": [
+        2000,
+        8000,
+        20000
+      ],
+      "eval_every": 2000,
+      "training_stability_db": 0.1,
+      "train_curve_samples": 128,
+      "grids": [
+        {
+          "name": "coarse",
+          "angle_points": 49,
+          "range_points": 7
+        },
+        {
+          "name": "dense",
+          "angle_points": 97,
+          "range_points": 13
+        }
+      ],
+      "baseline_iterations": [
+        1000,
+        2000,
+        4000,
+        8000,
+        16000
+      ],
+      "stability": {
+        "overall_convergence": 0.95,
+        "context_convergence": 0.9,
+        "nmse_db": 0.1,
+        "variance_relative": 0.05
+      },
+      "sbl_budgets": [
+        100,
+        300,
+        500,
+        1000
+      ],
+      "accuracy_tolerance_db": 0.1,
+      "averages": [
+        1,
+        4,
+        16
+      ],
+      "expansions": [],
+      "mismatches": [
+        {
+          "name": "paths5",
+          "channel": {
+            "paths": 5
+          }
+        }
+      ],
+      "communication": {
+        "coherence_symbols": 200,
+        "switch_symbols": 0.1
+      }
+    }
+  },
+  "models": {
+    "deterministic_none_201": {
+      "path": "models/budget_100/7de4b2bbc83f/seed_201/step_20000.pt",
+      "sha256": "56d8e5091b4de1cd1dab240fc92e31afb824992a59f84a4d9a47e130e8f6e04d",
+      "recipe": {
+        "architecture": "cross_frequency",
+        "loss": "condition",
+        "reliability": "none",
+        "kind": "deterministic",
+        "width": 32
+      },
+      "steps": 20000,
+      "averages": [
+        1
+      ],
+      "seed": 201,
+      "label": "deterministic_none"
+    },
+    "deterministic_none_202": {
+      "path": "models/budget_100/7de4b2bbc83f/seed_202/step_20000.pt",
+      "sha256": "bdcde262a53805c294936968d75bd5b509c9637daf354073b36d1cb0d1b65ffd",
+      "recipe": {
+        "architecture": "cross_frequency",
+        "loss": "condition",
+        "reliability": "none",
+        "kind": "deterministic",
+        "width": 32
+      },
+      "steps": 20000,
+      "averages": [
+        1
+      ],
+      "seed": 202,
+      "label": "deterministic_none"
+    },
+    "deterministic_none_203": {
+      "path": "models/budget_100/7de4b2bbc83f/seed_203/step_20000.pt",
+      "sha256": "59f22ae68899276d956d7db639b858d54dab5317875ac1e6a34a3096b2d0820a",
+      "recipe": {
+        "architecture": "cross_frequency",
+        "loss": "condition",
+        "reliability": "none",
+        "kind": "deterministic",
+        "width": 32
+      },
+      "steps": 20000,
+      "averages": [
+        1
+      ],
+      "seed": 203,
+      "label": "deterministic_none"
+    },
+    "deterministic_none_204": {
+      "path": "models/budget_100/7de4b2bbc83f/seed_204/step_20000.pt",
+      "sha256": "a2cae9149d50083dd9e8fd0dba35475eed26746ad442d93fefdf581be820a75a",
+      "recipe": {
+        "architecture": "cross_frequency",
+        "loss": "condition",
+        "reliability": "none",
+        "kind": "deterministic",
+        "width": 32
+      },
+      "steps": 20000,
+      "averages": [
+        1
+      ],
+      "seed": 204,
+      "label": "deterministic_none"
+    },
+    "deterministic_none_205": {
+      "path": "models/budget_100/7de4b2bbc83f/seed_205/step_20000.pt",
+      "sha256": "03a84ca20bccbf9f1a1c8b3182ec430ac34da27081bb46e414610bb4270d6fb9",
+      "recipe": {
+        "architecture": "cross_frequency",
+        "loss": "condition",
+        "reliability": "none",
+        "kind": "deterministic",
+        "width": 32
+      },
+      "steps": 20000,
+      "averages": [
+        1
+      ],
+      "seed": 205,
+      "label": "deterministic_none"
+    },
+    "diffusion_none_201": {
+      "path": "models/budget_100/b1945059da2e/seed_201/step_20000.pt",
+      "sha256": "0fbbe54485058230dcb91d309211db2fff732c1c736e609e3c7d68968247245a",
+      "recipe": {
+        "architecture": "cross_frequency",
+        "loss": "condition",
+        "reliability": "none",
+        "kind": "diffusion",
+        "width": 32
+      },
+      "steps": 20000,
+      "averages": [
+        1,
+        4,
+        16
+      ],
+      "seed": 201,
+      "label": "diffusion_none"
+    },
+    "diffusion_none_202": {
+      "path": "models/budget_100/b1945059da2e/seed_202/step_20000.pt",
+      "sha256": "9c38e2f45ad7297ce6214b3087a62993614d8aa12eeed43ef4d22c690bf4defc",
+      "recipe": {
+        "architecture": "cross_frequency",
+        "loss": "condition",
+        "reliability": "none",
+        "kind": "diffusion",
+        "width": 32
+      },
+      "steps": 20000,
+      "averages": [
+        1,
+        4,
+        16
+      ],
+      "seed": 202,
+      "label": "diffusion_none"
+    },
+    "diffusion_none_203": {
+      "path": "models/budget_100/b1945059da2e/seed_203/step_20000.pt",
+      "sha256": "d2ccc7f70221f9e9e07c9abceb4e2f8259dd1c56fb026808a8b5b06569eb2a8b",
+      "recipe": {
+        "architecture": "cross_frequency",
+        "loss": "condition",
+        "reliability": "none",
+        "kind": "diffusion",
+        "width": 32
+      },
+      "steps": 20000,
+      "averages": [
+        1,
+        4,
+        16
+      ],
+      "seed": 203,
+      "label": "diffusion_none"
+    },
+    "diffusion_none_204": {
+      "path": "models/budget_100/b1945059da2e/seed_204/step_20000.pt",
+      "sha256": "bc65b18e558c6c322bfed2023dff272b4288c503c3e446665e606d37cb8b7429",
+      "recipe": {
+        "architecture": "cross_frequency",
+        "loss": "condition",
+        "reliability": "none",
+        "kind": "diffusion",
+        "width": 32
+      },
+      "steps": 20000,
+      "averages": [
+        1,
+        4,
+        16
+      ],
+      "seed": 204,
+      "label": "diffusion_none"
+    },
+    "diffusion_none_205": {
+      "path": "models/budget_100/b1945059da2e/seed_205/step_20000.pt",
+      "sha256": "ed69d3e001c12d56f86fa1a530b87461652b41e3911697a489c94dae71195293",
+      "recipe": {
+        "architecture": "cross_frequency",
+        "loss": "condition",
+        "reliability": "none",
+        "kind": "diffusion",
+        "width": 32
+      },
+      "steps": 20000,
+      "averages": [
+        1,
+        4,
+        16
+      ],
+      "seed": 205,
+      "label": "diffusion_none"
+    }
+  },
+  "selected_recipe": {
+    "architecture": "cross_frequency",
+    "loss": "condition",
+    "reliability": "none",
+    "kind": "deterministic",
+    "width": 32,
+    "steps": 20000,
+    "selection": "fixed cross-frequency/condition-loss recipe; retain only the no-reliability refinement",
+    "iterations": 100,
+    "cache_id": "budget_100",
+    "mean_nmse_linear": 0.07100852984270507,
+    "mean_total_ms": 9.585590027882063,
+    "candidates": [
+      {
+        "iterations": 100,
+        "cache_id": "budget_100",
+        "mean_nmse_linear": 0.07100852984270507,
+        "mean_total_ms": 9.585590027882063
+      },
+      {
+        "iterations": 300,
+        "cache_id": "budget_300",
+        "mean_nmse_linear": 0.07151710009998169,
+        "mean_total_ms": 33.77721975645424
+      },
+      {
+        "iterations": 500,
+        "cache_id": "budget_500",
+        "mean_nmse_linear": 0.07188783114035384,
+        "mean_total_ms": 45.02808258659267
+      },
+      {
+        "iterations": 1000,
+        "cache_id": "budget_1000",
+        "mean_nmse_linear": 0.07228923781932887,
+        "mean_total_ms": 90.61751405829455
+      },
+      {
+        "iterations": 4000,
+        "cache_id": "budget_4000",
+        "mean_nmse_linear": 0.07192766888048634,
+        "mean_total_ms": 362.7032035817592
+      }
+    ],
+    "rule": "least measured total amortized time within declared dB tolerance of the best validation refinement"
+  },
+  "baselines": {
+    "coarse": {
+      "iterations": 4000,
+      "checked_against": 8000,
+      "grid": {
+        "name": "coarse",
+        "angle_points": 49,
+        "range_points": 7
+      },
+      "maximum_nmse_change_db": 0.004136085510253906,
+      "maximum_variance_relative_change": 0.0017931707365627103,
+      "overall_convergence": 0.984375,
+      "minimum_context_convergence": 0.9375,
+      "full_budgets_executed": true
+    },
+    "dense": {
+      "iterations": 4000,
+      "checked_against": 8000,
+      "grid": {
+        "name": "dense",
+        "angle_points": 97,
+        "range_points": 13
+      },
+      "maximum_nmse_change_db": 0.0008096694946289062,
+      "maximum_variance_relative_change": 0.0004970364336831512,
+      "overall_convergence": 0.95703125,
+      "minimum_context_convergence": 0.921875,
+      "full_budgets_executed": true
+    }
+  },
+  "training_cache_sha256": "240081814e1090cfa8ab30852466fc20a8dffa310cd84ffa789b594fe252967f",
+  "training_cache_id": "budget_100",
+  "calibration": {
+    "channel_scale": 0.000283367553493008,
+    "residual_real_scale": 0.24512426555156708,
+    "reliability_scale": 1.028251051902771,
+    "reliability_log_mean": -1.1210039854049683,
+    "reliability_log_std": 0.44043856859207153
+  },
+  "dc_multiplier": 0.0,
+  "dc_validation_scores": {
+    "0.0": 0.07133736671771658,
+    "0.1": 0.07154528813957768,
+    "1.0": 0.0780120203568913,
+    "10.0": 0.11513302268849657
+  },
+  "selection_split": "validation",
+  "screening_used": false,
+  "frozen_at_unix": 1792479171.8769925,
+  "screen_seeds": [
+    20261018,
+    20261019
+  ]
+}

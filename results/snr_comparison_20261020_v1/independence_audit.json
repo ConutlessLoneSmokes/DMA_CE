@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "basis": "byte hashes of physical CSI at the same first bandwidth; seed and full geometry hashes additionally retained by the run",
+  "counts": {
+    "train": 512,
+    "validation": 64,
+    "new_screen": 128,
+    "parent_screen": 128
+  },
+  "overlap_counts": {
+    "new_screen_vs_train": 0,
+    "new_screen_vs_validation": 0,
+    "new_screen_vs_parent_screen": 0
+  },
+  "observation_sha256": "1c074c4dbeeb9ca99b01ffb695174dce6b0de81db6575d9b07696cd607ac2548",
+  "frozen_sha256": "31bf5d114f485af6b94ccfb5ecd01a4403e78890092d6df5b96807b74bb0f806"
+}

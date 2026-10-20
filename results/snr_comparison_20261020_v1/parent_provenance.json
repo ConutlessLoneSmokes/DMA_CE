@@ -1,0 +1,11 @@
+{
+  "parent_run": "research_003",
+  "cache_id": "budget_100",
+  "cache_sha256": "240081814e1090cfa8ab30852466fc20a8dffa310cd84ffa789b594fe252967f",
+  "parent_frozen_sha256": "80bfe5fc9a5b745be9b5aea3a5534b95ade8801ad70a6a9490c13e631f492447",
+  "parent_source_sha256": "0a2d42c843f75b62de4ebfc88775a502f8e1d08289409ff07376a99e932d8987",
+  "splits": [
+    "train",
+    "validation"
+  ]
+}

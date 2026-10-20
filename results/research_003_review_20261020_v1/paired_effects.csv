@@ -1,0 +1,9 @@
+scenario,method,reference,training_seeds,geometry_blocks,delta_linear_mean_db,ci95_low_db,ci95_high_db,bootstrap
+matched,deterministic_none,sbl_dense,5,128,0.14391101836916018,-0.06621362307118824,0.3454028083373602,crossed_seed_and_geometry_blocks
+matched,diffusion_none_avg16,sbl_dense,5,128,1.0767549329977117,0.8209646109620237,1.324780800657932,crossed_seed_and_geometry_blocks
+matched,deterministic_none,sbl_budget,5,128,-1.17172477983727,-1.2462510397045543,-1.0968174996019415,crossed_seed_and_geometry_blocks
+matched,diffusion_none_avg16,sbl_budget,5,128,-0.23888086520871915,-0.41364407072082576,-0.05878950387851823,crossed_seed_and_geometry_blocks
+paths5,deterministic_none,sbl_dense,5,128,0.5605453275803378,0.35296400506956555,0.791116247538288,crossed_seed_and_geometry_blocks
+paths5,diffusion_none_avg16,sbl_dense,5,128,1.1106435833228763,0.8894981204111856,1.3433595523783284,crossed_seed_and_geometry_blocks
+paths5,deterministic_none,sbl_budget,5,128,-0.7133546389150885,-0.7773765193449564,-0.6513575892811092,crossed_seed_and_geometry_blocks
+paths5,diffusion_none_avg16,sbl_budget,5,128,-0.16325638317254992,-0.27107804967124366,-0.051938952021800454,crossed_seed_and_geometry_blocks

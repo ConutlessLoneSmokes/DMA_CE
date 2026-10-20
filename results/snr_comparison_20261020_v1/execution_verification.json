@@ -1,0 +1,16 @@
+{
+  "remote_status": "complete",
+  "remote_elapsed_seconds": 4525.266,
+  "metrics_rows": 101376,
+  "summary_rows": 360,
+  "dense_solver_geometries": 4608,
+  "dense_converged": 4608,
+  "maximum_dense_updates": 18174,
+  "maximum_dense_optimality_residual": 0.0009999275207519531,
+  "server_export_files_verified": 18,
+  "figures_visually_checked": [
+    "snr_nmse_main.png",
+    "snr_nmse_ablation.png"
+  ],
+  "original_ssh_session_transport": "connection reset reported when later closing/polling; completed remote status and independent audit verified"
+}

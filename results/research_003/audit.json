@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "source_archive_verified": true,
+  "data_caches_verified": 15,
+  "frozen_models_verified": 10,
+  "scenarios_verified": 2,
+  "metrics_recomputed": 143360,
+  "maximum_metric_difference": 0.0,
+  "sampler_replays": 4,
+  "maximum_replay_difference": 0.0,
+  "training_only_calibration": true,
+  "fresh_geometry_and_common_observations": true,
+  "communication_rates_recomputed": true,
+  "crossed_bootstrap_recomputed": true,
+  "continuation_verified": false
+}

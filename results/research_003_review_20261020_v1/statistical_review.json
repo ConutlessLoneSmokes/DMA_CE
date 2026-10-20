@@ -1,0 +1,77 @@
+{
+  "origin_skill": "academic-research-suite/experiment-agent",
+  "mode": "validate",
+  "date": "2026-10-20",
+  "source": "research_003",
+  "coverage": "11/11 checked",
+  "verification_status": "VERIFIED",
+  "comparisons": "posthoc descriptive; pointwise bootstrap intervals",
+  "items": [
+    {
+      "index": 1,
+      "type": "Simpson paradox",
+      "status": "checked",
+      "evidence": "按8个条件分层；确定性对密SBL优于3/8条件，DDPM16优于0/8；不将总体排序扩大到每个条件。"
+    },
+    {
+      "index": 2,
+      "type": "Ecological inference",
+      "status": "checked",
+      "evidence": "结论为128个几何的平均NMSE，不声称每个几何均改善。"
+    },
+    {
+      "index": 3,
+      "type": "Berkson selection",
+      "status": "scope_limited",
+      "evidence": "几何从固定角距范围生成，结论范围写明；筛选几何在模型冻结后生成。"
+    },
+    {
+      "index": 4,
+      "type": "Collider conditioning",
+      "status": "not_applicable",
+      "evidence": "硬件、SNR与路径条件预设，未根据观测误差选择控制变量。"
+    },
+    {
+      "index": 5,
+      "type": "Base rate neglect",
+      "status": "not_applicable",
+      "evidence": "指标为连续CSI误差，无分类或诊断基率推断。"
+    },
+    {
+      "index": 6,
+      "type": "Regression to mean",
+      "status": "checked",
+      "evidence": "未选极端误差几何；方法使用同一批新筛选观测。"
+    },
+    {
+      "index": 7,
+      "type": "Survivorship",
+      "status": "checked",
+      "evidence": "143360条指标完整审计；非收敛场景保留。"
+    },
+    {
+      "index": 8,
+      "type": "Look elsewhere",
+      "status": "exploratory",
+      "evidence": "全部方法和条件保留；区间为逐比较区间，未作多重比较校正，无确认性显著声明。"
+    },
+    {
+      "index": 9,
+      "type": "Forking paths",
+      "status": "exploratory",
+      "evidence": "研究在既有实验之后设计；模型及参数先冻结，筛选结果后读取；本次新配对分析标注为结果重审。"
+    },
+    {
+      "index": 10,
+      "type": "Causal overreach",
+      "status": "checked",
+      "evidence": "仅比较固定仿真分布中的算法行为，无现实部署因果结论。"
+    },
+    {
+      "index": 11,
+      "type": "Reverse causality",
+      "status": "not_applicable",
+      "evidence": "冻结算法作用于观测产生估计，筛选误差不用于回选参数。"
+    }
+  ]
+}

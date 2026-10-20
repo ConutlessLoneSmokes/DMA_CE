@@ -1,0 +1,23 @@
+{
+  "snrs_db": [-10, 10, 30],
+  "seeds": [201],
+  "training_scenes": 6,
+  "validation_scenes": 4,
+  "screen_scenes": 4,
+  "screen_seed": 20268940,
+  "prior_steps": 12,
+  "prior_checkpoints": [4, 8, 12],
+  "update_steps": 8,
+  "update_checkpoints": [2, 4, 8],
+  "update_width": 4,
+  "structured_iterations": 3,
+  "strength_grid": [0.1, 1.0],
+  "batch_size": 2,
+  "solver_batch_size": 2,
+  "sbl_max_iterations": 10,
+  "sbl_tolerance": 0.001,
+  "bootstrap_samples": 50,
+  "log_every": 4,
+  "timeout_seconds": 900,
+  "implementation_only": true
+}

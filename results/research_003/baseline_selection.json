@@ -1,0 +1,38 @@
+{
+  "status": "complete",
+  "selection": {
+    "baselines": {
+      "coarse": {
+        "iterations": 4000,
+        "checked_against": 8000,
+        "grid": {
+          "name": "coarse",
+          "angle_points": 49,
+          "range_points": 7
+        },
+        "maximum_nmse_change_db": 0.004136085510253906,
+        "maximum_variance_relative_change": 0.0017931707365627103,
+        "overall_convergence": 0.984375,
+        "minimum_context_convergence": 0.9375,
+        "full_budgets_executed": true
+      },
+      "dense": {
+        "iterations": 4000,
+        "checked_against": 8000,
+        "grid": {
+          "name": "dense",
+          "angle_points": 97,
+          "range_points": 13
+        },
+        "maximum_nmse_change_db": 0.0008096694946289062,
+        "maximum_variance_relative_change": 0.0004970364336831512,
+        "overall_convergence": 0.95703125,
+        "minimum_context_convergence": 0.921875,
+        "full_budgets_executed": true
+      }
+    },
+    "cache_id": "base_stable",
+    "screening_used": false
+  },
+  "completed_at_unix": 1792470888.6230767
+}

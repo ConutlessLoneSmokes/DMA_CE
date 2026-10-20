@@ -1,0 +1,28 @@
+{
+  "run": "snr_comparison_20261020_v1",
+  "seeds": [
+    201,
+    202,
+    203
+  ],
+  "snrs_db": [
+    -10,
+    10,
+    20,
+    30
+  ],
+  "splits": [
+    "train",
+    "validation"
+  ],
+  "scenes_per_split": 64,
+  "noise_seed": 20261020,
+  "posthoc": true,
+  "selection_or_retraining": false,
+  "truth_usage": "stage scoring and synthetic equal-MSE-per-geometry Gaussian control only",
+  "equal_mse_control": "independent isotropic Gaussian direction, exact error energy matched separately for every geometry",
+  "extra_baseline": "per-tone LMMSE covariance from all 512 parent training geometries; frozen prior unchanged",
+  "frozen_sha256": "31bf5d114f485af6b94ccfb5ecd01a4403e78890092d6df5b96807b74bb0f806",
+  "source_sha256": "cb421534184c4120ae028810bf260ace1c81f4f1c431fa6851640b1cb6cb4b57",
+  "structured_source_sha256": "a95d834c684574fbe7a7b2e7f7734e3d5e58487b5c618f5b02b7d00f1ed4e7c3"
+}

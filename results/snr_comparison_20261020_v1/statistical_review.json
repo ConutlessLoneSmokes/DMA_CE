@@ -1,0 +1,77 @@
+{
+  "origin_skill": "academic-research-suite/experiment-agent",
+  "date": "2026-10-20",
+  "mode": "validate",
+  "source": "snr_comparison_20261020_v1",
+  "verification_status": "VERIFIED",
+  "coverage": "11/11 checked",
+  "interval_scope": "pointwise geometry block bootstrap after averaging initialization seeds; initialization variation excluded",
+  "items": [
+    {
+      "index": 1,
+      "type": "Simpson/group dependence",
+      "status": "checked",
+      "evidence": "分36个条件和9个SNR保留；学习更新优于固定更新24/36条件，但混合均值更高，正文同时报告。"
+    },
+    {
+      "index": 2,
+      "type": "Ecological inference",
+      "status": "checked",
+      "evidence": "结论为独立几何平均，未声称每个样本均改善。"
+    },
+    {
+      "index": 3,
+      "type": "Berkson selection",
+      "status": "scope_limited",
+      "evidence": "角距有界生成，DMA配置来自训练设置；结论范围写明。"
+    },
+    {
+      "index": 4,
+      "type": "Collider conditioning",
+      "status": "not_applicable",
+      "evidence": "SNR、带宽、配置和方法在筛选前确定，未按误差筛选条件。"
+    },
+    {
+      "index": 5,
+      "type": "Base rate neglect",
+      "status": "not_applicable",
+      "evidence": "连续CSI误差，无分类概率或诊断基率推断。"
+    },
+    {
+      "index": 6,
+      "type": "Regression to mean",
+      "status": "checked",
+      "evidence": "全新128个几何未按极端分数选择，原父筛选场景未复用。"
+    },
+    {
+      "index": 7,
+      "type": "Survivorship",
+      "status": "checked",
+      "evidence": "全部101376条指标重算，传统基线只记一次，全部4608个密SBL输出保留并收敛。"
+    },
+    {
+      "index": 8,
+      "type": "Look elsewhere",
+      "status": "exploratory",
+      "evidence": "10方法、36条件全部保留；180个配对区间为点区间，无多重校正或确认性声明。"
+    },
+    {
+      "index": 9,
+      "type": "Forking paths",
+      "status": "exploratory",
+      "evidence": "设计在父结果之后，模型和超参数冻结后生成筛选；机制诊断事后标注，未改变主曲线。"
+    },
+    {
+      "index": 10,
+      "type": "Causal overreach",
+      "status": "checked",
+      "evidence": "仅在给定仿真分布与硬件下比较算法；合成误差控制仅作机制证据。"
+    },
+    {
+      "index": 11,
+      "type": "Reverse causality",
+      "status": "not_applicable",
+      "evidence": "筛选误差不反向参与模型或超参数选择。"
+    }
+  ]
+}

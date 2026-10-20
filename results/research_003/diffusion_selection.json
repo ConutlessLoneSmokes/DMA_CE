@@ -1,0 +1,86 @@
+{
+  "status": "complete",
+  "selection": {
+    "selected": {
+      "mode": "none",
+      "steps": 20000,
+      "average": 16,
+      "mean_nmse_linear": 0.09215812307305289,
+      "mean_total_ms": 17.98670337090395
+    },
+    "candidates": [
+      {
+        "mode": "none",
+        "steps": 2000,
+        "average": 1,
+        "mean_nmse_linear": 0.16071248360943477,
+        "mean_total_ms": 10.054557626669217
+      },
+      {
+        "mode": "none",
+        "steps": 2000,
+        "average": 4,
+        "mean_nmse_linear": 0.10978251537229274,
+        "mean_total_ms": 11.66264976071337
+      },
+      {
+        "mode": "none",
+        "steps": 2000,
+        "average": 16,
+        "mean_nmse_linear": 0.09712071128994164,
+        "mean_total_ms": 18.15029890644837
+      },
+      {
+        "mode": "none",
+        "steps": 8000,
+        "average": 1,
+        "mean_nmse_linear": 0.13477075485116075,
+        "mean_total_ms": 10.044998707750588
+      },
+      {
+        "mode": "none",
+        "steps": 8000,
+        "average": 4,
+        "mean_nmse_linear": 0.1013210263407321,
+        "mean_total_ms": 11.625060620417571
+      },
+      {
+        "mode": "none",
+        "steps": 8000,
+        "average": 16,
+        "mean_nmse_linear": 0.09300425088940756,
+        "mean_total_ms": 17.99161957637807
+      },
+      {
+        "mode": "none",
+        "steps": 20000,
+        "average": 1,
+        "mean_nmse_linear": 0.13005430376476093,
+        "mean_total_ms": 10.044769331367812
+      },
+      {
+        "mode": "none",
+        "steps": 20000,
+        "average": 4,
+        "mean_nmse_linear": 0.09972041377416947,
+        "mean_total_ms": 11.625651129634207
+      },
+      {
+        "mode": "none",
+        "steps": 20000,
+        "average": 16,
+        "mean_nmse_linear": 0.09215812307305289,
+        "mean_total_ms": 17.98670337090395
+      }
+    ],
+    "best_at_largest_budget": true,
+    "last_interval_improvement_db": 0.03969177879819294,
+    "interval_steps": [
+      8000,
+      20000
+    ],
+    "learning_rate_horizon": 20000,
+    "deterministic_validation_mean_nmse_linear": 0.07100852984270507
+  },
+  "completed_at_unix": 1792477326.0707574
+}

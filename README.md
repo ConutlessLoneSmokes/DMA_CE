@@ -21,6 +21,12 @@ python -m unittest discover -s tests -v
 
 当前比较保持±60°和0.1–0.4 m范围，使用修正后的SBL，并只保留无可靠度确定性精修。完整说明与服务器命令见[RESEARCH_STUDY.md](docs/RESEARCH_STUDY.md)，求解与收敛依据见[SBL_SOLVER.md](docs/SBL_SOLVER.md)。
 
+完成父运行后，可比较LS、联合频率LMMSE、密字典SBL、最新条件DDPM和“完整CSI的DDPM先验＋学习方差更新”。SNR扫描覆盖−10至30 dB，设计与方法定义见[SNR_COMPARISON.md](docs/SNR_COMPARISON.md)。
+
+```text
+python scripts/run_snr_comparison.py --config configs/snr_comparison.json --parent research_003 --run-id snr_comparison_20261020_v1
+```
+
 ```text
 python scripts/run_research.py --config configs/research_smoke.json --run-id server_smoke_20261020
 python scripts/audit_research.py server_smoke_20261020
@@ -44,11 +50,15 @@ python scripts/audit_research.py research_004 --validation-only
 
 ## 结果状态
 
+2026-10-20：[−10至30 dB五方法扫描](results/snr_comparison_20261020_v1/interpretation.md)已完成36组条件、128个新几何和3个初始化，101,376条指标重算及4次恢复重放最大差均为0。20 dB合并NMSE为密SBL−17.319 dB、最新条件DDPM−14.609 dB、新DDPM先验＋学习更新−2.015 dB。当前三轮组合在中高SNR未达到原方法精度；学习方差比同先验固定更新额外改善0.080 dB。[分步诊断](results/snr_comparison_20261020_v1_diagnostic_v2/report.md)检查了初始化误差结构、去噪时间与观测更新的影响。
+
+2026-10-20：[research_003五种子完成结果](results/research_003_review_20261020_v1/report.md)已核验。匹配场景的线性NMSE平均后转dB，密字典SBL为−11.704 dB、确定性精修为−11.560 dB、条件DDPM十六次平均为−10.627 dB。确定性精修在更少在线计算下接近密字典SBL；本轮DDPM未达到密字典SBL的误差。143,360条指标重算、4次采样重放完全一致。
+
 2026-10-20：SBL采用同一边缘似然目标的凸上界更新，以归一化一阶条件检查收敛；预算比较强制执行全部更新。确定性只保留无可靠度版本，跳过方差输入变换。[本轮39项检查及完整短流程](results/corrected_sbl_smoke_20261020_v1/report.md)通过，4,032条指标、12次模型重放均一致。正式配置暂缓尺寸扩展和范围偏移，先在原范围重建缓存、训练和比较。
 
 [原SBL排序异常诊断](results/sbl_dictionary_diagnostic_20261019_v1/report.md)确认原单步变化阈值会提前停止。以下历史性能数值均对应原SBL；修正后增益需重新核实。
 
-[修正后的固定观测复查](results/sbl_corrected_probe_20261020_v1/report.md)使用原两个验证几何和四种条件。8,000次更新后全部16个粗/密输出通过一阶条件，密字典比粗字典改善0.455–1.499 dB。4,000到8,000次的条件均值变化最多0.00196 dB。完整64几何和精修模型重训练由新服务器运行核实。
+[修正后的固定观测复查](results/sbl_corrected_probe_20261020_v1/report.md)使用原两个验证几何和四种条件。8,000次更新后全部16个粗/密输出通过一阶条件，密字典比粗字典改善0.455–1.499 dB。4,000到8,000次的条件均值变化最多0.00196 dB。后续完整验证与精修重训练见上述research_003结果。
 
 [research_002验证集总览](results/research_002_overview_20261019_v1/report.md)已绘制为一张四联图，提供PNG/PDF/SVG和可复现数据。32×32系统下，标量可靠度确定性精修比粗字典SBL改善0.888 dB；最佳扩散平均16次后改善0.352 dB，但在30 GHz的4种条件均弱于SBL。结果来自64个验证几何和3个训练初始化，最终阶段另用新初始化与筛选几何评价。
 
