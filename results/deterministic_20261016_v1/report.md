@@ -1,5 +1,7 @@
 # 第二轮：充分迭代粗估与可靠度对照
 
+归档状态（2026-10-21）：本目录保留历史评分、来源与核验；对应旧缓存已清理。现用完整运行见[清理记录](../../docs/CLEANUP_20261021.md)。
+
 ## Material Passport
 
 - Origin Skill: ARS-Codex experiment-agent

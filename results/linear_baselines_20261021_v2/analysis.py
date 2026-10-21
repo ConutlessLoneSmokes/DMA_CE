@@ -23,14 +23,7 @@ def avg(rows, key):
 def db(value):
     return 10*math.log10(value)
 
-hashes = {}
-sha_file = root / 'tmp/linear_baselines_server_v2.sha256'
-if sha_file.exists():
-    for line in sha_file.read_text(encoding='utf-8-sig').splitlines():
-        digest, path = line.split(None, 1)
-        hashes[path.strip()] = digest
-else:
-    hashes = json.loads((main/'server_file_hashes.json').read_text(encoding='utf-8'))
+hashes = json.loads((main/'server_file_hashes.json').read_text(encoding='utf-8'))
 for path, digest in hashes.items():
     assert hashlib.sha256((root/path).read_bytes()).hexdigest() == digest, path
 write(main / 'server_file_hashes.json', hashes)
@@ -199,6 +192,7 @@ write(main/'statistical_review.json',{'coverage':'11/11','inferential_claims':Fa
 write(main/'implementation_verification.json',{'unit_tests':60,'unit_tests_status':'passed',
     'command':'python -m unittest discover -s tests -v','mathematical_checks':'complex128 dense covariance mixture and per-tone equivalence',
     'smoke_run':'linear_baselines_smoke_20261021_v3','smoke_nmse_difference':0.,
+    'historical_smoke_record':'../../docs/IMPLEMENTATION_CHECKS.json',
     'source_files_match_archived_manifest':True,'server_exports_byte_verified':len(hashes),
     'figures_visually_checked':['linear_baselines.png','diagnostic_checks.png'],'measurement_timing':'not measured'})
 for folder, title, mode in [(probe,'原LS及LMMSE事后诊断','validate'),(counts,'训练样本数的验证集对照','validate')]:

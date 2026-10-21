@@ -1,7 +1,0 @@
-{
-  "stage_replays": 192,
-  "maximum_difference": 0.0,
-  "equal_mse_control_checked": true,
-  "row_null_decomposition_checked": true,
-  "models_hash_verified": true
-}

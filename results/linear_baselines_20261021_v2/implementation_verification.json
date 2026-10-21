@@ -11,5 +11,6 @@
     "linear_baselines.png",
     "diagnostic_checks.png"
   ],
-  "measurement_timing": "not measured"
+  "measurement_timing": "not measured",
+  "historical_smoke_record": "../../docs/IMPLEMENTATION_CHECKS.json"
 }

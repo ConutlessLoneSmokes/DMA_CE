@@ -1,0 +1,3801 @@
+{
+  "date": "2026-10-21",
+  "local": [
+    {
+      "run_id": "continuation_parent_smoke_20261019_v1",
+      "metadata": {
+        "config_resolved.json": {
+          "label": "five_step_smoke_implementation_only",
+          "seed": 20261018,
+          "device": "cuda",
+          "timeout_seconds": 1800,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              3000000000.0,
+              30000000000.0
+            ],
+            "antennas": 8,
+            "tones": 8,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              2,
+              4
+            ],
+            "snrs_db": [
+              10.0
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 2,
+            "range_min_m": 0.005,
+            "range_max_m": 0.02,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 6,
+            "validation": 4,
+            "screen": 4,
+            "screen_seed": 20261019
+          },
+          "sbl": {
+            "angle_points": 5,
+            "range_points": 2,
+            "iterations": 5,
+            "tolerance": 0.001,
+            "batch_size": 2
+          },
+          "learning": {
+            "steps": 2,
+            "batch_size": 2,
+            "width": 8,
+            "learning_rate": 0.001,
+            "diffusion_steps": 10,
+            "sampling_steps": 3,
+            "log_every": 2,
+            "variants": [
+              "deterministic_no_reliability",
+              "deterministic"
+            ]
+          },
+          "evaluation": {
+            "batch_size": 2,
+            "dc_multipliers": [
+              0.0,
+              0.1,
+              1.0
+            ],
+            "bootstrap_samples": 50,
+            "dc_selection_model": "deterministic_no_reliability",
+            "correct_coarse": true
+          },
+          "research": {
+            "training_seeds": [
+              101,
+              102
+            ],
+            "final_seeds": [
+              201,
+              202
+            ],
+            "shuffle_seeds": [
+              301,
+              302
+            ],
+            "checkpoints": [
+              2,
+              4,
+              6
+            ],
+            "eval_every": 2,
+            "training_stability_db": 100.0,
+            "train_curve_samples": 4,
+            "grids": [
+              {
+                "name": "coarse",
+                "angle_points": 5,
+                "range_points": 2
+              },
+              {
+                "name": "dense",
+                "angle_points": 9,
+                "range_points": 3
+              }
+            ],
+            "baseline_iterations": [
+              5,
+              10
+            ],
+            "stability": {
+              "overall_convergence": 0.0,
+              "context_convergence": 0.0,
+              "nmse_db": 100.0,
+              "variance_relative": 100.0
+            },
+            "sbl_budgets": [
+              2,
+              5
+            ],
+            "accuracy_tolerance_db": 0.1,
+            "averages": [
+              1,
+              4,
+              16
+            ],
+            "expansions": [
+              {
+                "name": "n16_k8",
+                "antennas": 16,
+                "tones": 8
+              },
+              {
+                "name": "n16_k16",
+                "antennas": 16,
+                "tones": 16
+              }
+            ],
+            "mismatches": [
+              {
+                "name": "paths3",
+                "channel": {
+                  "paths": 3
+                }
+              },
+              {
+                "name": "range_shift",
+                "channel": {
+                  "range_min_m": 0.01,
+                  "range_max_m": 0.03
+                }
+              }
+            ],
+            "communication": {
+              "coherence_symbols": 40,
+              "switch_symbols": 0.1
+            }
+          }
+        },
+        "environment.json": {
+          "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+          "platform": "Windows-10-10.0.26300-SP0",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cuda",
+          "cuda": "12.8",
+          "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+          "command": [
+            "scripts/run_research.py",
+            "--config",
+            "configs/research_smoke.json",
+            "--run-id",
+            "continuation_parent_smoke_20261019_v1",
+            "--stage",
+            "baseline"
+          ],
+          "git_commit": "f43cf15198bdc5cadc9d75ddb72add1a4122968f",
+          "source_zip_sha256": "255db57998e6d49d08f80f0274dffebb8d85a637d657ce01ca858e8ccfbfc3a8"
+        }
+      },
+      "errors": {}
+    },
+    {
+      "run_id": "continuation_smoke_20261019_v1",
+      "metadata": {
+        "config_resolved.json": {
+          "label": "five_step_smoke_implementation_only",
+          "seed": 20261018,
+          "device": "cuda",
+          "timeout_seconds": 1800,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              3000000000.0,
+              30000000000.0
+            ],
+            "antennas": 8,
+            "tones": 8,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              2,
+              4
+            ],
+            "snrs_db": [
+              10.0
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 2,
+            "range_min_m": 0.005,
+            "range_max_m": 0.02,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 6,
+            "validation": 4,
+            "screen": 4,
+            "screen_seed": 20261019
+          },
+          "sbl": {
+            "angle_points": 5,
+            "range_points": 2,
+            "iterations": 5,
+            "tolerance": 0.001,
+            "batch_size": 2
+          },
+          "learning": {
+            "steps": 2,
+            "batch_size": 2,
+            "width": 8,
+            "learning_rate": 0.001,
+            "diffusion_steps": 10,
+            "sampling_steps": 3,
+            "log_every": 2,
+            "variants": [
+              "deterministic_no_reliability",
+              "deterministic"
+            ]
+          },
+          "evaluation": {
+            "batch_size": 2,
+            "dc_multipliers": [
+              0.0,
+              0.1,
+              1.0
+            ],
+            "bootstrap_samples": 50,
+            "dc_selection_model": "deterministic_no_reliability",
+            "correct_coarse": true
+          },
+          "research": {
+            "training_seeds": [
+              101,
+              102
+            ],
+            "final_seeds": [
+              201,
+              202
+            ],
+            "shuffle_seeds": [
+              301,
+              302
+            ],
+            "checkpoints": [
+              2,
+              4,
+              6
+            ],
+            "eval_every": 2,
+            "training_stability_db": 100.0,
+            "train_curve_samples": 4,
+            "grids": [
+              {
+                "name": "coarse",
+                "angle_points": 5,
+                "range_points": 2
+              },
+              {
+                "name": "dense",
+                "angle_points": 9,
+                "range_points": 3
+              }
+            ],
+            "baseline_iterations": [
+              5,
+              10
+            ],
+            "stability": {
+              "overall_convergence": 0.0,
+              "context_convergence": 0.0,
+              "nmse_db": 100.0,
+              "variance_relative": 100.0
+            },
+            "sbl_budgets": [
+              2,
+              5
+            ],
+            "accuracy_tolerance_db": 0.1,
+            "averages": [
+              1,
+              4,
+              16
+            ],
+            "expansions": [
+              {
+                "name": "n16_k8",
+                "antennas": 16,
+                "tones": 8
+              },
+              {
+                "name": "n16_k16",
+                "antennas": 16,
+                "tones": 16
+              }
+            ],
+            "mismatches": [
+              {
+                "name": "paths3",
+                "channel": {
+                  "paths": 3
+                }
+              },
+              {
+                "name": "range_shift",
+                "channel": {
+                  "range_min_m": 0.01,
+                  "range_max_m": 0.03
+                }
+              }
+            ],
+            "communication": {
+              "coherence_symbols": 40,
+              "switch_symbols": 0.1
+            },
+            "diffusion_checkpoints": [
+              2,
+              4,
+              6,
+              8,
+              10
+            ]
+          }
+        },
+        "environment.json": {
+          "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+          "platform": "Windows-10-10.0.26300-SP0",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cuda",
+          "cuda": "12.8",
+          "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+          "command": [
+            "scripts/run_research.py",
+            "--continue-from",
+            "continuation_parent_smoke_20261019_v1",
+            "--diffusion-checkpoints",
+            "8",
+            "10",
+            "--run-id",
+            "continuation_smoke_20261019_v1",
+            "--stage",
+            "diffusion"
+          ],
+          "git_commit": "f43cf15198bdc5cadc9d75ddb72add1a4122968f",
+          "source_zip_sha256": "255db57998e6d49d08f80f0274dffebb8d85a637d657ce01ca858e8ccfbfc3a8"
+        }
+      },
+      "errors": {}
+    },
+    {
+      "run_id": "corrected_sbl_smoke_20261020_v1",
+      "metadata": {
+        "config_resolved.json": {
+          "label": "corrected_sbl_single_refinement_smoke_implementation_only",
+          "seed": 20261018,
+          "device": "cuda",
+          "timeout_seconds": 1800,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              3000000000.0,
+              30000000000.0
+            ],
+            "antennas": 8,
+            "tones": 8,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              2,
+              4
+            ],
+            "snrs_db": [
+              10.0
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 2,
+            "range_min_m": 0.005,
+            "range_max_m": 0.02,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 6,
+            "validation": 4,
+            "screen": 4,
+            "screen_seed": 20261019
+          },
+          "sbl": {
+            "angle_points": 5,
+            "range_points": 2,
+            "iterations": 5,
+            "tolerance": 0.001,
+            "batch_size": 2,
+            "early_stopping": false
+          },
+          "learning": {
+            "steps": 2,
+            "batch_size": 2,
+            "width": 8,
+            "learning_rate": 0.001,
+            "diffusion_steps": 10,
+            "sampling_steps": 3,
+            "log_every": 2,
+            "variants": [
+              "deterministic_no_reliability"
+            ]
+          },
+          "evaluation": {
+            "batch_size": 2,
+            "dc_multipliers": [
+              0.0,
+              0.1,
+              1.0
+            ],
+            "bootstrap_samples": 50,
+            "dc_selection_model": "deterministic_no_reliability",
+            "correct_coarse": true
+          },
+          "research": {
+            "training_seeds": [
+              101,
+              102
+            ],
+            "final_seeds": [
+              201,
+              202
+            ],
+            "shuffle_seeds": [
+              301,
+              302
+            ],
+            "checkpoints": [
+              2,
+              4,
+              6
+            ],
+            "eval_every": 2,
+            "training_stability_db": 100.0,
+            "train_curve_samples": 4,
+            "grids": [
+              {
+                "name": "coarse",
+                "angle_points": 5,
+                "range_points": 2
+              },
+              {
+                "name": "dense",
+                "angle_points": 9,
+                "range_points": 3
+              }
+            ],
+            "baseline_iterations": [
+              5,
+              10
+            ],
+            "stability": {
+              "overall_convergence": 0.0,
+              "context_convergence": 0.0,
+              "nmse_db": 100.0,
+              "variance_relative": 100.0
+            },
+            "sbl_budgets": [
+              2,
+              5
+            ],
+            "accuracy_tolerance_db": 0.1,
+            "averages": [
+              1,
+              4,
+              16
+            ],
+            "expansions": [
+              {
+                "name": "n16_k8",
+                "antennas": 16,
+                "tones": 8
+              },
+              {
+                "name": "n16_k16",
+                "antennas": 16,
+                "tones": 16
+              }
+            ],
+            "mismatches": [
+              {
+                "name": "paths3",
+                "channel": {
+                  "paths": 3
+                }
+              },
+              {
+                "name": "range_shift",
+                "channel": {
+                  "range_min_m": 0.01,
+                  "range_max_m": 0.03
+                }
+              }
+            ],
+            "communication": {
+              "coherence_symbols": 40,
+              "switch_symbols": 0.1
+            }
+          }
+        },
+        "environment.json": {
+          "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+          "platform": "Windows-10-10.0.26300-SP0",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cuda",
+          "cuda": "12.8",
+          "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+          "command": [
+            ".\\scripts\\run_research.py",
+            "--config",
+            ".\\configs\\research_smoke.json",
+            "--run-id",
+            "corrected_sbl_smoke_20261020_v1"
+          ],
+          "git_commit": "a77d5d15f1b1ca48726bfdddfe0ec6da549201f2",
+          "source_zip_sha256": "95b35bbe5ac4e96d8c7bb26d96ec46f2d29afe38677000f3e1ca0b716bc63ee8"
+        }
+      },
+      "errors": {}
+    },
+    {
+      "run_id": "deterministic_20261016_v1",
+      "metadata": {
+        "config_resolved.json": {
+          "label": "deterministic_reliability_screen_single_seed",
+          "seed": 20261016,
+          "device": "cuda",
+          "timeout_seconds": 1800,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              3000000000.0,
+              30000000000.0
+            ],
+            "antennas": 32,
+            "tones": 32,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              8,
+              16
+            ],
+            "snrs_db": [
+              10.0,
+              20.0
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 3,
+            "range_min_m": 0.1,
+            "range_max_m": 0.4,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 512,
+            "validation": 64,
+            "screen": 128,
+            "screen_seed": 20261017
+          },
+          "sbl": {
+            "angle_points": 49,
+            "range_points": 7,
+            "iterations": 1000,
+            "tolerance": 0.001,
+            "batch_size": 32
+          },
+          "learning": {
+            "steps": 2000,
+            "batch_size": 32,
+            "width": 32,
+            "learning_rate": 0.001,
+            "diffusion_steps": 100,
+            "sampling_steps": 20,
+            "log_every": 100,
+            "variants": [
+              "deterministic_no_reliability",
+              "deterministic"
+            ]
+          },
+          "evaluation": {
+            "batch_size": 32,
+            "dc_multipliers": [
+              0.0,
+              0.1,
+              1.0,
+              10.0
+            ],
+            "bootstrap_samples": 2000,
+            "dc_selection_model": "deterministic_no_reliability",
+            "correct_coarse": true
+          },
+          "sbl_budget_selection": {
+            "run_id": "sbl_budget_20261016_v1",
+            "selection_sha256": "4bad893d14b22e0b34a916dc4d979cf71ed21ebf3fcd6cbe0ba97c2a01adf6c3"
+          }
+        },
+        "environment.json": {
+          "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+          "platform": "Windows-10-10.0.26300-SP0",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cuda",
+          "cuda": "12.8",
+          "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+          "command": [
+            "scripts/run_experiment.py",
+            "--config",
+            "configs/deterministic.json",
+            "--run-id",
+            "deterministic_20261016_v1"
+          ],
+          "training_seed": 20261016
+        },
+        "status.json": {
+          "status": "complete",
+          "label": "deterministic_reliability_screen_single_seed",
+          "elapsed_seconds": 763.3442883491516,
+          "metrics_rows": 8192,
+          "data_sha256": "bd7ea1640ac83cd50470eb89eeca02c21b252c7e8df5e5c8f5f5254be1792395",
+          "frozen_validation_sha256": "042dc4731b5606259ede52da5ccc37fa3beb103447f0e92f18114e2920bb0b88"
+        },
+        "frozen_validation.json": {
+          "selected_multiplier": 0.0,
+          "prior_complex_variance": 0.0,
+          "selection_split": "validation",
+          "selection_model": "deterministic_no_reliability",
+          "shared_by_all_methods": true,
+          "validation_mean_nmse_linear": {
+            "0.0": 0.09634962109885237,
+            "0.1": 0.09668056607415565,
+            "1.0": 0.10498482278671872,
+            "10.0": 0.14396025526002632
+          },
+          "screening_used": false,
+          "data_sha256": "bd7ea1640ac83cd50470eb89eeca02c21b252c7e8df5e5c8f5f5254be1792395",
+          "models": {
+            "deterministic_no_reliability": "7b27cf17754eda5b42ace5bc4d4681ad7c114815bab4866300bad9ad6b4b3893",
+            "deterministic": "e2d0629adf4aa0b385cbec62aa0ba2f41723c6905a82149b43dbba138f2b0379"
+          },
+          "methods": [
+            "coarse",
+            "coarse_dc",
+            "deterministic_no_reliability",
+            "deterministic_no_reliability_dc",
+            "deterministic",
+            "deterministic_dc",
+            "deterministic_shuffled",
+            "deterministic_shuffled_dc"
+          ],
+          "frozen_at_unix": 1792144060.252665,
+          "geometry_hashes": {
+            "train": "280b0576663295e69690de1c1e2382f2abfe1c72cb748af07f0c4d3ff9d54e74",
+            "validation": "3bcc3034585475e3871403f6d39b633d65e7f46ce5f4a534e1398bd296de3b96",
+            "screen": "6592e1196b49958d397d7c806d8026d1d8ac4a4d763f0830e5cf68b010f4d743"
+          }
+        }
+      },
+      "errors": {}
+    },
+    {
+      "run_id": "deterministic_smoke_20261016_v1",
+      "metadata": {
+        "config_resolved.json": {
+          "label": "connectivity_deterministic_controls",
+          "seed": 20261017,
+          "device": "cuda",
+          "timeout_seconds": 1800,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              30000000000.0
+            ],
+            "antennas": 16,
+            "tones": 16,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              4,
+              8
+            ],
+            "snrs_db": [
+              10.0
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 3,
+            "range_min_m": 0.03,
+            "range_max_m": 0.1,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 16,
+            "validation": 8,
+            "screen": 8,
+            "screen_seed": 20261017
+          },
+          "sbl": {
+            "angle_points": 17,
+            "range_points": 4,
+            "iterations": 20,
+            "tolerance": 0.001,
+            "batch_size": 8
+          },
+          "learning": {
+            "steps": 20,
+            "batch_size": 8,
+            "width": 16,
+            "learning_rate": 0.001,
+            "diffusion_steps": 100,
+            "sampling_steps": 10,
+            "log_every": 10,
+            "variants": [
+              "deterministic_no_reliability",
+              "deterministic"
+            ]
+          },
+          "evaluation": {
+            "batch_size": 8,
+            "dc_multipliers": [
+              0.0,
+              0.1,
+              1.0,
+              10.0
+            ],
+            "bootstrap_samples": 200,
+            "dc_selection_model": "deterministic_no_reliability",
+            "correct_coarse": true
+          }
+        },
+        "environment.json": {
+          "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+          "platform": "Windows-10-10.0.26300-SP0",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cuda",
+          "cuda": "12.8",
+          "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+          "command": [
+            "scripts/run_experiment.py",
+            "--config",
+            "configs/deterministic_smoke.json",
+            "--run-id",
+            "deterministic_smoke_20261016_v1"
+          ],
+          "training_seed": 20261017
+        },
+        "status.json": {
+          "status": "complete",
+          "label": "connectivity_deterministic_controls",
+          "elapsed_seconds": 3.987133264541626,
+          "metrics_rows": 128,
+          "data_sha256": "0d3755f2b164b392f26faf8fbb0a0b6b9ca6709046f87a4f28e89fe8e1d744ad",
+          "frozen_validation_sha256": "6ec3a041ed1afdfe928bde02e7ab9ebb6a751478e75a965b6a0b3f2a8929d1ba"
+        },
+        "frozen_validation.json": {
+          "selected_multiplier": 0.0,
+          "prior_complex_variance": 0.0,
+          "selection_split": "validation",
+          "selection_model": "deterministic_no_reliability",
+          "shared_by_all_methods": true,
+          "validation_mean_nmse_linear": {
+            "0.0": 0.5652278503403068,
+            "0.1": 0.5660186875611544,
+            "1.0": 0.5885087074711919,
+            "10.0": 0.650044159963727
+          },
+          "screening_used": false,
+          "data_sha256": "0d3755f2b164b392f26faf8fbb0a0b6b9ca6709046f87a4f28e89fe8e1d744ad",
+          "models": {
+            "deterministic_no_reliability": "0eec1d476d6043b1ff4709424362d09cc48e7330a540c806a23c71e63deec642",
+            "deterministic": "a8a9cd7230a0a543eb70ab179f86488a4adb3c40f902484fb654bdee81d0bfa0"
+          },
+          "methods": [
+            "coarse",
+            "coarse_dc",
+            "deterministic_no_reliability",
+            "deterministic_no_reliability_dc",
+            "deterministic",
+            "deterministic_dc",
+            "deterministic_shuffled",
+            "deterministic_shuffled_dc"
+          ],
+          "frozen_at_unix": 1792143218.5115325,
+          "geometry_hashes": {
+            "train": "f4a5c46a3d63abebc7b0790d9851d1ff8c300a4197234390d91849082dca23bc",
+            "validation": "57c095451099d80e1b6bbb94a1a2f72dc7b55a98393c378a64ea460059dd323e",
+            "screen": "811deb0d36e7582da75b0c39ac917713b1fe4973d0e9842f6c7893ebd107df15"
+          }
+        }
+      },
+      "errors": {}
+    },
+    {
+      "run_id": "linear_baselines_smoke_20261020_v1",
+      "metadata": {
+        "config_resolved.json": {
+          "label": "linear_baseline_implementation_check",
+          "seed": 20261018,
+          "device": "cpu",
+          "timeout_seconds": 120,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              3000000000.0,
+              30000000000.0
+            ],
+            "antennas": 8,
+            "tones": 8,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              2,
+              4
+            ],
+            "snrs_db": [
+              -10,
+              10,
+              30
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 2,
+            "range_min_m": 0.005,
+            "range_max_m": 0.02,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 6,
+            "validation": 4,
+            "screen": 4,
+            "screen_seed": 20269022
+          },
+          "sbl": {
+            "angle_points": 5,
+            "range_points": 2,
+            "iterations": 5,
+            "tolerance": 0.001,
+            "batch_size": 2,
+            "early_stopping": false
+          },
+          "learning": {
+            "steps": 2,
+            "batch_size": 2,
+            "width": 8,
+            "learning_rate": 0.001,
+            "diffusion_steps": 10,
+            "sampling_steps": 3,
+            "log_every": 2,
+            "variants": [
+              "deterministic_no_reliability"
+            ]
+          },
+          "evaluation": {
+            "batch_size": 2,
+            "dc_multipliers": [
+              0.0,
+              0.1,
+              1.0
+            ],
+            "bootstrap_samples": 50,
+            "dc_selection_model": "deterministic_no_reliability",
+            "correct_coarse": true
+          },
+          "research": {
+            "training_seeds": [
+              101,
+              102
+            ],
+            "final_seeds": [
+              201,
+              202
+            ],
+            "shuffle_seeds": [
+              301,
+              302
+            ],
+            "checkpoints": [
+              2,
+              4,
+              6
+            ],
+            "eval_every": 2,
+            "training_stability_db": 100.0,
+            "train_curve_samples": 4,
+            "grids": [
+              {
+                "name": "coarse",
+                "angle_points": 5,
+                "range_points": 2
+              },
+              {
+                "name": "dense",
+                "angle_points": 9,
+                "range_points": 3
+              }
+            ],
+            "baseline_iterations": [
+              5,
+              10
+            ],
+            "stability": {
+              "overall_convergence": 0.0,
+              "context_convergence": 0.0,
+              "nmse_db": 100.0,
+              "variance_relative": 100.0
+            },
+            "sbl_budgets": [
+              2,
+              5
+            ],
+            "accuracy_tolerance_db": 0.1,
+            "averages": [
+              1,
+              4,
+              16
+            ],
+            "expansions": [
+              {
+                "name": "n16_k8",
+                "antennas": 16,
+                "tones": 8
+              },
+              {
+                "name": "n16_k16",
+                "antennas": 16,
+                "tones": 16
+              }
+            ],
+            "mismatches": [
+              {
+                "name": "paths3",
+                "channel": {
+                  "paths": 3
+                }
+              },
+              {
+                "name": "range_shift",
+                "channel": {
+                  "range_min_m": 0.01,
+                  "range_max_m": 0.03
+                }
+              }
+            ],
+            "communication": {
+              "coherence_symbols": 40,
+              "switch_symbols": 0.1
+            }
+          },
+          "comparison": {
+            "snrs_db": [
+              -10,
+              10,
+              30
+            ],
+            "seeds": [
+              201
+            ],
+            "training_scenes": 6,
+            "validation_scenes": 4,
+            "screen_scenes": 4,
+            "screen_seed": 20268940,
+            "prior_steps": 12,
+            "prior_checkpoints": [
+              4,
+              8,
+              12
+            ],
+            "update_steps": 8,
+            "update_checkpoints": [
+              2,
+              4,
+              8
+            ],
+            "update_width": 4,
+            "structured_iterations": 3,
+            "strength_grid": [
+              0.1,
+              1.0
+            ],
+            "batch_size": 2,
+            "solver_batch_size": 2,
+            "sbl_max_iterations": 10,
+            "sbl_tolerance": 0.001,
+            "bootstrap_samples": 50,
+            "log_every": 4,
+            "timeout_seconds": 900,
+            "implementation_only": true,
+            "parent_run": "corrected_sbl_smoke_20261020_v1",
+            "training_snrs_db": [
+              10.0
+            ]
+          },
+          "linear_baselines": {
+            "training_scenes": 6,
+            "validation_scenes": 4,
+            "screen_scenes": 4,
+            "screen_seed": 20269022,
+            "frequency_shrinkage_grid": [
+              0.0,
+              0.5,
+              1.0
+            ],
+            "timeout_seconds": 120,
+            "implementation_only": true,
+            "source_snr_run": "snr_comparison_smoke_20261020_v2",
+            "selection": "one shrinkage strength per bandwidth, mean validation NMSE over all SNRs and configuration counts"
+          }
+        },
+        "environment.json": {
+          "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+          "platform": "Windows-10-10.0.26300-SP0",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cpu",
+          "cuda": "12.8",
+          "gpu": null,
+          "command": [
+            "scripts/run_linear_baselines.py",
+            "--config",
+            "configs/linear_baselines_smoke.json",
+            "--parent",
+            "snr_comparison_smoke_20261020_v2",
+            "--run-id",
+            "linear_baselines_smoke_20261020_v1",
+            "--device",
+            "cpu"
+          ],
+          "git_commit": "48a6094779f4a22c3894f1f0707b4f8f18c4df2a",
+          "source_zip_sha256": "3422746810e6b6512804e823fc54f4fe289a4fc3e69783a8c5388dfcbe0ddd5f"
+        },
+        "status.json": {
+          "status": "complete",
+          "metrics_rows": 192,
+          "maximum_recomputed_nmse_difference": 0.0,
+          "ls_decomposition_checks": 48,
+          "maximum_ls_decomposition_difference": 5.684341886080802e-14,
+          "fresh_independent_geometries": 4,
+          "validation_frozen_before_screen": true,
+          "statistics_and_source_cache_unchanged": true,
+          "elapsed_seconds": 1.6075661182403564
+        }
+      },
+      "errors": {}
+    },
+    {
+      "run_id": "linear_baselines_smoke_20261020_v2",
+      "metadata": {
+        "config_resolved.json": {
+          "label": "linear_baseline_implementation_check",
+          "seed": 20261018,
+          "device": "cpu",
+          "timeout_seconds": 120,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              3000000000.0,
+              30000000000.0
+            ],
+            "antennas": 8,
+            "tones": 8,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              2,
+              4
+            ],
+            "snrs_db": [
+              -10,
+              10,
+              30
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 2,
+            "range_min_m": 0.005,
+            "range_max_m": 0.02,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 6,
+            "validation": 4,
+            "screen": 4,
+            "screen_seed": 20269022
+          },
+          "sbl": {
+            "angle_points": 5,
+            "range_points": 2,
+            "iterations": 5,
+            "tolerance": 0.001,
+            "batch_size": 2,
+            "early_stopping": false
+          },
+          "learning": {
+            "steps": 2,
+            "batch_size": 2,
+            "width": 8,
+            "learning_rate": 0.001,
+            "diffusion_steps": 10,
+            "sampling_steps": 3,
+            "log_every": 2,
+            "variants": [
+              "deterministic_no_reliability"
+            ]
+          },
+          "evaluation": {
+            "batch_size": 2,
+            "dc_multipliers": [
+              0.0,
+              0.1,
+              1.0
+            ],
+            "bootstrap_samples": 50,
+            "dc_selection_model": "deterministic_no_reliability",
+            "correct_coarse": true
+          },
+          "research": {
+            "training_seeds": [
+              101,
+              102
+            ],
+            "final_seeds": [
+              201,
+              202
+            ],
+            "shuffle_seeds": [
+              301,
+              302
+            ],
+            "checkpoints": [
+              2,
+              4,
+              6
+            ],
+            "eval_every": 2,
+            "training_stability_db": 100.0,
+            "train_curve_samples": 4,
+            "grids": [
+              {
+                "name": "coarse",
+                "angle_points": 5,
+                "range_points": 2
+              },
+              {
+                "name": "dense",
+                "angle_points": 9,
+                "range_points": 3
+              }
+            ],
+            "baseline_iterations": [
+              5,
+              10
+            ],
+            "stability": {
+              "overall_convergence": 0.0,
+              "context_convergence": 0.0,
+              "nmse_db": 100.0,
+              "variance_relative": 100.0
+            },
+            "sbl_budgets": [
+              2,
+              5
+            ],
+            "accuracy_tolerance_db": 0.1,
+            "averages": [
+              1,
+              4,
+              16
+            ],
+            "expansions": [
+              {
+                "name": "n16_k8",
+                "antennas": 16,
+                "tones": 8
+              },
+              {
+                "name": "n16_k16",
+                "antennas": 16,
+                "tones": 16
+              }
+            ],
+            "mismatches": [
+              {
+                "name": "paths3",
+                "channel": {
+                  "paths": 3
+                }
+              },
+              {
+                "name": "range_shift",
+                "channel": {
+                  "range_min_m": 0.01,
+                  "range_max_m": 0.03
+                }
+              }
+            ],
+            "communication": {
+              "coherence_symbols": 40,
+              "switch_symbols": 0.1
+            }
+          },
+          "comparison": {
+            "snrs_db": [
+              -10,
+              10,
+              30
+            ],
+            "seeds": [
+              201
+            ],
+            "training_scenes": 6,
+            "validation_scenes": 4,
+            "screen_scenes": 4,
+            "screen_seed": 20268940,
+            "prior_steps": 12,
+            "prior_checkpoints": [
+              4,
+              8,
+              12
+            ],
+            "update_steps": 8,
+            "update_checkpoints": [
+              2,
+              4,
+              8
+            ],
+            "update_width": 4,
+            "structured_iterations": 3,
+            "strength_grid": [
+              0.1,
+              1.0
+            ],
+            "batch_size": 2,
+            "solver_batch_size": 2,
+            "sbl_max_iterations": 10,
+            "sbl_tolerance": 0.001,
+            "bootstrap_samples": 50,
+            "log_every": 4,
+            "timeout_seconds": 900,
+            "implementation_only": true,
+            "parent_run": "corrected_sbl_smoke_20261020_v1",
+            "training_snrs_db": [
+              10.0
+            ]
+          },
+          "linear_baselines": {
+            "training_scenes": 6,
+            "validation_scenes": 4,
+            "screen_scenes": 4,
+            "screen_seed": 20269022,
+            "frequency_shrinkage_grid": [
+              0.0,
+              0.5,
+              1.0
+            ],
+            "timeout_seconds": 120,
+            "implementation_only": true,
+            "source_snr_run": "snr_comparison_smoke_20261020_v2",
+            "timing": "not measured; shared metric timing fields are placeholders",
+            "selection": "one shrinkage strength per bandwidth, mean validation NMSE over all SNRs and configuration counts"
+          }
+        },
+        "environment.json": {
+          "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+          "platform": "Windows-10-10.0.26300-SP0",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cpu",
+          "cuda": "12.8",
+          "gpu": null,
+          "command": [
+            "scripts/run_linear_baselines.py",
+            "--config",
+            "configs/linear_baselines_smoke.json",
+            "--parent",
+            "snr_comparison_smoke_20261020_v2",
+            "--run-id",
+            "linear_baselines_smoke_20261020_v2",
+            "--device",
+            "cpu"
+          ],
+          "git_commit": "48a6094779f4a22c3894f1f0707b4f8f18c4df2a",
+          "source_zip_sha256": "5ee741c3fe1c97e10238910038541df22c5700d99e855b27c51f00455009c6c8"
+        },
+        "status.json": {
+          "status": "complete",
+          "metrics_rows": 192,
+          "maximum_recomputed_nmse_difference": 0.0,
+          "maximum_original_statistics_difference": 1.6196978165585978e-12,
+          "ls_decomposition_checks": 48,
+          "maximum_ls_decomposition_difference": 5.684341886080802e-14,
+          "fresh_independent_geometries": 4,
+          "validation_frozen_before_screen": true,
+          "common_observation_checks": 48,
+          "statistics_and_source_cache_unchanged": true,
+          "elapsed_seconds": 2.804253101348877
+        }
+      },
+      "errors": {}
+    },
+    {
+      "run_id": "linear_baselines_smoke_20261021_v3",
+      "metadata": {
+        "config_resolved.json": {
+          "label": "linear_baseline_implementation_check",
+          "seed": 20261018,
+          "device": "cpu",
+          "timeout_seconds": 120,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              3000000000.0,
+              30000000000.0
+            ],
+            "antennas": 8,
+            "tones": 8,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              2,
+              4
+            ],
+            "snrs_db": [
+              -10,
+              10,
+              30
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 2,
+            "range_min_m": 0.005,
+            "range_max_m": 0.02,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 6,
+            "validation": 4,
+            "screen": 4,
+            "screen_seed": 20269022
+          },
+          "sbl": {
+            "angle_points": 5,
+            "range_points": 2,
+            "iterations": 5,
+            "tolerance": 0.001,
+            "batch_size": 2,
+            "early_stopping": false
+          },
+          "learning": {
+            "steps": 2,
+            "batch_size": 2,
+            "width": 8,
+            "learning_rate": 0.001,
+            "diffusion_steps": 10,
+            "sampling_steps": 3,
+            "log_every": 2,
+            "variants": [
+              "deterministic_no_reliability"
+            ]
+          },
+          "evaluation": {
+            "batch_size": 2,
+            "dc_multipliers": [
+              0.0,
+              0.1,
+              1.0
+            ],
+            "bootstrap_samples": 50,
+            "dc_selection_model": "deterministic_no_reliability",
+            "correct_coarse": true
+          },
+          "research": {
+            "training_seeds": [
+              101,
+              102
+            ],
+            "final_seeds": [
+              201,
+              202
+            ],
+            "shuffle_seeds": [
+              301,
+              302
+            ],
+            "checkpoints": [
+              2,
+              4,
+              6
+            ],
+            "eval_every": 2,
+            "training_stability_db": 100.0,
+            "train_curve_samples": 4,
+            "grids": [
+              {
+                "name": "coarse",
+                "angle_points": 5,
+                "range_points": 2
+              },
+              {
+                "name": "dense",
+                "angle_points": 9,
+                "range_points": 3
+              }
+            ],
+            "baseline_iterations": [
+              5,
+              10
+            ],
+            "stability": {
+              "overall_convergence": 0.0,
+              "context_convergence": 0.0,
+              "nmse_db": 100.0,
+              "variance_relative": 100.0
+            },
+            "sbl_budgets": [
+              2,
+              5
+            ],
+            "accuracy_tolerance_db": 0.1,
+            "averages": [
+              1,
+              4,
+              16
+            ],
+            "expansions": [
+              {
+                "name": "n16_k8",
+                "antennas": 16,
+                "tones": 8
+              },
+              {
+                "name": "n16_k16",
+                "antennas": 16,
+                "tones": 16
+              }
+            ],
+            "mismatches": [
+              {
+                "name": "paths3",
+                "channel": {
+                  "paths": 3
+                }
+              },
+              {
+                "name": "range_shift",
+                "channel": {
+                  "range_min_m": 0.01,
+                  "range_max_m": 0.03
+                }
+              }
+            ],
+            "communication": {
+              "coherence_symbols": 40,
+              "switch_symbols": 0.1
+            }
+          },
+          "comparison": {
+            "snrs_db": [
+              -10,
+              10,
+              30
+            ],
+            "seeds": [
+              201
+            ],
+            "training_scenes": 6,
+            "validation_scenes": 4,
+            "screen_scenes": 4,
+            "screen_seed": 20268940,
+            "prior_steps": 12,
+            "prior_checkpoints": [
+              4,
+              8,
+              12
+            ],
+            "update_steps": 8,
+            "update_checkpoints": [
+              2,
+              4,
+              8
+            ],
+            "update_width": 4,
+            "structured_iterations": 3,
+            "strength_grid": [
+              0.1,
+              1.0
+            ],
+            "batch_size": 2,
+            "solver_batch_size": 2,
+            "sbl_max_iterations": 10,
+            "sbl_tolerance": 0.001,
+            "bootstrap_samples": 50,
+            "log_every": 4,
+            "timeout_seconds": 900,
+            "implementation_only": true,
+            "parent_run": "corrected_sbl_smoke_20261020_v1",
+            "training_snrs_db": [
+              10.0
+            ]
+          },
+          "linear_baselines": {
+            "training_scenes": 6,
+            "validation_scenes": 4,
+            "screen_scenes": 4,
+            "screen_seed": 20269022,
+            "frequency_shrinkage_grid": [
+              0.0,
+              0.5,
+              1.0
+            ],
+            "timeout_seconds": 120,
+            "implementation_only": true,
+            "source_snr_run": "snr_comparison_smoke_20261020_v2",
+            "timing": "not measured; shared metric timing fields are placeholders",
+            "selection": "one shrinkage strength per bandwidth, mean validation NMSE over all SNRs and configuration counts"
+          }
+        },
+        "environment.json": {
+          "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+          "platform": "Windows-10-10.0.26300-SP0",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cpu",
+          "cuda": "12.8",
+          "gpu": null,
+          "command": [
+            "scripts/run_linear_baselines.py",
+            "--config",
+            "configs/linear_baselines_smoke.json",
+            "--parent",
+            "snr_comparison_smoke_20261020_v2",
+            "--run-id",
+            "linear_baselines_smoke_20261021_v3",
+            "--device",
+            "cpu"
+          ],
+          "git_commit": "48a6094779f4a22c3894f1f0707b4f8f18c4df2a",
+          "source_zip_sha256": "3f2133961d47cc841e9002f1b9a68cdfac352635fdc9637a3d228e23fd616116"
+        },
+        "status.json": {
+          "status": "complete",
+          "metrics_rows": 192,
+          "maximum_recomputed_nmse_difference": 0.0,
+          "maximum_original_statistics_difference": 1.6196978165585978e-12,
+          "ls_decomposition_checks": 48,
+          "maximum_ls_decomposition_difference": 5.684341886080802e-14,
+          "fresh_independent_geometries": 4,
+          "validation_frozen_before_screen": true,
+          "common_observation_checks": 48,
+          "statistics_and_source_cache_unchanged": true,
+          "elapsed_seconds": 1.9243724346160889
+        }
+      },
+      "errors": {}
+    },
+    {
+      "run_id": "pilot_20261016_v1",
+      "metadata": {
+        "config_resolved.json": {
+          "label": "exploratory_single_seed",
+          "seed": 20261016,
+          "device": "cuda",
+          "timeout_seconds": 1800,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              3000000000.0,
+              30000000000.0
+            ],
+            "antennas": 32,
+            "tones": 32,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              8,
+              16
+            ],
+            "snrs_db": [
+              10.0,
+              20.0
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 3,
+            "range_min_m": 0.1,
+            "range_max_m": 0.4,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 512,
+            "validation": 64,
+            "screen": 128
+          },
+          "sbl": {
+            "angle_points": 49,
+            "range_points": 7,
+            "iterations": 100,
+            "tolerance": 0.001,
+            "batch_size": 32
+          },
+          "learning": {
+            "steps": 2000,
+            "batch_size": 32,
+            "width": 32,
+            "learning_rate": 0.001,
+            "diffusion_steps": 100,
+            "sampling_steps": 20,
+            "log_every": 100
+          },
+          "evaluation": {
+            "batch_size": 32,
+            "dc_multipliers": [
+              0.1,
+              1.0,
+              10.0
+            ],
+            "bootstrap_samples": 2000
+          }
+        },
+        "environment.json": {
+          "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+          "platform": "Windows-10-10.0.26300-SP0",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cuda",
+          "cuda": "12.8",
+          "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+          "command": [
+            "scripts/run_experiment.py",
+            "--config",
+            "configs/pilot.json",
+            "--run-id",
+            "pilot_20261016_v1"
+          ],
+          "training_seed": 20261016
+        },
+        "status.json": {
+          "status": "complete",
+          "label": "exploratory_single_seed",
+          "elapsed_seconds": 207.1069974899292,
+          "metrics_rows": 11264,
+          "data_sha256": "d0caa0fb82b4468d452da4444d53d4bd32f1c2838aa3076c42cd04a95783e6e4",
+          "frozen_validation_sha256": "bbf8f12546294d42945d8363c15d3e6737de0c3c2c13ddb91b8d8aceba648316"
+        },
+        "frozen_validation.json": {
+          "selected_multiplier": 1.0,
+          "prior_complex_variance": 0.28758081793785095,
+          "selection_split": "validation",
+          "selection_model": "residual",
+          "shared_by_all_methods": true,
+          "validation_mean_nmse_linear": {
+            "0.1": 0.494412119507615,
+            "1.0": 0.45441037759155734,
+            "10.0": 0.4695089503074996
+          },
+          "screening_used": false,
+          "data_sha256": "d0caa0fb82b4468d452da4444d53d4bd32f1c2838aa3076c42cd04a95783e6e4",
+          "models": {
+            "conditional": "f1313846251071e7cb59a03ed3487e3d6e10cda865337c16ebf400b4359e6654",
+            "residual": "30a3783579ee7919ce571cf74ea0e5809d1f00da8fce86b5f401807fbb694426",
+            "reliable_residual": "9877a900e4fc914a87ea0d474074c10cd0d1dd9429e0f8e4398a60e8d12130ee",
+            "deterministic": "62ef4fd7728aa0a45264c40f24a889734bcec619bbb250044b8bcfccf743392b"
+          },
+          "frozen_at_unix": 1792140238.2695515,
+          "geometry_hashes": {
+            "train": "280b0576663295e69690de1c1e2382f2abfe1c72cb748af07f0c4d3ff9d54e74",
+            "validation": "3bcc3034585475e3871403f6d39b633d65e7f46ce5f4a534e1398bd296de3b96",
+            "screen": "b3d98264c195cb347126460fb41180ce8ef04ef7523625afe8895024657ca6a3"
+          }
+        }
+      },
+      "errors": {}
+    },
+    {
+      "run_id": "research_002_overview_20261019_v1",
+      "metadata": {
+        "config_resolved.json": {
+          "label": "five_step_validation_selected_study",
+          "seed": 20261016,
+          "device": "cuda",
+          "timeout_seconds": 604800,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              3000000000.0,
+              30000000000.0
+            ],
+            "antennas": 32,
+            "tones": 32,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              8,
+              16
+            ],
+            "snrs_db": [
+              10.0,
+              20.0
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 3,
+            "range_min_m": 0.1,
+            "range_max_m": 0.4,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 512,
+            "validation": 64,
+            "screen": 128,
+            "screen_seed": 20261018
+          },
+          "sbl": {
+            "angle_points": 49,
+            "range_points": 7,
+            "iterations": 1000,
+            "tolerance": 0.001,
+            "batch_size": 16
+          },
+          "learning": {
+            "steps": 2000,
+            "batch_size": 32,
+            "width": 32,
+            "learning_rate": 0.001,
+            "diffusion_steps": 100,
+            "sampling_steps": 20,
+            "log_every": 500,
+            "variants": [
+              "deterministic_no_reliability",
+              "deterministic"
+            ]
+          },
+          "evaluation": {
+            "batch_size": 32,
+            "dc_multipliers": [
+              0.0,
+              0.1,
+              1.0,
+              10.0
+            ],
+            "bootstrap_samples": 2000,
+            "dc_selection_model": "deterministic_no_reliability",
+            "correct_coarse": true
+          },
+          "research": {
+            "training_seeds": [
+              101,
+              102,
+              103
+            ],
+            "final_seeds": [
+              201,
+              202,
+              203,
+              204,
+              205
+            ],
+            "shuffle_seeds": [
+              301,
+              302,
+              303,
+              304,
+              305
+            ],
+            "checkpoints": [
+              2000,
+              8000,
+              20000
+            ],
+            "eval_every": 2000,
+            "training_stability_db": 0.1,
+            "train_curve_samples": 128,
+            "grids": [
+              {
+                "name": "coarse",
+                "angle_points": 49,
+                "range_points": 7
+              },
+              {
+                "name": "dense",
+                "angle_points": 97,
+                "range_points": 13
+              }
+            ],
+            "baseline_iterations": [
+              1000,
+              2000,
+              4000,
+              8000
+            ],
+            "stability": {
+              "overall_convergence": 0.95,
+              "context_convergence": 0.9,
+              "nmse_db": 0.1,
+              "variance_relative": 0.05
+            },
+            "sbl_budgets": [
+              100,
+              300,
+              500,
+              1000
+            ],
+            "accuracy_tolerance_db": 0.1,
+            "averages": [
+              1,
+              4,
+              16
+            ],
+            "expansions": [
+              {
+                "name": "n128_k32",
+                "antennas": 128,
+                "tones": 32
+              },
+              {
+                "name": "n128_k128",
+                "antennas": 128,
+                "tones": 128
+              }
+            ],
+            "mismatches": [
+              {
+                "name": "paths5",
+                "channel": {
+                  "paths": 5
+                }
+              },
+              {
+                "name": "range_shift",
+                "channel": {
+                  "range_min_m": 0.2,
+                  "range_max_m": 0.6
+                }
+              }
+            ],
+            "communication": {
+              "coherence_symbols": 200,
+              "switch_symbols": 0.1
+            },
+            "diffusion_checkpoints": [
+              2000,
+              8000,
+              20000,
+              30000,
+              40000
+            ]
+          }
+        }
+      },
+      "errors": {}
+    },
+    {
+      "run_id": "research_shape128_20261018_v1",
+      "metadata": {
+        "config_resolved.json": {
+          "label": "shape128_two_scene_implementation_only",
+          "seed": 20261016,
+          "device": "cuda",
+          "timeout_seconds": 604800,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              30000000000.0
+            ],
+            "antennas": 128,
+            "tones": 128,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              16
+            ],
+            "snrs_db": [
+              10.0
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 3,
+            "range_min_m": 1.6783558792924038,
+            "range_max_m": 6.713423517169615,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 2,
+            "validation": 2,
+            "screen": 2,
+            "screen_seed": 20261018
+          },
+          "sbl": {
+            "angle_points": 49,
+            "range_points": 7,
+            "iterations": 2,
+            "tolerance": 0.001,
+            "batch_size": 1
+          },
+          "learning": {
+            "steps": 2,
+            "batch_size": 2,
+            "width": 32,
+            "learning_rate": 0.001,
+            "diffusion_steps": 100,
+            "sampling_steps": 20,
+            "log_every": 1,
+            "variants": [
+              "deterministic_no_reliability",
+              "deterministic"
+            ]
+          },
+          "evaluation": {
+            "batch_size": 2,
+            "dc_multipliers": [
+              0.0,
+              0.1,
+              1.0,
+              10.0
+            ],
+            "bootstrap_samples": 10,
+            "dc_selection_model": "deterministic_no_reliability",
+            "correct_coarse": true
+          },
+          "research": {
+            "training_seeds": [
+              101
+            ],
+            "final_seeds": [
+              201
+            ],
+            "shuffle_seeds": [
+              301
+            ],
+            "checkpoints": [
+              1,
+              2
+            ],
+            "eval_every": 2,
+            "training_stability_db": 0.1,
+            "train_curve_samples": 2,
+            "grids": [
+              {
+                "name": "coarse",
+                "angle_points": 49,
+                "range_points": 7
+              },
+              {
+                "name": "dense",
+                "angle_points": 97,
+                "range_points": 13
+              }
+            ],
+            "baseline_iterations": [
+              2,
+              5
+            ],
+            "stability": {
+              "overall_convergence": 0.95,
+              "context_convergence": 0.9,
+              "nmse_db": 0.1,
+              "variance_relative": 0.05
+            },
+            "sbl_budgets": [
+              2
+            ],
+            "accuracy_tolerance_db": 0.1,
+            "averages": [
+              1,
+              4,
+              16
+            ],
+            "expansions": [],
+            "mismatches": [],
+            "communication": {
+              "coherence_symbols": 200,
+              "switch_symbols": 0.1
+            }
+          }
+        },
+        "environment.json": {
+          "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+          "platform": "Windows-10-10.0.26300-SP0",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cuda",
+          "cuda": "12.8",
+          "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+          "command": [
+            "tmp/shape_probe.py"
+          ],
+          "git_commit": "7a3b2dec3d00f6c50e2843b65124652292a598e0",
+          "source_zip_sha256": "1a6bef203630e90932604430ef64cfe20a5c53fe88b3912f66f891591a2cd27a"
+        }
+      },
+      "errors": {}
+    },
+    {
+      "run_id": "research_shape128_20261018_v2",
+      "metadata": {
+        "config_resolved.json": {
+          "label": "shape128_two_scene_implementation_only",
+          "seed": 20261016,
+          "device": "cuda",
+          "timeout_seconds": 604800,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              30000000000.0
+            ],
+            "antennas": 128,
+            "tones": 128,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              16
+            ],
+            "snrs_db": [
+              10.0
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 3,
+            "range_min_m": 1.6783558792924038,
+            "range_max_m": 6.713423517169615,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 2,
+            "validation": 2,
+            "screen": 2,
+            "screen_seed": 20261018
+          },
+          "sbl": {
+            "angle_points": 49,
+            "range_points": 7,
+            "iterations": 2,
+            "tolerance": 0.001,
+            "batch_size": 1
+          },
+          "learning": {
+            "steps": 2,
+            "batch_size": 2,
+            "width": 32,
+            "learning_rate": 0.001,
+            "diffusion_steps": 100,
+            "sampling_steps": 20,
+            "log_every": 1,
+            "variants": [
+              "deterministic_no_reliability",
+              "deterministic"
+            ]
+          },
+          "evaluation": {
+            "batch_size": 2,
+            "dc_multipliers": [
+              0.0,
+              0.1,
+              1.0,
+              10.0
+            ],
+            "bootstrap_samples": 10,
+            "dc_selection_model": "deterministic_no_reliability",
+            "correct_coarse": true
+          },
+          "research": {
+            "training_seeds": [
+              101
+            ],
+            "final_seeds": [
+              201
+            ],
+            "shuffle_seeds": [
+              301
+            ],
+            "checkpoints": [
+              1,
+              2
+            ],
+            "eval_every": 2,
+            "training_stability_db": 0.1,
+            "train_curve_samples": 2,
+            "grids": [
+              {
+                "name": "coarse",
+                "angle_points": 49,
+                "range_points": 7
+              },
+              {
+                "name": "dense",
+                "angle_points": 97,
+                "range_points": 13
+              }
+            ],
+            "baseline_iterations": [
+              2,
+              5
+            ],
+            "stability": {
+              "overall_convergence": 0.95,
+              "context_convergence": 0.9,
+              "nmse_db": 0.1,
+              "variance_relative": 0.05
+            },
+            "sbl_budgets": [
+              2
+            ],
+            "accuracy_tolerance_db": 0.1,
+            "averages": [
+              1,
+              4,
+              16
+            ],
+            "expansions": [],
+            "mismatches": [],
+            "communication": {
+              "coherence_symbols": 200,
+              "switch_symbols": 0.1
+            }
+          }
+        },
+        "environment.json": {
+          "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+          "platform": "Windows-10-10.0.26300-SP0",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cuda",
+          "cuda": "12.8",
+          "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+          "command": [
+            "tmp/shape_probe.py"
+          ],
+          "git_commit": "7a3b2dec3d00f6c50e2843b65124652292a598e0",
+          "source_zip_sha256": "c43cbd0832bd52e4a58bec980760959503653210ebd4539b5fc7e2f4bdb86521"
+        }
+      },
+      "errors": {}
+    },
+    {
+      "run_id": "research_smoke_20261018_v1",
+      "metadata": {
+        "config_resolved.json": {
+          "label": "five_step_smoke_implementation_only",
+          "seed": 20261018,
+          "device": "cuda",
+          "timeout_seconds": 1800,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              3000000000.0,
+              30000000000.0
+            ],
+            "antennas": 8,
+            "tones": 8,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              2,
+              4
+            ],
+            "snrs_db": [
+              10.0
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 2,
+            "range_min_m": 0.005,
+            "range_max_m": 0.02,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 6,
+            "validation": 4,
+            "screen": 4,
+            "screen_seed": 20261019
+          },
+          "sbl": {
+            "angle_points": 5,
+            "range_points": 2,
+            "iterations": 5,
+            "tolerance": 0.001,
+            "batch_size": 2
+          },
+          "learning": {
+            "steps": 2,
+            "batch_size": 2,
+            "width": 8,
+            "learning_rate": 0.001,
+            "diffusion_steps": 10,
+            "sampling_steps": 3,
+            "log_every": 2,
+            "variants": [
+              "deterministic_no_reliability",
+              "deterministic"
+            ]
+          },
+          "evaluation": {
+            "batch_size": 2,
+            "dc_multipliers": [
+              0.0,
+              0.1,
+              1.0
+            ],
+            "bootstrap_samples": 50,
+            "dc_selection_model": "deterministic_no_reliability",
+            "correct_coarse": true
+          },
+          "research": {
+            "training_seeds": [
+              101,
+              102
+            ],
+            "final_seeds": [
+              201,
+              202
+            ],
+            "shuffle_seeds": [
+              301,
+              302
+            ],
+            "checkpoints": [
+              2,
+              4,
+              6
+            ],
+            "eval_every": 2,
+            "training_stability_db": 100.0,
+            "train_curve_samples": 4,
+            "grids": [
+              {
+                "name": "coarse",
+                "angle_points": 5,
+                "range_points": 2
+              },
+              {
+                "name": "dense",
+                "angle_points": 9,
+                "range_points": 3
+              }
+            ],
+            "baseline_iterations": [
+              5,
+              10
+            ],
+            "stability": {
+              "overall_convergence": 0.0,
+              "context_convergence": 0.0,
+              "nmse_db": 100.0,
+              "variance_relative": 100.0
+            },
+            "sbl_budgets": [
+              2,
+              5
+            ],
+            "accuracy_tolerance_db": 0.1,
+            "averages": [
+              1,
+              4,
+              16
+            ],
+            "expansions": [
+              {
+                "name": "n16_k8",
+                "antennas": 16,
+                "tones": 8
+              },
+              {
+                "name": "n16_k16",
+                "antennas": 16,
+                "tones": 16
+              }
+            ],
+            "mismatches": [
+              {
+                "name": "paths3",
+                "channel": {
+                  "paths": 3
+                }
+              },
+              {
+                "name": "range_shift",
+                "channel": {
+                  "range_min_m": 0.01,
+                  "range_max_m": 0.03
+                }
+              }
+            ],
+            "communication": {
+              "coherence_symbols": 40,
+              "switch_symbols": 0.1
+            }
+          }
+        },
+        "environment.json": {
+          "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+          "platform": "Windows-10-10.0.26300-SP0",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cuda",
+          "cuda": "12.8",
+          "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+          "command": [
+            "scripts/run_research.py",
+            "--config",
+            "configs/research_smoke.json",
+            "--run-id",
+            "research_smoke_20261018_v1"
+          ],
+          "git_commit": "7a3b2dec3d00f6c50e2843b65124652292a598e0",
+          "source_zip_sha256": "1a6bef203630e90932604430ef64cfe20a5c53fe88b3912f66f891591a2cd27a"
+        }
+      },
+      "errors": {}
+    },
+    {
+      "run_id": "research_smoke_20261018_v2",
+      "metadata": {
+        "config_resolved.json": {
+          "label": "five_step_smoke_implementation_only",
+          "seed": 20261018,
+          "device": "cuda",
+          "timeout_seconds": 1800,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              3000000000.0,
+              30000000000.0
+            ],
+            "antennas": 8,
+            "tones": 8,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              2,
+              4
+            ],
+            "snrs_db": [
+              10.0
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 2,
+            "range_min_m": 0.005,
+            "range_max_m": 0.02,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 6,
+            "validation": 4,
+            "screen": 4,
+            "screen_seed": 20261019
+          },
+          "sbl": {
+            "angle_points": 5,
+            "range_points": 2,
+            "iterations": 5,
+            "tolerance": 0.001,
+            "batch_size": 2
+          },
+          "learning": {
+            "steps": 2,
+            "batch_size": 2,
+            "width": 8,
+            "learning_rate": 0.001,
+            "diffusion_steps": 10,
+            "sampling_steps": 3,
+            "log_every": 2,
+            "variants": [
+              "deterministic_no_reliability",
+              "deterministic"
+            ]
+          },
+          "evaluation": {
+            "batch_size": 2,
+            "dc_multipliers": [
+              0.0,
+              0.1,
+              1.0
+            ],
+            "bootstrap_samples": 50,
+            "dc_selection_model": "deterministic_no_reliability",
+            "correct_coarse": true
+          },
+          "research": {
+            "training_seeds": [
+              101,
+              102
+            ],
+            "final_seeds": [
+              201,
+              202
+            ],
+            "shuffle_seeds": [
+              301,
+              302
+            ],
+            "checkpoints": [
+              2,
+              4,
+              6
+            ],
+            "eval_every": 2,
+            "training_stability_db": 100.0,
+            "train_curve_samples": 4,
+            "grids": [
+              {
+                "name": "coarse",
+                "angle_points": 5,
+                "range_points": 2
+              },
+              {
+                "name": "dense",
+                "angle_points": 9,
+                "range_points": 3
+              }
+            ],
+            "baseline_iterations": [
+              5,
+              10
+            ],
+            "stability": {
+              "overall_convergence": 0.0,
+              "context_convergence": 0.0,
+              "nmse_db": 100.0,
+              "variance_relative": 100.0
+            },
+            "sbl_budgets": [
+              2,
+              5
+            ],
+            "accuracy_tolerance_db": 0.1,
+            "averages": [
+              1,
+              4,
+              16
+            ],
+            "expansions": [
+              {
+                "name": "n16_k8",
+                "antennas": 16,
+                "tones": 8
+              },
+              {
+                "name": "n16_k16",
+                "antennas": 16,
+                "tones": 16
+              }
+            ],
+            "mismatches": [
+              {
+                "name": "paths3",
+                "channel": {
+                  "paths": 3
+                }
+              },
+              {
+                "name": "range_shift",
+                "channel": {
+                  "range_min_m": 0.01,
+                  "range_max_m": 0.03
+                }
+              }
+            ],
+            "communication": {
+              "coherence_symbols": 40,
+              "switch_symbols": 0.1
+            }
+          }
+        },
+        "environment.json": {
+          "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+          "platform": "Windows-10-10.0.26300-SP0",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cuda",
+          "cuda": "12.8",
+          "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+          "command": [
+            "scripts/run_research.py",
+            "--config",
+            "configs/research_smoke.json",
+            "--run-id",
+            "research_smoke_20261018_v2"
+          ],
+          "git_commit": "7a3b2dec3d00f6c50e2843b65124652292a598e0",
+          "source_zip_sha256": "6a60492da5918c00d9aaae754c9759664b263903005a74367f590cd573007b11"
+        }
+      },
+      "errors": {}
+    },
+    {
+      "run_id": "sbl_budget_20261016_v1",
+      "metadata": {
+        "config_resolved.json": {
+          "parent": "pilot_20261016_v1",
+          "split": "validation",
+          "budgets": [
+            500,
+            1000,
+            2000,
+            4000
+          ],
+          "minimum_overall_convergence": 0.95,
+          "minimum_context_convergence": 0.9,
+          "maximum_nmse_change_db": 0.1,
+          "maximum_variance_relative_change": 0.05,
+          "parent_config": {
+            "label": "exploratory_single_seed",
+            "seed": 20261016,
+            "device": "cuda",
+            "timeout_seconds": 1800,
+            "system": {
+              "carrier_hz": 300000000000.0,
+              "bandwidths_hz": [
+                3000000000.0,
+                30000000000.0
+              ],
+              "antennas": 32,
+              "tones": 32,
+              "spacing_wavelengths": 0.5,
+              "configurations": [
+                8,
+                16
+              ],
+              "snrs_db": [
+                10.0,
+                20.0
+              ],
+              "quality_factor": 50.0,
+              "tuning_bandwidth_hz": 30000000000.0,
+              "waveguide_effective_index": 1.4,
+              "waveguide_end_power_fraction": 0.8,
+              "rf_noise_fraction": 0.05
+            },
+            "channel": {
+              "paths": 3,
+              "range_min_m": 0.1,
+              "range_max_m": 0.4,
+              "angle_limit_deg": 60.0,
+              "include_absorption": false
+            },
+            "data": {
+              "train": 512,
+              "validation": 64,
+              "screen": 128
+            },
+            "sbl": {
+              "angle_points": 49,
+              "range_points": 7,
+              "iterations": 100,
+              "tolerance": 0.001,
+              "batch_size": 32
+            },
+            "learning": {
+              "steps": 2000,
+              "batch_size": 32,
+              "width": 32,
+              "learning_rate": 0.001,
+              "diffusion_steps": 100,
+              "sampling_steps": 20,
+              "log_every": 100
+            },
+            "evaluation": {
+              "batch_size": 32,
+              "dc_multipliers": [
+                0.1,
+                1.0,
+                10.0
+              ],
+              "bootstrap_samples": 2000
+            }
+          },
+          "parent_data_sha256": "d0caa0fb82b4468d452da4444d53d4bd32f1c2838aa3076c42cd04a95783e6e4"
+        },
+        "environment.json": {
+          "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+          "platform": "Windows-10-10.0.26300-SP0",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cuda",
+          "cuda": "12.8",
+          "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+          "command": [
+            "scripts/select_sbl_budget.py",
+            "pilot_20261016_v1",
+            "sbl_budget_20261016_v1"
+          ],
+          "training_seed": 20261016
+        },
+        "status.json": {
+          "status": "complete",
+          "elapsed_seconds": 186.54445309999937,
+          "metrics_rows": 1536
+        },
+        "selection.json": {
+          "selection": {
+            "selected_iterations": 1000,
+            "checked_against": 2000,
+            "maximum_nmse_change_db": 0.0018711090087890625,
+            "maximum_variance_relative_change": 0.0035502350803905403,
+            "overall_convergence": 0.98046875,
+            "minimum_context_convergence": 0.921875
+          },
+          "selection_split": "validation"
+        }
+      },
+      "errors": {}
+    },
+    {
+      "run_id": "sbl_corrected_probe_20261020_v1",
+      "metadata": {
+        "config_resolved.json": {
+          "label": "bounded_corrected_sbl_single_refinement",
+          "seed": 20261016,
+          "device": "cuda",
+          "timeout_seconds": 604800,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              3000000000.0,
+              30000000000.0
+            ],
+            "antennas": 32,
+            "tones": 32,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              8,
+              16
+            ],
+            "snrs_db": [
+              10.0,
+              20.0
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 3,
+            "range_min_m": 0.1,
+            "range_max_m": 0.4,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 512,
+            "validation": 64,
+            "screen": 128,
+            "screen_seed": 20261018
+          },
+          "sbl": {
+            "angle_points": 49,
+            "range_points": 7,
+            "iterations": 1000,
+            "tolerance": 0.001,
+            "batch_size": 16,
+            "early_stopping": false
+          },
+          "learning": {
+            "steps": 2000,
+            "batch_size": 32,
+            "width": 32,
+            "learning_rate": 0.001,
+            "diffusion_steps": 100,
+            "sampling_steps": 20,
+            "log_every": 500,
+            "variants": [
+              "deterministic_no_reliability"
+            ]
+          },
+          "evaluation": {
+            "batch_size": 32,
+            "dc_multipliers": [
+              0.0,
+              0.1,
+              1.0,
+              10.0
+            ],
+            "bootstrap_samples": 2000,
+            "dc_selection_model": "deterministic_no_reliability",
+            "correct_coarse": true
+          },
+          "research": {
+            "training_seeds": [
+              101,
+              102,
+              103
+            ],
+            "final_seeds": [
+              201,
+              202,
+              203,
+              204,
+              205
+            ],
+            "shuffle_seeds": [
+              301,
+              302,
+              303,
+              304,
+              305
+            ],
+            "checkpoints": [
+              2000,
+              8000,
+              20000
+            ],
+            "eval_every": 2000,
+            "training_stability_db": 0.1,
+            "train_curve_samples": 128,
+            "grids": [
+              {
+                "name": "coarse",
+                "angle_points": 49,
+                "range_points": 7
+              },
+              {
+                "name": "dense",
+                "angle_points": 97,
+                "range_points": 13
+              }
+            ],
+            "baseline_iterations": [
+              1000,
+              2000,
+              4000,
+              8000,
+              16000
+            ],
+            "stability": {
+              "overall_convergence": 0.95,
+              "context_convergence": 0.9,
+              "nmse_db": 0.1,
+              "variance_relative": 0.05
+            },
+            "sbl_budgets": [
+              100,
+              300,
+              500,
+              1000
+            ],
+            "accuracy_tolerance_db": 0.1,
+            "averages": [
+              1,
+              4,
+              16
+            ],
+            "expansions": [],
+            "mismatches": [
+              {
+                "name": "paths5",
+                "channel": {
+                  "paths": 5
+                }
+              }
+            ],
+            "communication": {
+              "coherence_symbols": 200,
+              "switch_symbols": 0.1
+            }
+          }
+        },
+        "environment.json": {
+          "python": "3.10.20",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cuda",
+          "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+          "script_sha256": "7cf70e09624402158e5ebdd15ee6fe0f9958db414dc6d341e00281f8c1a385da"
+        },
+        "status.json": {
+          "status": "complete",
+          "seconds": 230.00049550000404,
+          "metrics_rows": 48
+        }
+      },
+      "errors": {}
+    },
+    {
+      "run_id": "sbl_dictionary_diagnostic_20261019_v1",
+      "metadata": {
+        "config_resolved.json": {
+          "label": "five_step_validation_selected_study",
+          "seed": 20261016,
+          "device": "cuda",
+          "timeout_seconds": 604800,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              3000000000.0,
+              30000000000.0
+            ],
+            "antennas": 32,
+            "tones": 32,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              8,
+              16
+            ],
+            "snrs_db": [
+              10.0,
+              20.0
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 3,
+            "range_min_m": 0.1,
+            "range_max_m": 0.4,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 512,
+            "validation": 64,
+            "screen": 128,
+            "screen_seed": 20261018
+          },
+          "sbl": {
+            "angle_points": 49,
+            "range_points": 7,
+            "iterations": 1000,
+            "tolerance": 0.001,
+            "batch_size": 16
+          },
+          "learning": {
+            "steps": 2000,
+            "batch_size": 32,
+            "width": 32,
+            "learning_rate": 0.001,
+            "diffusion_steps": 100,
+            "sampling_steps": 20,
+            "log_every": 500,
+            "variants": [
+              "deterministic_no_reliability",
+              "deterministic"
+            ]
+          },
+          "evaluation": {
+            "batch_size": 32,
+            "dc_multipliers": [
+              0.0,
+              0.1,
+              1.0,
+              10.0
+            ],
+            "bootstrap_samples": 2000,
+            "dc_selection_model": "deterministic_no_reliability",
+            "correct_coarse": true
+          },
+          "research": {
+            "training_seeds": [
+              101,
+              102,
+              103
+            ],
+            "final_seeds": [
+              201,
+              202,
+              203,
+              204,
+              205
+            ],
+            "shuffle_seeds": [
+              301,
+              302,
+              303,
+              304,
+              305
+            ],
+            "checkpoints": [
+              2000,
+              8000,
+              20000
+            ],
+            "eval_every": 2000,
+            "training_stability_db": 0.1,
+            "train_curve_samples": 128,
+            "grids": [
+              {
+                "name": "coarse",
+                "angle_points": 49,
+                "range_points": 7
+              },
+              {
+                "name": "dense",
+                "angle_points": 97,
+                "range_points": 13
+              }
+            ],
+            "baseline_iterations": [
+              1000,
+              2000,
+              4000,
+              8000
+            ],
+            "stability": {
+              "overall_convergence": 0.95,
+              "context_convergence": 0.9,
+              "nmse_db": 0.1,
+              "variance_relative": 0.05
+            },
+            "sbl_budgets": [
+              100,
+              300,
+              500,
+              1000
+            ],
+            "accuracy_tolerance_db": 0.1,
+            "averages": [
+              1,
+              4,
+              16
+            ],
+            "expansions": [
+              {
+                "name": "n128_k32",
+                "antennas": 128,
+                "tones": 32
+              },
+              {
+                "name": "n128_k128",
+                "antennas": 128,
+                "tones": 128
+              }
+            ],
+            "mismatches": [
+              {
+                "name": "paths5",
+                "channel": {
+                  "paths": 5
+                }
+              },
+              {
+                "name": "range_shift",
+                "channel": {
+                  "range_min_m": 0.2,
+                  "range_max_m": 0.6
+                }
+              }
+            ],
+            "communication": {
+              "coherence_symbols": 200,
+              "switch_symbols": 0.1
+            },
+            "diffusion_checkpoints": [
+              2000,
+              8000,
+              20000,
+              30000,
+              40000
+            ]
+          }
+        },
+        "environment.json": {
+          "python": "3.10.20",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cuda",
+          "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+          "script_sha256": "6451869bebdd8b0f889ef7c02bb6ffcedff94263f6c683fb0d8e66da9a25d069"
+        },
+        "status.json": {
+          "status": "complete",
+          "seconds": 247.33940362930298,
+          "geometries": 2,
+          "default_replay_contexts": 8,
+          "forced_iteration_contexts": 4,
+          "trace_rows": 140
+        }
+      },
+      "errors": {}
+    },
+    {
+      "run_id": "sbl_mm_probe_20261020_v1",
+      "metadata": {},
+      "errors": {}
+    },
+    {
+      "run_id": "sbl_mm_probe_20261020_v2",
+      "metadata": {},
+      "errors": {}
+    },
+    {
+      "run_id": "smoke_20261016_v1",
+      "metadata": {
+        "config_resolved.json": {
+          "label": "smoke_connectivity_only",
+          "seed": 20261017,
+          "device": "cuda",
+          "timeout_seconds": 1800,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              30000000000.0
+            ],
+            "antennas": 16,
+            "tones": 16,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              4,
+              8
+            ],
+            "snrs_db": [
+              10.0
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 3,
+            "range_min_m": 0.03,
+            "range_max_m": 0.1,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 16,
+            "validation": 8,
+            "screen": 8
+          },
+          "sbl": {
+            "angle_points": 17,
+            "range_points": 4,
+            "iterations": 20,
+            "tolerance": 0.001,
+            "batch_size": 8
+          },
+          "learning": {
+            "steps": 20,
+            "batch_size": 8,
+            "width": 16,
+            "learning_rate": 0.001,
+            "diffusion_steps": 100,
+            "sampling_steps": 10,
+            "log_every": 10
+          },
+          "evaluation": {
+            "batch_size": 8,
+            "dc_multipliers": [
+              0.1,
+              1.0,
+              10.0
+            ],
+            "bootstrap_samples": 200
+          }
+        },
+        "environment.json": {
+          "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+          "platform": "Windows-10-10.0.26300-SP0",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cuda",
+          "cuda": "12.8",
+          "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+          "command": [
+            "scripts/run_experiment.py",
+            "--config",
+            "configs/smoke.json",
+            "--run-id",
+            "smoke_20261016_v1"
+          ],
+          "training_seed": 20261017
+        },
+        "status.json": {
+          "status": "complete",
+          "label": "smoke_connectivity_only",
+          "elapsed_seconds": 12.102290868759155,
+          "metrics_rows": 176,
+          "data_sha256": "a0a64034d3017664795d692de8a729015de798f3c2eb4426293313fb755607e0",
+          "frozen_validation_sha256": "ab0b367371213aaa5d4cec2166b5bf6db8d351d98183a9090fe6948d8d460ec9"
+        },
+        "frozen_validation.json": {
+          "selected_multiplier": 10.0,
+          "prior_complex_variance": 8.356688618659973,
+          "selection_split": "validation",
+          "selection_model": "residual",
+          "shared_by_all_methods": true,
+          "validation_mean_nmse_linear": {
+            "0.1": 117.68494379520416,
+            "1.0": 93.19202733039856,
+            "10.0": 86.5300544500351
+          },
+          "screening_used": false,
+          "data_sha256": "a0a64034d3017664795d692de8a729015de798f3c2eb4426293313fb755607e0",
+          "models": {
+            "conditional": "b77d8f4cd424f84f6f09c49c32dfb8dfd68fd16416d474d63532bca770b42c68",
+            "residual": "092d21e6c0302f17dbf07b7a960d8119ad4abd3ce765da05970e951e57cf2a78",
+            "reliable_residual": "573079215cafbc681b3c4d1cde83245f8284b39e3f1cb26ba7d4e5a28dd1f1b6",
+            "deterministic": "f53ba21479929a672c84a77fd3ddbe03d46fbc5d1c04aa5dead1ecd77599b4cb"
+          },
+          "frozen_at_unix": 1792139509.8786013,
+          "geometry_hashes": {
+            "train": "f4a5c46a3d63abebc7b0790d9851d1ff8c300a4197234390d91849082dca23bc",
+            "validation": "57c095451099d80e1b6bbb94a1a2f72dc7b55a98393c378a64ea460059dd323e",
+            "screen": "811deb0d36e7582da75b0c39ac917713b1fe4973d0e9842f6c7893ebd107df15"
+          }
+        }
+      },
+      "errors": {}
+    },
+    {
+      "run_id": "snr_comparison_smoke_20261020_v1",
+      "metadata": {
+        "config_resolved.json": {
+          "label": "snr_ddpm_prior_structured_implementation_only",
+          "seed": 20261018,
+          "device": "cuda",
+          "timeout_seconds": 900,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              3000000000.0,
+              30000000000.0
+            ],
+            "antennas": 8,
+            "tones": 8,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              2,
+              4
+            ],
+            "snrs_db": [
+              -10,
+              10,
+              30
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 2,
+            "range_min_m": 0.005,
+            "range_max_m": 0.02,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 6,
+            "validation": 4,
+            "screen": 4,
+            "screen_seed": 20268940
+          },
+          "sbl": {
+            "angle_points": 5,
+            "range_points": 2,
+            "iterations": 5,
+            "tolerance": 0.001,
+            "batch_size": 2,
+            "early_stopping": false
+          },
+          "learning": {
+            "steps": 2,
+            "batch_size": 2,
+            "width": 8,
+            "learning_rate": 0.001,
+            "diffusion_steps": 10,
+            "sampling_steps": 3,
+            "log_every": 2,
+            "variants": [
+              "deterministic_no_reliability"
+            ]
+          },
+          "evaluation": {
+            "batch_size": 2,
+            "dc_multipliers": [
+              0.0,
+              0.1,
+              1.0
+            ],
+            "bootstrap_samples": 50,
+            "dc_selection_model": "deterministic_no_reliability",
+            "correct_coarse": true
+          },
+          "research": {
+            "training_seeds": [
+              101,
+              102
+            ],
+            "final_seeds": [
+              201,
+              202
+            ],
+            "shuffle_seeds": [
+              301,
+              302
+            ],
+            "checkpoints": [
+              2,
+              4,
+              6
+            ],
+            "eval_every": 2,
+            "training_stability_db": 100.0,
+            "train_curve_samples": 4,
+            "grids": [
+              {
+                "name": "coarse",
+                "angle_points": 5,
+                "range_points": 2
+              },
+              {
+                "name": "dense",
+                "angle_points": 9,
+                "range_points": 3
+              }
+            ],
+            "baseline_iterations": [
+              5,
+              10
+            ],
+            "stability": {
+              "overall_convergence": 0.0,
+              "context_convergence": 0.0,
+              "nmse_db": 100.0,
+              "variance_relative": 100.0
+            },
+            "sbl_budgets": [
+              2,
+              5
+            ],
+            "accuracy_tolerance_db": 0.1,
+            "averages": [
+              1,
+              4,
+              16
+            ],
+            "expansions": [
+              {
+                "name": "n16_k8",
+                "antennas": 16,
+                "tones": 8
+              },
+              {
+                "name": "n16_k16",
+                "antennas": 16,
+                "tones": 16
+              }
+            ],
+            "mismatches": [
+              {
+                "name": "paths3",
+                "channel": {
+                  "paths": 3
+                }
+              },
+              {
+                "name": "range_shift",
+                "channel": {
+                  "range_min_m": 0.01,
+                  "range_max_m": 0.03
+                }
+              }
+            ],
+            "communication": {
+              "coherence_symbols": 40,
+              "switch_symbols": 0.1
+            }
+          },
+          "comparison": {
+            "snrs_db": [
+              -10,
+              10,
+              30
+            ],
+            "seeds": [
+              201
+            ],
+            "training_scenes": 6,
+            "validation_scenes": 4,
+            "screen_scenes": 4,
+            "screen_seed": 20268940,
+            "prior_steps": 12,
+            "prior_checkpoints": [
+              4,
+              8,
+              12
+            ],
+            "update_steps": 8,
+            "update_checkpoints": [
+              2,
+              4,
+              8
+            ],
+            "update_width": 4,
+            "structured_iterations": 3,
+            "strength_grid": [
+              0.1,
+              1.0
+            ],
+            "batch_size": 2,
+            "solver_batch_size": 2,
+            "sbl_max_iterations": 10,
+            "sbl_tolerance": 0.001,
+            "bootstrap_samples": 50,
+            "log_every": 4,
+            "timeout_seconds": 900,
+            "implementation_only": true,
+            "parent_run": "corrected_sbl_smoke_20261020_v1",
+            "training_snrs_db": [
+              10.0
+            ]
+          }
+        },
+        "environment.json": {
+          "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+          "platform": "Windows-10-10.0.26300-SP0",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cuda",
+          "cuda": "12.8",
+          "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+          "command": [
+            "scripts/run_snr_comparison.py",
+            "--config",
+            "configs/snr_comparison_smoke.json",
+            "--parent",
+            "corrected_sbl_smoke_20261020_v1",
+            "--run-id",
+            "snr_comparison_smoke_20261020_v1"
+          ],
+          "git_commit": "2b69aa3751a3cb7b5a405e32676e7f460640e774",
+          "source_zip_sha256": "6f0607af89439b282b66e69f9bc8fbbdc497ec96982d25dc09d8fab2db74e08b"
+        },
+        "status.json": {
+          "status": "complete",
+          "metrics_rows": 480,
+          "audit": {
+            "status": "passed",
+            "source_archive_verified": true,
+            "metrics_recomputed": 480,
+            "maximum_metric_difference": 0.0,
+            "structured_replays": 4,
+            "maximum_replay_difference": 0.0,
+            "same_observations": true,
+            "selection_split": "validation",
+            "normalization": "parent training-only global scale",
+            "frozen_at_unix": 1792487849.0651503,
+            "screen_generated_after_freeze": true
+          }
+        }
+      },
+      "errors": {}
+    },
+    {
+      "run_id": "snr_comparison_smoke_20261020_v2",
+      "metadata": {
+        "config_resolved.json": {
+          "label": "snr_ddpm_prior_structured_implementation_only",
+          "seed": 20261018,
+          "device": "cuda",
+          "timeout_seconds": 900,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              3000000000.0,
+              30000000000.0
+            ],
+            "antennas": 8,
+            "tones": 8,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              2,
+              4
+            ],
+            "snrs_db": [
+              -10,
+              10,
+              30
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 2,
+            "range_min_m": 0.005,
+            "range_max_m": 0.02,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 6,
+            "validation": 4,
+            "screen": 4,
+            "screen_seed": 20268940
+          },
+          "sbl": {
+            "angle_points": 5,
+            "range_points": 2,
+            "iterations": 5,
+            "tolerance": 0.001,
+            "batch_size": 2,
+            "early_stopping": false
+          },
+          "learning": {
+            "steps": 2,
+            "batch_size": 2,
+            "width": 8,
+            "learning_rate": 0.001,
+            "diffusion_steps": 10,
+            "sampling_steps": 3,
+            "log_every": 2,
+            "variants": [
+              "deterministic_no_reliability"
+            ]
+          },
+          "evaluation": {
+            "batch_size": 2,
+            "dc_multipliers": [
+              0.0,
+              0.1,
+              1.0
+            ],
+            "bootstrap_samples": 50,
+            "dc_selection_model": "deterministic_no_reliability",
+            "correct_coarse": true
+          },
+          "research": {
+            "training_seeds": [
+              101,
+              102
+            ],
+            "final_seeds": [
+              201,
+              202
+            ],
+            "shuffle_seeds": [
+              301,
+              302
+            ],
+            "checkpoints": [
+              2,
+              4,
+              6
+            ],
+            "eval_every": 2,
+            "training_stability_db": 100.0,
+            "train_curve_samples": 4,
+            "grids": [
+              {
+                "name": "coarse",
+                "angle_points": 5,
+                "range_points": 2
+              },
+              {
+                "name": "dense",
+                "angle_points": 9,
+                "range_points": 3
+              }
+            ],
+            "baseline_iterations": [
+              5,
+              10
+            ],
+            "stability": {
+              "overall_convergence": 0.0,
+              "context_convergence": 0.0,
+              "nmse_db": 100.0,
+              "variance_relative": 100.0
+            },
+            "sbl_budgets": [
+              2,
+              5
+            ],
+            "accuracy_tolerance_db": 0.1,
+            "averages": [
+              1,
+              4,
+              16
+            ],
+            "expansions": [
+              {
+                "name": "n16_k8",
+                "antennas": 16,
+                "tones": 8
+              },
+              {
+                "name": "n16_k16",
+                "antennas": 16,
+                "tones": 16
+              }
+            ],
+            "mismatches": [
+              {
+                "name": "paths3",
+                "channel": {
+                  "paths": 3
+                }
+              },
+              {
+                "name": "range_shift",
+                "channel": {
+                  "range_min_m": 0.01,
+                  "range_max_m": 0.03
+                }
+              }
+            ],
+            "communication": {
+              "coherence_symbols": 40,
+              "switch_symbols": 0.1
+            }
+          },
+          "comparison": {
+            "snrs_db": [
+              -10,
+              10,
+              30
+            ],
+            "seeds": [
+              201
+            ],
+            "training_scenes": 6,
+            "validation_scenes": 4,
+            "screen_scenes": 4,
+            "screen_seed": 20268940,
+            "prior_steps": 12,
+            "prior_checkpoints": [
+              4,
+              8,
+              12
+            ],
+            "update_steps": 8,
+            "update_checkpoints": [
+              2,
+              4,
+              8
+            ],
+            "update_width": 4,
+            "structured_iterations": 3,
+            "strength_grid": [
+              0.1,
+              1.0
+            ],
+            "batch_size": 2,
+            "solver_batch_size": 2,
+            "sbl_max_iterations": 10,
+            "sbl_tolerance": 0.001,
+            "bootstrap_samples": 50,
+            "log_every": 4,
+            "timeout_seconds": 900,
+            "implementation_only": true,
+            "parent_run": "corrected_sbl_smoke_20261020_v1",
+            "training_snrs_db": [
+              10.0
+            ]
+          }
+        },
+        "environment.json": {
+          "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+          "platform": "Windows-10-10.0.26300-SP0",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cuda",
+          "cuda": "12.8",
+          "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+          "command": [
+            "scripts/run_snr_comparison.py",
+            "--config",
+            "configs/snr_comparison_smoke.json",
+            "--parent",
+            "corrected_sbl_smoke_20261020_v1",
+            "--run-id",
+            "snr_comparison_smoke_20261020_v2"
+          ],
+          "git_commit": "2b69aa3751a3cb7b5a405e32676e7f460640e774",
+          "source_zip_sha256": "7adf14a7af20b7fe210926bcf9e781b3cefdefe5130aee652f14e212b348aceb"
+        },
+        "status.json": {
+          "status": "complete",
+          "metrics_rows": 480,
+          "audit": {
+            "status": "passed",
+            "source_archive_verified": true,
+            "metrics_recomputed": 480,
+            "maximum_metric_difference": 0.0,
+            "structured_replays": 4,
+            "maximum_replay_difference": 0.0,
+            "same_observations": true,
+            "selection_split": "validation",
+            "normalization": "parent training-only global scale",
+            "frozen_at_unix": 1792488088.2341413,
+            "screen_generated_after_freeze": true
+          }
+        }
+      },
+      "errors": {}
+    },
+    {
+      "run_id": "validation_probe_20261016_v1",
+      "metadata": {
+        "config_resolved.json": {
+          "parent_run": "pilot_20261016_v1",
+          "split": "validation",
+          "first_geometries": 32,
+          "sbl_iterations": 500,
+          "sample_means": [
+            1,
+            4,
+            16
+          ],
+          "timeout_seconds": 1800,
+          "parent_data_sha256": "d0caa0fb82b4468d452da4444d53d4bd32f1c2838aa3076c42cd04a95783e6e4",
+          "parent_config": {
+            "label": "exploratory_single_seed",
+            "seed": 20261016,
+            "device": "cuda",
+            "timeout_seconds": 1800,
+            "system": {
+              "carrier_hz": 300000000000.0,
+              "bandwidths_hz": [
+                3000000000.0,
+                30000000000.0
+              ],
+              "antennas": 32,
+              "tones": 32,
+              "spacing_wavelengths": 0.5,
+              "configurations": [
+                8,
+                16
+              ],
+              "snrs_db": [
+                10.0,
+                20.0
+              ],
+              "quality_factor": 50.0,
+              "tuning_bandwidth_hz": 30000000000.0,
+              "waveguide_effective_index": 1.4,
+              "waveguide_end_power_fraction": 0.8,
+              "rf_noise_fraction": 0.05
+            },
+            "channel": {
+              "paths": 3,
+              "range_min_m": 0.1,
+              "range_max_m": 0.4,
+              "angle_limit_deg": 60.0,
+              "include_absorption": false
+            },
+            "data": {
+              "train": 512,
+              "validation": 64,
+              "screen": 128
+            },
+            "sbl": {
+              "angle_points": 49,
+              "range_points": 7,
+              "iterations": 100,
+              "tolerance": 0.001,
+              "batch_size": 32
+            },
+            "learning": {
+              "steps": 2000,
+              "batch_size": 32,
+              "width": 32,
+              "learning_rate": 0.001,
+              "diffusion_steps": 100,
+              "sampling_steps": 20,
+              "log_every": 100
+            },
+            "evaluation": {
+              "batch_size": 32,
+              "dc_multipliers": [
+                0.1,
+                1.0,
+                10.0
+              ],
+              "bootstrap_samples": 2000
+            }
+          },
+          "sampling_seed": "parent_seed + 7000 + 1000*context + 100000*draw"
+        },
+        "environment.json": {
+          "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+          "platform": "Windows-10-10.0.26300-SP0",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cuda",
+          "cuda": "12.8",
+          "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+          "command": [
+            "scripts/diagnose_validation.py",
+            "pilot_20261016_v1",
+            "validation_probe_20261016_v1"
+          ],
+          "training_seed": 20261016
+        },
+        "status.json": {
+          "status": "complete",
+          "elapsed_seconds": 38.73461049999969,
+          "metrics_rows": 1280,
+          "independent_validation_geometries": 32,
+          "screening_used": false
+        }
+      },
+      "errors": {}
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "file": "github_fusion_audit.md",
+    "sha": "c08c13d962d1c82c4de0f1df17b1139cd5a5a812",
+    "url": "https://github.com/ConutlessLoneSmokes/THz_DMA/blob/main/research_route/experiment_results/2026-10-16/d041_fusion_probe_20261016_v1_review/audit_report.md"
+  },
+  {
+    "file": "github_nearest_neighbor_notes.md",
+    "sha": "adfea920bec4b31ce433298d04313fb0d4211054",
+    "url": "https://github.com/ConutlessLoneSmokes/THz_DMA/blob/main/research_route/19k_%E6%96%B9%E5%90%91%E4%B8%80%E5%80%99%E9%80%89%E5%88%9B%E6%96%B0%E4%B8%8E%E6%9C%80%E8%BF%91%E9%82%BB%E8%BE%B9%E7%95%8C.md"
+  },
+  {
+    "file": "github_budget_audit.md",
+    "sha": "53920ed1dacd20c67d959b3a508d9650f38ebb0f",
+    "url": "https://github.com/ConutlessLoneSmokes/THz_DMA/blob/main/research_route/experiment_results/2026-10-15/d041_budget_sweep_20261015_v1_review/audit_report.md"
+  },
+  {
+    "file": "github_resource_comparison.md",
+    "sha": "727bb695cb3059beb358b5ebfe7082a495167cd1",
+    "url": "https://github.com/ConutlessLoneSmokes/THz_DMA/blob/main/research_route/19j_%E6%96%B9%E5%90%91%E4%B8%80%E5%AF%BC%E9%A2%91RE%E8%B5%84%E6%BA%90%E6%96%87%E7%8C%AE%E5%AF%B9%E7%85%A7.md"
+  },
+  {
+    "file": "github_dma_operator.py",
+    "sha": "a867228d95553f435ae443c7f9c2fbdc6307a9c6",
+    "url": "https://github.com/ConutlessLoneSmokes/THz_DMA/blob/main/src/zhou2025_repro/d041.py"
+  },
+  {
+    "file": "github_configuration_operator.py",
+    "sha": "2d85fc0ecf0c0d9d6ef78f811ae490d4b3d14f9c",
+    "url": "https://github.com/ConutlessLoneSmokes/THz_DMA/blob/main/src/zhou2025_repro/configuration_sweep.py"
+  },
+  {
+    "file": "github_moment_recovery.py",
+    "sha": "a998b2ef25287d2c6cf18f5e204794ca5d0844b9",
+    "url": "https://github.com/ConutlessLoneSmokes/THz_DMA/blob/main/src/zhou2025_repro/moment_recovery.py"
+  },
+  {
+    "file": "github_prior_access.py",
+    "sha": "2f12719f67aa4de410d7feaeaf0de221f8625b31",
+    "url": "https://github.com/ConutlessLoneSmokes/THz_DMA/blob/main/src/zhou2025_repro/dma.py"
+  }
+]

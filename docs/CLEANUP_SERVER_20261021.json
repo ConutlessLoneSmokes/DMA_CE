@@ -1,0 +1,157 @@
+{
+  "date": "2026-10-21",
+  "root": "/home/lsy/DMA_CE",
+  "status": "complete",
+  "deleted": [
+    {
+      "path": "runs/linear_baseline_probe_20261020_v1",
+      "files": 5,
+      "bytes": 133914
+    },
+    {
+      "path": "runs/snr_comparison_20261020_v1_diagnostic_v2",
+      "files": 5,
+      "bytes": 279155
+    },
+    {
+      "path": "runs/linear_baselines_20261020_v1",
+      "files": 46,
+      "bytes": 1018170587
+    },
+    {
+      "path": "runs/snr_comparison_20261020_v1_diagnostic",
+      "files": 5,
+      "bytes": 260634
+    },
+    {
+      "path": "runs/research_001",
+      "files": 350,
+      "bytes": 738730888
+    },
+    {
+      "path": "runs/research_002",
+      "files": 383,
+      "bytes": 752625772
+    },
+    {
+      "path": "runs/continuation_state_probe_20261019_v1",
+      "files": 402,
+      "bytes": 771736371
+    },
+    {
+      "path": "runs/baseline_covariance_probe_20261020_v1",
+      "files": 8,
+      "bytes": 150379
+    },
+    {
+      "path": "results/continuation_parent_smoke_20261019_v1",
+      "files": 30,
+      "bytes": 719052
+    },
+    {
+      "path": "results/continuation_smoke_20261019_v1",
+      "files": 93,
+      "bytes": 3487294
+    },
+    {
+      "path": "results/corrected_sbl_smoke_20261020_v1",
+      "files": 90,
+      "bytes": 3147275
+    },
+    {
+      "path": "results/deterministic_smoke_20261016_v1",
+      "files": 18,
+      "bytes": 232737
+    },
+    {
+      "path": "results/linear_baselines_smoke_20261020_v1",
+      "files": 16,
+      "bytes": 514987
+    },
+    {
+      "path": "results/linear_baselines_smoke_20261020_v2",
+      "files": 16,
+      "bytes": 517918
+    },
+    {
+      "path": "results/linear_baselines_smoke_20261021_v3",
+      "files": 16,
+      "bytes": 518373
+    },
+    {
+      "path": "results/research_smoke_20261018_v2",
+      "files": 89,
+      "bytes": 3338981
+    },
+    {
+      "path": "results/smoke_20261016_v1",
+      "files": 16,
+      "bytes": 211857
+    },
+    {
+      "path": "results/snr_comparison_smoke_20261020_v1",
+      "files": 17,
+      "bytes": 1052524
+    },
+    {
+      "path": "results/snr_comparison_smoke_20261020_v2",
+      "files": 19,
+      "bytes": 1058167
+    },
+    {
+      "path": "results/continuation_state_probe_20261019_v1",
+      "files": 31,
+      "bytes": 20086160
+    },
+    {
+      "path": "results/research_shape128_20261018_v2",
+      "files": 9,
+      "bytes": 102924
+    },
+    {
+      "path": "results/linear_baselines_20261020_v1",
+      "files": 25,
+      "bytes": 10789214
+    },
+    {
+      "path": "results/snr_comparison_20261020_v1_diagnostic",
+      "files": 6,
+      "bytes": 261126
+    },
+    {
+      "path": "results/research_001",
+      "files": 29,
+      "bytes": 32200496
+    },
+    {
+      "path": "results/research_002",
+      "files": 32,
+      "bytes": 40406823
+    },
+    {
+      "path": "src/dma_ce/__pycache__",
+      "files": 10,
+      "bytes": 155960
+    },
+    {
+      "path": "src/dma_ce/_upstream/__pycache__",
+      "files": 5,
+      "bytes": 23692
+    },
+    {
+      "path": "tmp",
+      "files": 32,
+      "bytes": 62255192
+    }
+  ],
+  "deleted_files": 1803,
+  "deleted_bytes": 3463168452,
+  "retained_runs": [
+    "linear_baselines_20261021_v2",
+    "research_003",
+    "snr_comparison_20261020_v1"
+  ],
+  "retained_run_files_verified": 453,
+  "retained_models_caches_predictions_unchanged": true,
+  "original_repository_outside_scope": "/home/lsy/THz_DMA"
+}

@@ -19,7 +19,7 @@ from PIL import Image
 
 OUT = Path(__file__).resolve().parent
 ROOT = OUT.parents[1]
-SOURCE = Path(sys.argv[1]) if len(sys.argv) == 2 else ROOT / "runs" / OUT.name / "source_tables"
+SOURCE = Path(sys.argv[1]) if len(sys.argv) == 2 else OUT / "source_tables"
 assert len(sys.argv) <= 2, "usage: python plot_results.py [source-table-directory]"
 source_files = {}
 

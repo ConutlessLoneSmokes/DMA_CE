@@ -1,7 +1,0 @@
-{
-  "python": "3.10.21 (main, Aug 27 2026, 14:42:07) [GCC 14.3.0]",
-  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
-  "torch": "2.11.0+cu128",
-  "cuda": "12.8",
-  "gpu": "NVIDIA GeForce RTX 3090"
-}

@@ -1,0 +1,3411 @@
+{
+  "consolidated_on": "2026-10-21",
+  "meaning": "Historical implementation checks; generated smoke datasets, plots and checkpoints retired.",
+  "git_before_cleanup": "e652fc3658a4107c0f996de2037187b4d3c540b3",
+  "records": [
+    {
+      "run_id": "continuation_parent_smoke_20261019_v1",
+      "scope": "implementation_verification_only",
+      "retired_directory": "results/continuation_parent_smoke_20261019_v1",
+      "reports": {
+        "report.md": "# 五步实验执行记录\n\n运行：continuation_parent_smoke_20261019_v1。标签：five_step_smoke_implementation_only。\n\n各选择只使用训练/验证数据；最终各系统在保存模型和参数哈希后生成新的筛选几何。\n独立重复为训练初始化种子和几何场景；同一几何的带宽、配置与SNR按块配对。\n\n| 阶段 | 状态 |\n|---|---|\n| baseline | complete |\n| curves | complete |\n| factorial | complete |\n| reliability | complete |\n| budget | complete |\n| diffusion | complete |\n| final | pending |\n\n训练、验证曲线和精度—时间图保存在相应阶段目录。主NMSE先在线性尺度汇总再转dB。\n修正能量与真实残差对齐只用于评分诊断。可靠度标定和条件损失权重仅来自训练集。\n最终通信指标是单用户、单接收RF链、跨频共享DMA状态的接收速率，扣除导频与配置切换开销。\n所报时间包含SBL和精修的批量均摊时间，排除编译预热；不等同于单样本时延。\n\n这是小规模流程验证，迭代和训练预算已缩短；数值不能作为方法性能或论文结论。\n"
+      },
+      "checks": {},
+      "source_records": {
+        "config_resolved.json": {
+          "label": "five_step_smoke_implementation_only",
+          "seed": 20261018,
+          "device": "cuda",
+          "timeout_seconds": 1800,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              3000000000.0,
+              30000000000.0
+            ],
+            "antennas": 8,
+            "tones": 8,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              2,
+              4
+            ],
+            "snrs_db": [
+              10.0
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 2,
+            "range_min_m": 0.005,
+            "range_max_m": 0.02,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 6,
+            "validation": 4,
+            "screen": 4,
+            "screen_seed": 20261019
+          },
+          "sbl": {
+            "angle_points": 5,
+            "range_points": 2,
+            "iterations": 5,
+            "tolerance": 0.001,
+            "batch_size": 2
+          },
+          "learning": {
+            "steps": 2,
+            "batch_size": 2,
+            "width": 8,
+            "learning_rate": 0.001,
+            "diffusion_steps": 10,
+            "sampling_steps": 3,
+            "log_every": 2,
+            "variants": [
+              "deterministic_no_reliability",
+              "deterministic"
+            ]
+          },
+          "evaluation": {
+            "batch_size": 2,
+            "dc_multipliers": [
+              0.0,
+              0.1,
+              1.0
+            ],
+            "bootstrap_samples": 50,
+            "dc_selection_model": "deterministic_no_reliability",
+            "correct_coarse": true
+          },
+          "research": {
+            "training_seeds": [
+              101,
+              102
+            ],
+            "final_seeds": [
+              201,
+              202
+            ],
+            "shuffle_seeds": [
+              301,
+              302
+            ],
+            "checkpoints": [
+              2,
+              4,
+              6
+            ],
+            "eval_every": 2,
+            "training_stability_db": 100.0,
+            "train_curve_samples": 4,
+            "grids": [
+              {
+                "name": "coarse",
+                "angle_points": 5,
+                "range_points": 2
+              },
+              {
+                "name": "dense",
+                "angle_points": 9,
+                "range_points": 3
+              }
+            ],
+            "baseline_iterations": [
+              5,
+              10
+            ],
+            "stability": {
+              "overall_convergence": 0.0,
+              "context_convergence": 0.0,
+              "nmse_db": 100.0,
+              "variance_relative": 100.0
+            },
+            "sbl_budgets": [
+              2,
+              5
+            ],
+            "accuracy_tolerance_db": 0.1,
+            "averages": [
+              1,
+              4,
+              16
+            ],
+            "expansions": [
+              {
+                "name": "n16_k8",
+                "antennas": 16,
+                "tones": 8
+              },
+              {
+                "name": "n16_k16",
+                "antennas": 16,
+                "tones": 16
+              }
+            ],
+            "mismatches": [
+              {
+                "name": "paths3",
+                "channel": {
+                  "paths": 3
+                }
+              },
+              {
+                "name": "range_shift",
+                "channel": {
+                  "range_min_m": 0.01,
+                  "range_max_m": 0.03
+                }
+              }
+            ],
+            "communication": {
+              "coherence_symbols": 40,
+              "switch_symbols": 0.1
+            }
+          }
+        },
+        "environment.json": {
+          "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+          "platform": "Windows-10-10.0.26300-SP0",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cuda",
+          "cuda": "12.8",
+          "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+          "command": [
+            "scripts/run_research.py",
+            "--config",
+            "configs/research_smoke.json",
+            "--run-id",
+            "continuation_parent_smoke_20261019_v1",
+            "--stage",
+            "baseline"
+          ],
+          "git_commit": "f43cf15198bdc5cadc9d75ddb72add1a4122968f",
+          "source_zip_sha256": "255db57998e6d49d08f80f0274dffebb8d85a637d657ce01ca858e8ccfbfc3a8"
+        },
+        "source_manifest.json": {
+          "AGENTS.md": "eb29b8ca7088c6053cdfa8d744b0429bd4a85c21896f6bd3969c0e6ff2791eb7",
+          "README.md": "f166544a968f989b1115a68b43bd483b3cfcf50972f1a3a3723b182fc8cd07ce",
+          "pyproject.toml": "afd9bb930fe35ef73d25bf40238d84969d5e0217710ae6671d5aef01a0d491ef",
+          ".gitignore": "3438cd7d9fcc8eb653609000af3c71f8e4f922c2c8ea71abaad4a9575df98d99",
+          ".gitattributes": "1d60e158806f63fc61cc05049288cedf431806a7d0897567b1201f03e1f772ad",
+          "src/dma_ce/conditional.py": "99db81f40e8d6b64943485e8a33d38780f720567a1203b4a1a206d0dcf2017e4",
+          "src/dma_ce/continuation.py": "d14029d48a785e9a22b493d18b5a4e3ac041b425de827f9d520578559b63be7e",
+          "src/dma_ce/data.py": "a3f4e329a1543358434ba402552fb10ebbe8bd99cebd84cabbbb5a3756a6d251",
+          "src/dma_ce/experiment.py": "28c7e304ff46a672b3ad01a5062cebbae0c461d28b2b6f6042322c4310d9b826",
+          "src/dma_ce/research.py": "4e334c4db5f4a2b7783ab020e60ea36a80892541bc7c80210dc4eb747e083c52",
+          "src/dma_ce/sbl.py": "376fa0c4a8ef3b18ed1d65d5505fc403a311bac0d1ee55e1e61524f8c48befa8",
+          "src/dma_ce/suite.py": "7ad16f383c8ca74b34f55afeba7c3346adbc6f6e309239b0279e82296d409176",
+          "src/dma_ce/__init__.py": "b639b35c4e623952e62c5633c888d31b7107042a999fdae65d6ed2ce5100bedf",
+          "src/dma_ce/_upstream/atmosphere.py": "45db4c5afbe0fac2bc8e053fed2f3fc8e2c959ede7f338733da4524ffeceecb6",
+          "src/dma_ce/_upstream/ddpm.py": "35d435278cb7c5f849f91ec94fb4ebf0c77e103232b36cde2ac822a630df6543",
+          "src/dma_ce/_upstream/dma.py": "ba667d0a19d80a356f11d2d58d5c14f4d6b5c910437b5c43ddfc377a17eed69c",
+          "src/dma_ce/_upstream/geometry.py": "1b59a0430d5867bcca38603ce76e9691cea34be9168c92b9f9baf206354e50bc",
+          "src/dma_ce/_upstream/__init__.py": "2ce696ff49d731d23cc426ac63688bce357500403dfe6354533bec195ed6cceb",
+          "scripts/audit_experiment.py": "3a523e287a9d267d80e208a129df3b6bb52b4436bd28016b19edf0b2dafc838c",
+          "scripts/audit_research.py": "824f8e47731a1936ae439342655c03a393718ab880a93be09846b509778e48f8",
+          "scripts/diagnose_validation.py": "8e2cb086dd1888c8b5abf8a05398f1df84c72c987d053409305ddd67a56b4deb",
+          "scripts/run_experiment.py": "ac1284957064269482aa10719e9fa0c727090faed2c3558b18c2a1d31cee8ab3",
+          "scripts/run_research.py": "cea7b6e730a7989126e4fe4031b00c45a0db080193d5c3a912f981eed66bbd7e",
+          "scripts/select_sbl_budget.py": "74804ef07f1f97ffce99b6b0ab41a73932892e71cea54bbe5885b03ea65106e5",
+          "tests/test_core.py": "b72314e51358c3c4e004798b7426734f2f96e8a1646c10e048971f914a4ebf73",
+          "tests/test_research.py": "0829c32f4ea152956c329b546d19c4a731dcbed0b564aad07ba8887a54cf9ddb",
+          "configs/deterministic.json": "2beec3f7578c4f771972485c48485d23d6bc042eedea715e01b2997b32088c1d",
+          "configs/deterministic_smoke.json": "873ba196af09c662dedb6b00069dd1672b742d51a7288b5f64af5a5252babf1c",
+          "configs/pilot.json": "9815e16f16a82785fca43bd880974fe7ffdd5dcfaf4ff19e5bcf9e8b387eca02",
+          "configs/research.json": "f75a558817a679b8b443466e17d3b30e68f11b43e355f08a12b43f744df44119",
+          "configs/research_smoke.json": "6233058a55f3e655133c835ebad3ca9becf89cf2dd565c874dc288b5f92bcd7d",
+          "configs/smoke.json": "1fc9d7cdfb615f273abdf522e03256610c2d721967e67e6f78c608f0aed834c6",
+          "docs/EXPERIMENT_PLAN.md": "146d852cc93694c8f1c0702bcd8ab7351f9b9f6e09065aa9445c495216bbda90",
+          "docs/REFERENCES.md": "5c6ecfd346a955fa58ce889b64722b75cf136d33f968403a37dc85de412b937f",
+          "docs/RESEARCH_STUDY.md": "8b273693f875177752d9a0bf673ac668cc515b8939c96af687d120bc58feba82",
+          "docs/SECOND_STAGE_PLAN.md": "bb9ad2df80ab65ec41be49a08ee9af403107e0232d1cd593c43a73bbc7c0e967",
+          "docs/UPSTREAM_REUSE.json": "f2854bd1a5e4910ca9b0713175c6aca57e45df85a7df38032ca49177c19d0165"
+        }
+      },
+      "source_archive_sha256": "255db57998e6d49d08f80f0274dffebb8d85a637d657ce01ca858e8ccfbfc3a8"
+    },
+    {
+      "run_id": "continuation_smoke_20261019_v1",
+      "scope": "implementation_verification_only",
+      "retired_directory": "results/continuation_smoke_20261019_v1",
+      "reports": {
+        "implementation_verification.md": "# 独立续训流程检查\n\n2026-10-19完成。这里检验续训实现；训练、几何和系统尺寸均为短验证配置。\n\n父运行 `continuation_parent_smoke_20261019_v1` 执行至扩散阶段，保存2/4/6步模型。新运行复制前五阶段产物，从第6步的模型、Adam优化器、批次随机状态及扩散随机状态继续至8/10步。原6步余弦学习率日程保持不变，新增步骤使用0.0001。\n\n- 33项单元检查通过，CPU与GPU均验证完整轨迹和分段续训的模型参数、优化器及随机状态逐项相等。\n- 验证审计重放10个模型检查点，核对480条指标，最大差值0。\n- 完成3种小系统、9组匹配/失配评价；完整审计重算4,608条指标，重放15次生成结果，两项最大差值均为0。\n- 最终新初始化的扩散模型训练至10步，确定性模型保持原选定2步，所有模型使用原6步学习率日程。\n- 前五阶段、旧检查点、缓存和旧日志前缀通过哈希检查；再次运行同一入口复用全部7阶段。\n- 单元检查覆盖连续两次预算扩展、拒绝已开始最终筛选的父运行、缺失优化器、修改续训参数和损坏继承快照。\n\n详细数值见 [implementation_verification.json](implementation_verification.json)，验证审计见 [validation_audit.json](validation_audit.json)，完整审计见 [audit.json](audit.json)。正式长训练及性能比较由服务器独立运行。\n",
+        "report.md": "# 五步实验执行记录\n\n运行：continuation_smoke_20261019_v1。标签：five_step_smoke_implementation_only。\n\n各选择只使用训练/验证数据；最终各系统在保存模型和参数哈希后生成新的筛选几何。\n独立重复为训练初始化种子和几何场景；同一几何的带宽、配置与SNR按块配对。\n\n| 阶段 | 状态 |\n|---|---|\n| baseline | complete |\n| curves | complete |\n| factorial | complete |\n| reliability | complete |\n| budget | complete |\n| diffusion | complete |\n| final | complete |\n\n训练、验证曲线和精度—时间图保存在相应阶段目录。主NMSE先在线性尺度汇总再转dB。\n修正能量与真实残差对齐只用于评分诊断。可靠度标定和条件损失权重仅来自训练集。\n最终通信指标是单用户、单接收RF链、跨频共享DMA状态的接收速率，扣除导频与配置切换开销。\n所报时间包含SBL和精修的批量均摊时间，排除编译预热；不等同于单样本时延。\n\n这是小规模流程验证，迭代和训练预算已缩短；数值不能作为方法性能或论文结论。\n\n- [base/matched](final/base/matched/summary.csv)\n- [base/paths3](final/base/paths3/summary.csv)\n- [base/range_shift](final/base/range_shift/summary.csv)\n- [n16_k16/matched](final/n16_k16/matched/summary.csv)\n- [n16_k16/paths3](final/n16_k16/paths3/summary.csv)\n- [n16_k16/range_shift](final/n16_k16/range_shift/summary.csv)\n- [n16_k8/matched](final/n16_k8/matched/summary.csv)\n- [n16_k8/paths3](final/n16_k8/paths3/summary.csv)\n- [n16_k8/range_shift](final/n16_k8/range_shift/summary.csv)\n"
+      },
+      "checks": {
+        "audit.json": {
+          "status": "passed",
+          "source_archive_verified": true,
+          "data_caches_verified": 18,
+          "frozen_models_verified": 18,
+          "scenarios_verified": 9,
+          "metrics_recomputed": 4608,
+          "maximum_metric_difference": 0.0,
+          "sampler_replays": 15,
+          "maximum_replay_difference": 0.0,
+          "training_only_calibration": true,
+          "fresh_geometry_and_common_observations": true,
+          "communication_rates_recomputed": true,
+          "crossed_bootstrap_recomputed": true,
+          "continuation_verified": true
+        },
+        "implementation_verification.json": {
+          "status": "passed",
+          "implementation_only": true,
+          "unit_tests": 33,
+          "unit_test_runtime_seconds": 24.172,
+          "exact_training_prefix_and_resume_devices": [
+            "cpu",
+            "cuda"
+          ],
+          "preserved_parent_file_checks": 151,
+          "original_learning_rate_horizon": 6,
+          "extended_diffusion_checkpoints": [
+            2,
+            4,
+            6,
+            8,
+            10
+          ],
+          "final_diffusion_steps": 10,
+          "final_deterministic_steps": 2,
+          "validation_metrics_replayed": 480,
+          "validation_maximum_difference": 0.0,
+          "final_metrics_recomputed": 4608,
+          "final_model_replays": 15,
+          "final_maximum_difference": 0.0,
+          "sampler_maximum_difference": 0.0,
+          "all_stages_resume_verified": true
+        },
+        "validation_audit.json": {
+          "status": "passed",
+          "scope": "validation_only",
+          "ready_for_final": true,
+          "diffusion_status": "complete",
+          "source_archive_verified": true,
+          "continuation_verified": true,
+          "data_caches_verified": 8,
+          "diffusion_checkpoints_replayed": 10,
+          "validation_metrics_recomputed": 480,
+          "maximum_metric_difference": 0.0,
+          "last_interval_improvement_db": 0.0005324448010578088,
+          "training_only_calibration": true,
+          "training_validation_geometry_disjoint": true,
+          "screening_data_read": false
+        }
+      },
+      "source_records": {
+        "config_resolved.json": {
+          "label": "five_step_smoke_implementation_only",
+          "seed": 20261018,
+          "device": "cuda",
+          "timeout_seconds": 1800,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              3000000000.0,
+              30000000000.0
+            ],
+            "antennas": 8,
+            "tones": 8,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              2,
+              4
+            ],
+            "snrs_db": [
+              10.0
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 2,
+            "range_min_m": 0.005,
+            "range_max_m": 0.02,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 6,
+            "validation": 4,
+            "screen": 4,
+            "screen_seed": 20261019
+          },
+          "sbl": {
+            "angle_points": 5,
+            "range_points": 2,
+            "iterations": 5,
+            "tolerance": 0.001,
+            "batch_size": 2
+          },
+          "learning": {
+            "steps": 2,
+            "batch_size": 2,
+            "width": 8,
+            "learning_rate": 0.001,
+            "diffusion_steps": 10,
+            "sampling_steps": 3,
+            "log_every": 2,
+            "variants": [
+              "deterministic_no_reliability",
+              "deterministic"
+            ]
+          },
+          "evaluation": {
+            "batch_size": 2,
+            "dc_multipliers": [
+              0.0,
+              0.1,
+              1.0
+            ],
+            "bootstrap_samples": 50,
+            "dc_selection_model": "deterministic_no_reliability",
+            "correct_coarse": true
+          },
+          "research": {
+            "training_seeds": [
+              101,
+              102
+            ],
+            "final_seeds": [
+              201,
+              202
+            ],
+            "shuffle_seeds": [
+              301,
+              302
+            ],
+            "checkpoints": [
+              2,
+              4,
+              6
+            ],
+            "eval_every": 2,
+            "training_stability_db": 100.0,
+            "train_curve_samples": 4,
+            "grids": [
+              {
+                "name": "coarse",
+                "angle_points": 5,
+                "range_points": 2
+              },
+              {
+                "name": "dense",
+                "angle_points": 9,
+                "range_points": 3
+              }
+            ],
+            "baseline_iterations": [
+              5,
+              10
+            ],
+            "stability": {
+              "overall_convergence": 0.0,
+              "context_convergence": 0.0,
+              "nmse_db": 100.0,
+              "variance_relative": 100.0
+            },
+            "sbl_budgets": [
+              2,
+              5
+            ],
+            "accuracy_tolerance_db": 0.1,
+            "averages": [
+              1,
+              4,
+              16
+            ],
+            "expansions": [
+              {
+                "name": "n16_k8",
+                "antennas": 16,
+                "tones": 8
+              },
+              {
+                "name": "n16_k16",
+                "antennas": 16,
+                "tones": 16
+              }
+            ],
+            "mismatches": [
+              {
+                "name": "paths3",
+                "channel": {
+                  "paths": 3
+                }
+              },
+              {
+                "name": "range_shift",
+                "channel": {
+                  "range_min_m": 0.01,
+                  "range_max_m": 0.03
+                }
+              }
+            ],
+            "communication": {
+              "coherence_symbols": 40,
+              "switch_symbols": 0.1
+            },
+            "diffusion_checkpoints": [
+              2,
+              4,
+              6,
+              8,
+              10
+            ]
+          }
+        },
+        "environment.json": {
+          "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+          "platform": "Windows-10-10.0.26300-SP0",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cuda",
+          "cuda": "12.8",
+          "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+          "command": [
+            "scripts/run_research.py",
+            "--continue-from",
+            "continuation_parent_smoke_20261019_v1",
+            "--diffusion-checkpoints",
+            "8",
+            "10",
+            "--run-id",
+            "continuation_smoke_20261019_v1",
+            "--stage",
+            "diffusion"
+          ],
+          "git_commit": "f43cf15198bdc5cadc9d75ddb72add1a4122968f",
+          "source_zip_sha256": "255db57998e6d49d08f80f0274dffebb8d85a637d657ce01ca858e8ccfbfc3a8"
+        },
+        "source_manifest.json": {
+          "AGENTS.md": "eb29b8ca7088c6053cdfa8d744b0429bd4a85c21896f6bd3969c0e6ff2791eb7",
+          "README.md": "f166544a968f989b1115a68b43bd483b3cfcf50972f1a3a3723b182fc8cd07ce",
+          "pyproject.toml": "afd9bb930fe35ef73d25bf40238d84969d5e0217710ae6671d5aef01a0d491ef",
+          ".gitignore": "3438cd7d9fcc8eb653609000af3c71f8e4f922c2c8ea71abaad4a9575df98d99",
+          ".gitattributes": "1d60e158806f63fc61cc05049288cedf431806a7d0897567b1201f03e1f772ad",
+          "src/dma_ce/conditional.py": "99db81f40e8d6b64943485e8a33d38780f720567a1203b4a1a206d0dcf2017e4",
+          "src/dma_ce/continuation.py": "d14029d48a785e9a22b493d18b5a4e3ac041b425de827f9d520578559b63be7e",
+          "src/dma_ce/data.py": "a3f4e329a1543358434ba402552fb10ebbe8bd99cebd84cabbbb5a3756a6d251",
+          "src/dma_ce/experiment.py": "28c7e304ff46a672b3ad01a5062cebbae0c461d28b2b6f6042322c4310d9b826",
+          "src/dma_ce/research.py": "4e334c4db5f4a2b7783ab020e60ea36a80892541bc7c80210dc4eb747e083c52",
+          "src/dma_ce/sbl.py": "376fa0c4a8ef3b18ed1d65d5505fc403a311bac0d1ee55e1e61524f8c48befa8",
+          "src/dma_ce/suite.py": "7ad16f383c8ca74b34f55afeba7c3346adbc6f6e309239b0279e82296d409176",
+          "src/dma_ce/__init__.py": "b639b35c4e623952e62c5633c888d31b7107042a999fdae65d6ed2ce5100bedf",
+          "src/dma_ce/_upstream/atmosphere.py": "45db4c5afbe0fac2bc8e053fed2f3fc8e2c959ede7f338733da4524ffeceecb6",
+          "src/dma_ce/_upstream/ddpm.py": "35d435278cb7c5f849f91ec94fb4ebf0c77e103232b36cde2ac822a630df6543",
+          "src/dma_ce/_upstream/dma.py": "ba667d0a19d80a356f11d2d58d5c14f4d6b5c910437b5c43ddfc377a17eed69c",
+          "src/dma_ce/_upstream/geometry.py": "1b59a0430d5867bcca38603ce76e9691cea34be9168c92b9f9baf206354e50bc",
+          "src/dma_ce/_upstream/__init__.py": "2ce696ff49d731d23cc426ac63688bce357500403dfe6354533bec195ed6cceb",
+          "scripts/audit_experiment.py": "3a523e287a9d267d80e208a129df3b6bb52b4436bd28016b19edf0b2dafc838c",
+          "scripts/audit_research.py": "824f8e47731a1936ae439342655c03a393718ab880a93be09846b509778e48f8",
+          "scripts/diagnose_validation.py": "8e2cb086dd1888c8b5abf8a05398f1df84c72c987d053409305ddd67a56b4deb",
+          "scripts/run_experiment.py": "ac1284957064269482aa10719e9fa0c727090faed2c3558b18c2a1d31cee8ab3",
+          "scripts/run_research.py": "cea7b6e730a7989126e4fe4031b00c45a0db080193d5c3a912f981eed66bbd7e",
+          "scripts/select_sbl_budget.py": "74804ef07f1f97ffce99b6b0ab41a73932892e71cea54bbe5885b03ea65106e5",
+          "tests/test_core.py": "b72314e51358c3c4e004798b7426734f2f96e8a1646c10e048971f914a4ebf73",
+          "tests/test_research.py": "0829c32f4ea152956c329b546d19c4a731dcbed0b564aad07ba8887a54cf9ddb",
+          "configs/deterministic.json": "2beec3f7578c4f771972485c48485d23d6bc042eedea715e01b2997b32088c1d",
+          "configs/deterministic_smoke.json": "873ba196af09c662dedb6b00069dd1672b742d51a7288b5f64af5a5252babf1c",
+          "configs/pilot.json": "9815e16f16a82785fca43bd880974fe7ffdd5dcfaf4ff19e5bcf9e8b387eca02",
+          "configs/research.json": "f75a558817a679b8b443466e17d3b30e68f11b43e355f08a12b43f744df44119",
+          "configs/research_smoke.json": "6233058a55f3e655133c835ebad3ca9becf89cf2dd565c874dc288b5f92bcd7d",
+          "configs/smoke.json": "1fc9d7cdfb615f273abdf522e03256610c2d721967e67e6f78c608f0aed834c6",
+          "docs/EXPERIMENT_PLAN.md": "146d852cc93694c8f1c0702bcd8ab7351f9b9f6e09065aa9445c495216bbda90",
+          "docs/REFERENCES.md": "5c6ecfd346a955fa58ce889b64722b75cf136d33f968403a37dc85de412b937f",
+          "docs/RESEARCH_STUDY.md": "8b273693f875177752d9a0bf673ac668cc515b8939c96af687d120bc58feba82",
+          "docs/SECOND_STAGE_PLAN.md": "bb9ad2df80ab65ec41be49a08ee9af403107e0232d1cd593c43a73bbc7c0e967",
+          "docs/UPSTREAM_REUSE.json": "f2854bd1a5e4910ca9b0713175c6aca57e45df85a7df38032ca49177c19d0165"
+        }
+      },
+      "source_archive_sha256": "255db57998e6d49d08f80f0274dffebb8d85a637d657ce01ca858e8ccfbfc3a8"
+    },
+    {
+      "run_id": "corrected_sbl_smoke_20261020_v1",
+      "scope": "implementation_verification_only",
+      "retired_directory": "results/corrected_sbl_smoke_20261020_v1",
+      "reports": {
+        "report.md": "# 有界场景方法比较执行记录\n\n运行：corrected_sbl_smoke_20261020_v1。标签：corrected_sbl_single_refinement_smoke_implementation_only。\n\nSBL求解器：convex_bound_kkt_v1。基线检查强制执行完整预算，收敛标记来自边缘似然的一阶条件。\n确定性精修只保留无可靠度版本，采用跨频卷积和按条件归一化的训练损失。\n\n各选择只使用训练/验证数据；最终各系统在保存模型和参数哈希后生成新的筛选几何。\n独立重复为训练初始化种子和几何场景；同一几何的带宽、配置与SNR按块配对。\n\n| 阶段 | 状态 |\n|---|---|\n| baseline | complete |\n| curves | complete |\n| factorial | complete |\n| reliability | complete |\n| budget | complete |\n| diffusion | complete |\n| final | complete |\n\n训练、验证曲线和精度—时间图保存在相应阶段目录。主NMSE先在线性尺度汇总再转dB。\n修正能量与真实残差对齐只用于评分诊断。可靠度标定和条件损失权重仅来自训练集。\n最终通信指标是单用户、单接收RF链、跨频共享DMA状态的接收速率，扣除导频与配置切换开销。\n所报时间包含SBL和精修的批量均摊时间，排除编译预热；不等同于单样本时延。\n\n这是小规模流程验证，迭代和训练预算已缩短；数值不能作为方法性能或论文结论。\n\n- [base/matched](final/base/matched/summary.csv)\n- [base/paths3](final/base/paths3/summary.csv)\n- [base/range_shift](final/base/range_shift/summary.csv)\n- [n16_k16/matched](final/n16_k16/matched/summary.csv)\n- [n16_k16/paths3](final/n16_k16/paths3/summary.csv)\n- [n16_k16/range_shift](final/n16_k16/range_shift/summary.csv)\n- [n16_k8/matched](final/n16_k8/matched/summary.csv)\n- [n16_k8/paths3](final/n16_k8/paths3/summary.csv)\n- [n16_k8/range_shift](final/n16_k8/range_shift/summary.csv)\n\n## 2026-10-20实现核查\n\n39项检查通过，覆盖复高斯后验、独立分量解析最优解、边缘似然下降、四份重复列的结果及停止位置不变性、强制预算计数、旧SBL缓存拒绝、训练/验证独立、CPU/GPU优化器与随机状态续训。\n\n本运行完成全部7阶段，再用同ID恢复，7个阶段均复用。验证审计重放6个扩散检查点、核对288条指标，最大差为零。最终审计核对18个缓存、12个冻结模型、9组场景、4,032条指标和12次模型重放，所有误差与重放差值均为零。\n\n主短系统为8阵元、8子载波，每个划分只有6/4/4个几何，2个训练初始化和2个新的最终初始化，训练检查点为2/4/6步。为覆盖原有通用分支，还执行16阵元的两种极小扩展及路径数/距离偏移。正式研究配置继续固定32×32及原角距范围。\n\n两个基线预算5/10步实际执行完毕。短验证放宽了收敛和稳定阈值，一阶条件通过率为零；这里的 `complete` 只确认流程和记录逻辑。正式配置保留95%总体、90%逐条件通过比例及0.1 dB/5%稳定性要求。\n\n所有确定性训练任务均为无可靠度、跨频卷积、条件归一化损失；不再执行方差图、标量和置换对照。低层历史模型读取接口保留。\n\n[验证审计](validation_audit.json)与[最终审计](audit.json)保存完整核对结果。原39项检查输出、执行日志及补充核查记录保存在本目录；模型和原始缓存保存在独立 `runs/`。\n"
+      },
+      "checks": {
+        "audit.json": {
+          "status": "passed",
+          "source_archive_verified": true,
+          "data_caches_verified": 18,
+          "frozen_models_verified": 12,
+          "scenarios_verified": 9,
+          "metrics_recomputed": 4032,
+          "maximum_metric_difference": 0.0,
+          "sampler_replays": 12,
+          "maximum_replay_difference": 0.0,
+          "training_only_calibration": true,
+          "fresh_geometry_and_common_observations": true,
+          "communication_rates_recomputed": true,
+          "crossed_bootstrap_recomputed": true,
+          "continuation_verified": false
+        },
+        "validation_audit.json": {
+          "status": "passed",
+          "scope": "validation_only",
+          "ready_for_final": true,
+          "diffusion_status": "complete",
+          "source_archive_verified": true,
+          "continuation_verified": false,
+          "data_caches_verified": 18,
+          "diffusion_checkpoints_replayed": 6,
+          "validation_metrics_recomputed": 288,
+          "maximum_metric_difference": 0.0,
+          "last_interval_improvement_db": 0.003598823633545905,
+          "training_only_calibration": true,
+          "training_validation_geometry_disjoint": true,
+          "screening_data_read": false
+        }
+      },
+      "source_records": {
+        "config_resolved.json": {
+          "label": "corrected_sbl_single_refinement_smoke_implementation_only",
+          "seed": 20261018,
+          "device": "cuda",
+          "timeout_seconds": 1800,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              3000000000.0,
+              30000000000.0
+            ],
+            "antennas": 8,
+            "tones": 8,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              2,
+              4
+            ],
+            "snrs_db": [
+              10.0
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 2,
+            "range_min_m": 0.005,
+            "range_max_m": 0.02,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 6,
+            "validation": 4,
+            "screen": 4,
+            "screen_seed": 20261019
+          },
+          "sbl": {
+            "angle_points": 5,
+            "range_points": 2,
+            "iterations": 5,
+            "tolerance": 0.001,
+            "batch_size": 2,
+            "early_stopping": false
+          },
+          "learning": {
+            "steps": 2,
+            "batch_size": 2,
+            "width": 8,
+            "learning_rate": 0.001,
+            "diffusion_steps": 10,
+            "sampling_steps": 3,
+            "log_every": 2,
+            "variants": [
+              "deterministic_no_reliability"
+            ]
+          },
+          "evaluation": {
+            "batch_size": 2,
+            "dc_multipliers": [
+              0.0,
+              0.1,
+              1.0
+            ],
+            "bootstrap_samples": 50,
+            "dc_selection_model": "deterministic_no_reliability",
+            "correct_coarse": true
+          },
+          "research": {
+            "training_seeds": [
+              101,
+              102
+            ],
+            "final_seeds": [
+              201,
+              202
+            ],
+            "shuffle_seeds": [
+              301,
+              302
+            ],
+            "checkpoints": [
+              2,
+              4,
+              6
+            ],
+            "eval_every": 2,
+            "training_stability_db": 100.0,
+            "train_curve_samples": 4,
+            "grids": [
+              {
+                "name": "coarse",
+                "angle_points": 5,
+                "range_points": 2
+              },
+              {
+                "name": "dense",
+                "angle_points": 9,
+                "range_points": 3
+              }
+            ],
+            "baseline_iterations": [
+              5,
+              10
+            ],
+            "stability": {
+              "overall_convergence": 0.0,
+              "context_convergence": 0.0,
+              "nmse_db": 100.0,
+              "variance_relative": 100.0
+            },
+            "sbl_budgets": [
+              2,
+              5
+            ],
+            "accuracy_tolerance_db": 0.1,
+            "averages": [
+              1,
+              4,
+              16
+            ],
+            "expansions": [
+              {
+                "name": "n16_k8",
+                "antennas": 16,
+                "tones": 8
+              },
+              {
+                "name": "n16_k16",
+                "antennas": 16,
+                "tones": 16
+              }
+            ],
+            "mismatches": [
+              {
+                "name": "paths3",
+                "channel": {
+                  "paths": 3
+                }
+              },
+              {
+                "name": "range_shift",
+                "channel": {
+                  "range_min_m": 0.01,
+                  "range_max_m": 0.03
+                }
+              }
+            ],
+            "communication": {
+              "coherence_symbols": 40,
+              "switch_symbols": 0.1
+            }
+          }
+        },
+        "environment.json": {
+          "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+          "platform": "Windows-10-10.0.26300-SP0",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cuda",
+          "cuda": "12.8",
+          "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+          "command": [
+            ".\\scripts\\run_research.py",
+            "--config",
+            ".\\configs\\research_smoke.json",
+            "--run-id",
+            "corrected_sbl_smoke_20261020_v1"
+          ],
+          "git_commit": "a77d5d15f1b1ca48726bfdddfe0ec6da549201f2",
+          "source_zip_sha256": "95b35bbe5ac4e96d8c7bb26d96ec46f2d29afe38677000f3e1ca0b716bc63ee8"
+        },
+        "source_manifest.json": {
+          "AGENTS.md": "eb29b8ca7088c6053cdfa8d744b0429bd4a85c21896f6bd3969c0e6ff2791eb7",
+          "README.md": "e135744642a0b90e801c1021144823573608c0a9652afcd3912c808553d9e853",
+          "pyproject.toml": "afd9bb930fe35ef73d25bf40238d84969d5e0217710ae6671d5aef01a0d491ef",
+          ".gitignore": "3438cd7d9fcc8eb653609000af3c71f8e4f922c2c8ea71abaad4a9575df98d99",
+          ".gitattributes": "1d60e158806f63fc61cc05049288cedf431806a7d0897567b1201f03e1f772ad",
+          "src/dma_ce/conditional.py": "c53599b8ae048d07a8819c372f9931a5a89ee080a0d738d62ac5a8ca26baaddc",
+          "src/dma_ce/continuation.py": "0cf131613d9d8984db18f70103a1a72c0c70af866f784008e7c348df6a63b29e",
+          "src/dma_ce/data.py": "952b6c8536e549a1f3a1495d0f9c758a8e907936faaaa008f35aec4d392986d1",
+          "src/dma_ce/experiment.py": "fc5caf50e1184ef6b5d4df0d466124864d65f79955490b4ed275187d9f0b4532",
+          "src/dma_ce/research.py": "4e334c4db5f4a2b7783ab020e60ea36a80892541bc7c80210dc4eb747e083c52",
+          "src/dma_ce/sbl.py": "83d3d03fbd9736f255ed630e670629786a53026d29a430e6ccd29225d1297273",
+          "src/dma_ce/suite.py": "fd4f401402769aeb9cd2bf08d3acf5d6847b5ff92e9719490b66d2da9693d1c7",
+          "src/dma_ce/__init__.py": "b639b35c4e623952e62c5633c888d31b7107042a999fdae65d6ed2ce5100bedf",
+          "src/dma_ce/_upstream/atmosphere.py": "45db4c5afbe0fac2bc8e053fed2f3fc8e2c959ede7f338733da4524ffeceecb6",
+          "src/dma_ce/_upstream/ddpm.py": "35d435278cb7c5f849f91ec94fb4ebf0c77e103232b36cde2ac822a630df6543",
+          "src/dma_ce/_upstream/dma.py": "ba667d0a19d80a356f11d2d58d5c14f4d6b5c910437b5c43ddfc377a17eed69c",
+          "src/dma_ce/_upstream/geometry.py": "1b59a0430d5867bcca38603ce76e9691cea34be9168c92b9f9baf206354e50bc",
+          "src/dma_ce/_upstream/__init__.py": "2ce696ff49d731d23cc426ac63688bce357500403dfe6354533bec195ed6cceb",
+          "scripts/audit_experiment.py": "3a523e287a9d267d80e208a129df3b6bb52b4436bd28016b19edf0b2dafc838c",
+          "scripts/audit_research.py": "824f8e47731a1936ae439342655c03a393718ab880a93be09846b509778e48f8",
+          "scripts/diagnose_validation.py": "24b101f11809c02203220368225f3f2aac9ef07e5cac900af0bb5cd4ccabad80",
+          "scripts/run_experiment.py": "ac1284957064269482aa10719e9fa0c727090faed2c3558b18c2a1d31cee8ab3",
+          "scripts/run_research.py": "d625fb0ce5381f3ece761d296a8163d9a7f90b8ec42c8a5d742146f7793482e6",
+          "scripts/select_sbl_budget.py": "c47179a41773b9fe137393cece919e19780166c8ab38859d7619143c8c64ddee",
+          "tests/test_core.py": "773a7b9db91ba9e6997de4935bc29bac68a0ed0f00c884052ec39821d0af6e3c",
+          "tests/test_research.py": "8396886affd45b4c63512d6bca85b91ba7b7aea59a9989185bdf2740855472f4",
+          "configs/deterministic.json": "2beec3f7578c4f771972485c48485d23d6bc042eedea715e01b2997b32088c1d",
+          "configs/deterministic_smoke.json": "873ba196af09c662dedb6b00069dd1672b742d51a7288b5f64af5a5252babf1c",
+          "configs/pilot.json": "9815e16f16a82785fca43bd880974fe7ffdd5dcfaf4ff19e5bcf9e8b387eca02",
+          "configs/research.json": "67f4027cf2dd76cc1477e7ce8816d1c0fb49c04ae2cb21a829a1ab27850c6c53",
+          "configs/research_smoke.json": "565552f804cf58059d30acd69c1bad8d7a1265e1ca16d771fd6d1254e5483f87",
+          "configs/smoke.json": "1fc9d7cdfb615f273abdf522e03256610c2d721967e67e6f78c608f0aed834c6",
+          "docs/EXPERIMENT_PLAN.md": "146d852cc93694c8f1c0702bcd8ab7351f9b9f6e09065aa9445c495216bbda90",
+          "docs/REFERENCES.md": "5c6ecfd346a955fa58ce889b64722b75cf136d33f968403a37dc85de412b937f",
+          "docs/RESEARCH_STUDY.md": "4d00a764eee549b30350dba4cf03d21f2464134894d3b08f8f5dc5e982468e23",
+          "docs/SECOND_STAGE_PLAN.md": "bb9ad2df80ab65ec41be49a08ee9af403107e0232d1cd593c43a73bbc7c0e967",
+          "docs/UPSTREAM_REUSE.json": "f2854bd1a5e4910ca9b0713175c6aca57e45df85a7df38032ca49177c19d0165"
+        }
+      },
+      "source_archive_sha256": "95b35bbe5ac4e96d8c7bb26d96ec46f2d29afe38677000f3e1ca0b716bc63ee8"
+    },
+    {
+      "run_id": "deterministic_smoke_20261016_v1",
+      "scope": "implementation_verification_only",
+      "retired_directory": "results/deterministic_smoke_20261016_v1",
+      "reports": {
+        "report.md": "# 确定性残差与可靠度对照\n\n## Material Passport\n\n- Origin Skill: ARS-Codex experiment-agent\n- Origin Mode: run\n- Origin Date: 2026-10-16\n- Verification Status: ANALYZED\n- Version Label: deterministic_smoke_20261016_v1\n\n状态：完成。标签：connectivity_deterministic_controls。\n独立筛选几何8个，条件2组，逐场景指标128行。\n同一几何的条件按块配对；区间仅描述该单训练种子下的几何差异。\n\n| 对照 | 配对平均差/dB | 描述性95%区间/dB |\n|---|---:|---|\n| deterministic − deterministic_no_reliability | -0.0083 | [-0.0152, -0.0018] |\n| deterministic_dc − deterministic_no_reliability_dc | -0.0083 | [-0.0157, -0.0011] |\n| deterministic_shuffled − deterministic | 0.0042 | [-0.0018, 0.0089] |\n| deterministic_shuffled_dc − deterministic_dc | 0.0042 | [-0.0018, 0.0088] |\n| deterministic_no_reliability − coarse | 0.0082 | [-0.0081, 0.0245] |\n| deterministic − coarse | -0.0001 | [-0.0184, 0.0186] |\n| deterministic_no_reliability_dc − coarse_dc | 0.0082 | [-0.0076, 0.0252] |\n| deterministic_dc − coarse_dc | -0.0001 | [-0.0198, 0.0184] |\n\n负值表示左侧方法更好。此表均值是逐场景dB配对差，不等于线性均值再转dB之差。\n\n![完整CSI](nmse.png)\n\n![可靠度校准](calibration.png)\n\nSBL非收敛比例见summary.csv，逐场景迭代/残差见metrics.csv。后验对角是模型内代理，图中实测误差只用于评分。\n计算时间为批量均摊，不是单样本在线时延；该缩小系统不支持完整尺寸或通信净速率结论。\n"
+      },
+      "checks": {
+        "audit.json": {
+          "status": "passed",
+          "metrics_recomputed": 128,
+          "observation_hashes_checked": 128,
+          "disjoint_geometry_splits": true,
+          "training_only_scales_recomputed": true,
+          "freeze_before_screen": true,
+          "source_zip_and_model_hashes_verified": true,
+          "maximum_metric_difference": 0.0,
+          "sampler_replay_maximum_difference": 0.0,
+          "posthoc_residual_decomposition_checked": true,
+          "model_parameters": {
+            "deterministic_no_reliability": 4385,
+            "deterministic": 4385
+          },
+          "training_seconds": {
+            "deterministic_no_reliability": 0.38839139999981853,
+            "deterministic": 0.09627499999987776
+          },
+          "sbl_screen_converged": 0,
+          "sbl_screen_total": 16
+        },
+        "status.json": {
+          "status": "complete",
+          "label": "connectivity_deterministic_controls",
+          "elapsed_seconds": 3.987133264541626,
+          "metrics_rows": 128,
+          "data_sha256": "0d3755f2b164b392f26faf8fbb0a0b6b9ca6709046f87a4f28e89fe8e1d744ad",
+          "frozen_validation_sha256": "6ec3a041ed1afdfe928bde02e7ab9ebb6a751478e75a965b6a0b3f2a8929d1ba"
+        }
+      },
+      "source_records": {
+        "config_resolved.json": {
+          "label": "connectivity_deterministic_controls",
+          "seed": 20261017,
+          "device": "cuda",
+          "timeout_seconds": 1800,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              30000000000.0
+            ],
+            "antennas": 16,
+            "tones": 16,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              4,
+              8
+            ],
+            "snrs_db": [
+              10.0
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 3,
+            "range_min_m": 0.03,
+            "range_max_m": 0.1,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 16,
+            "validation": 8,
+            "screen": 8,
+            "screen_seed": 20261017
+          },
+          "sbl": {
+            "angle_points": 17,
+            "range_points": 4,
+            "iterations": 20,
+            "tolerance": 0.001,
+            "batch_size": 8
+          },
+          "learning": {
+            "steps": 20,
+            "batch_size": 8,
+            "width": 16,
+            "learning_rate": 0.001,
+            "diffusion_steps": 100,
+            "sampling_steps": 10,
+            "log_every": 10,
+            "variants": [
+              "deterministic_no_reliability",
+              "deterministic"
+            ]
+          },
+          "evaluation": {
+            "batch_size": 8,
+            "dc_multipliers": [
+              0.0,
+              0.1,
+              1.0,
+              10.0
+            ],
+            "bootstrap_samples": 200,
+            "dc_selection_model": "deterministic_no_reliability",
+            "correct_coarse": true
+          }
+        },
+        "environment.json": {
+          "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+          "platform": "Windows-10-10.0.26300-SP0",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cuda",
+          "cuda": "12.8",
+          "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+          "command": [
+            "scripts/run_experiment.py",
+            "--config",
+            "configs/deterministic_smoke.json",
+            "--run-id",
+            "deterministic_smoke_20261016_v1"
+          ],
+          "training_seed": 20261017
+        },
+        "source_manifest.json": {
+          ".gitignore": "3438cd7d9fcc8eb653609000af3c71f8e4f922c2c8ea71abaad4a9575df98d99",
+          ".gitattributes": "1d60e158806f63fc61cc05049288cedf431806a7d0897567b1201f03e1f772ad",
+          "AGENTS.md": "eb29b8ca7088c6053cdfa8d744b0429bd4a85c21896f6bd3969c0e6ff2791eb7",
+          "README.md": "47b72f58007a891240c5b1c5847b615890d31061b02a983bdad6fa7f5442f970",
+          "pyproject.toml": "afd9bb930fe35ef73d25bf40238d84969d5e0217710ae6671d5aef01a0d491ef",
+          "src/dma_ce/conditional.py": "8e23a70fa306312ca727971d42be7ced4870f009d6e9028735e07d3e9a462ad6",
+          "src/dma_ce/data.py": "67238f815e8be89dcc9477616d9bdad83a3fe77f2384496ec4d5912229ee6ee4",
+          "src/dma_ce/experiment.py": "28c7e304ff46a672b3ad01a5062cebbae0c461d28b2b6f6042322c4310d9b826",
+          "src/dma_ce/sbl.py": "376fa0c4a8ef3b18ed1d65d5505fc403a311bac0d1ee55e1e61524f8c48befa8",
+          "src/dma_ce/__init__.py": "b639b35c4e623952e62c5633c888d31b7107042a999fdae65d6ed2ce5100bedf",
+          "src/dma_ce/_upstream/atmosphere.py": "45db4c5afbe0fac2bc8e053fed2f3fc8e2c959ede7f338733da4524ffeceecb6",
+          "src/dma_ce/_upstream/ddpm.py": "35d435278cb7c5f849f91ec94fb4ebf0c77e103232b36cde2ac822a630df6543",
+          "src/dma_ce/_upstream/dma.py": "ba667d0a19d80a356f11d2d58d5c14f4d6b5c910437b5c43ddfc377a17eed69c",
+          "src/dma_ce/_upstream/geometry.py": "1b59a0430d5867bcca38603ce76e9691cea34be9168c92b9f9baf206354e50bc",
+          "src/dma_ce/_upstream/__init__.py": "2ce696ff49d731d23cc426ac63688bce357500403dfe6354533bec195ed6cceb",
+          "scripts/audit_experiment.py": "3a523e287a9d267d80e208a129df3b6bb52b4436bd28016b19edf0b2dafc838c",
+          "scripts/diagnose_validation.py": "8e2cb086dd1888c8b5abf8a05398f1df84c72c987d053409305ddd67a56b4deb",
+          "scripts/run_experiment.py": "ac1284957064269482aa10719e9fa0c727090faed2c3558b18c2a1d31cee8ab3",
+          "scripts/select_sbl_budget.py": "74804ef07f1f97ffce99b6b0ab41a73932892e71cea54bbe5885b03ea65106e5",
+          "configs/deterministic.json": "dcb3a857af968d66da1338e948787e49581682642303f2c95be729b1e84f79be",
+          "configs/deterministic_smoke.json": "5576162ba7d8c0f309c86efb346e6491f50e52dec6b31d8f726ec1306beeaa45",
+          "configs/pilot.json": "9815e16f16a82785fca43bd880974fe7ffdd5dcfaf4ff19e5bcf9e8b387eca02",
+          "configs/smoke.json": "1fc9d7cdfb615f273abdf522e03256610c2d721967e67e6f78c608f0aed834c6",
+          "tests/test_core.py": "b72314e51358c3c4e004798b7426734f2f96e8a1646c10e048971f914a4ebf73",
+          "docs/EXPERIMENT_PLAN.md": "146d852cc93694c8f1c0702bcd8ab7351f9b9f6e09065aa9445c495216bbda90",
+          "docs/REFERENCES.md": "5c6ecfd346a955fa58ce889b64722b75cf136d33f968403a37dc85de412b937f",
+          "docs/SECOND_STAGE_PLAN.md": "bb9ad2df80ab65ec41be49a08ee9af403107e0232d1cd593c43a73bbc7c0e967",
+          "docs/UPSTREAM_REUSE.json": "f2854bd1a5e4910ca9b0713175c6aca57e45df85a7df38032ca49177c19d0165"
+        }
+      },
+      "source_archive_sha256": "67d1b37bf81b704ab495fc6faf91a5c455533fa7527b108cc9a5baa7955fa03a"
+    },
+    {
+      "run_id": "linear_baselines_smoke_20261020_v1",
+      "scope": "implementation_verification_only",
+      "retired_directory": "results/linear_baselines_smoke_20261020_v1",
+      "reports": {
+        "report.md": "## Material Passport\n\n- Origin Skill: academic-research-suite / experiment-agent\n- Origin Mode: run + validate\n- Origin Date: 2026-10-21\n- Verification Status: VERIFIED\n- Version Label: linear_baselines_smoke_20261020_v1\n\n# 实现检查\n\n仅用于检查实现，不用于性能判断。4个独立几何、12个条件、192条指标重算差0，48次LS误差分解通过。完整源码、配置和环境随目录保存。最终双精度版本为`linear_baselines_smoke_20261021_v3`。\n"
+      },
+      "checks": {
+        "audit.json": {
+          "metrics_rows": 192,
+          "maximum_recomputed_nmse_difference": 0.0,
+          "ls_decomposition_checks": 48,
+          "maximum_ls_decomposition_difference": 5.684341886080802e-14,
+          "fresh_independent_geometries": 4,
+          "validation_frozen_before_screen": true,
+          "statistics_and_source_cache_unchanged": true,
+          "elapsed_seconds": 1.6075661182403564
+        },
+        "status.json": {
+          "status": "complete",
+          "metrics_rows": 192,
+          "maximum_recomputed_nmse_difference": 0.0,
+          "ls_decomposition_checks": 48,
+          "maximum_ls_decomposition_difference": 5.684341886080802e-14,
+          "fresh_independent_geometries": 4,
+          "validation_frozen_before_screen": true,
+          "statistics_and_source_cache_unchanged": true,
+          "elapsed_seconds": 1.6075661182403564
+        }
+      },
+      "source_records": {
+        "config_resolved.json": {
+          "label": "linear_baseline_implementation_check",
+          "seed": 20261018,
+          "device": "cpu",
+          "timeout_seconds": 120,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              3000000000.0,
+              30000000000.0
+            ],
+            "antennas": 8,
+            "tones": 8,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              2,
+              4
+            ],
+            "snrs_db": [
+              -10,
+              10,
+              30
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 2,
+            "range_min_m": 0.005,
+            "range_max_m": 0.02,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 6,
+            "validation": 4,
+            "screen": 4,
+            "screen_seed": 20269022
+          },
+          "sbl": {
+            "angle_points": 5,
+            "range_points": 2,
+            "iterations": 5,
+            "tolerance": 0.001,
+            "batch_size": 2,
+            "early_stopping": false
+          },
+          "learning": {
+            "steps": 2,
+            "batch_size": 2,
+            "width": 8,
+            "learning_rate": 0.001,
+            "diffusion_steps": 10,
+            "sampling_steps": 3,
+            "log_every": 2,
+            "variants": [
+              "deterministic_no_reliability"
+            ]
+          },
+          "evaluation": {
+            "batch_size": 2,
+            "dc_multipliers": [
+              0.0,
+              0.1,
+              1.0
+            ],
+            "bootstrap_samples": 50,
+            "dc_selection_model": "deterministic_no_reliability",
+            "correct_coarse": true
+          },
+          "research": {
+            "training_seeds": [
+              101,
+              102
+            ],
+            "final_seeds": [
+              201,
+              202
+            ],
+            "shuffle_seeds": [
+              301,
+              302
+            ],
+            "checkpoints": [
+              2,
+              4,
+              6
+            ],
+            "eval_every": 2,
+            "training_stability_db": 100.0,
+            "train_curve_samples": 4,
+            "grids": [
+              {
+                "name": "coarse",
+                "angle_points": 5,
+                "range_points": 2
+              },
+              {
+                "name": "dense",
+                "angle_points": 9,
+                "range_points": 3
+              }
+            ],
+            "baseline_iterations": [
+              5,
+              10
+            ],
+            "stability": {
+              "overall_convergence": 0.0,
+              "context_convergence": 0.0,
+              "nmse_db": 100.0,
+              "variance_relative": 100.0
+            },
+            "sbl_budgets": [
+              2,
+              5
+            ],
+            "accuracy_tolerance_db": 0.1,
+            "averages": [
+              1,
+              4,
+              16
+            ],
+            "expansions": [
+              {
+                "name": "n16_k8",
+                "antennas": 16,
+                "tones": 8
+              },
+              {
+                "name": "n16_k16",
+                "antennas": 16,
+                "tones": 16
+              }
+            ],
+            "mismatches": [
+              {
+                "name": "paths3",
+                "channel": {
+                  "paths": 3
+                }
+              },
+              {
+                "name": "range_shift",
+                "channel": {
+                  "range_min_m": 0.01,
+                  "range_max_m": 0.03
+                }
+              }
+            ],
+            "communication": {
+              "coherence_symbols": 40,
+              "switch_symbols": 0.1
+            }
+          },
+          "comparison": {
+            "snrs_db": [
+              -10,
+              10,
+              30
+            ],
+            "seeds": [
+              201
+            ],
+            "training_scenes": 6,
+            "validation_scenes": 4,
+            "screen_scenes": 4,
+            "screen_seed": 20268940,
+            "prior_steps": 12,
+            "prior_checkpoints": [
+              4,
+              8,
+              12
+            ],
+            "update_steps": 8,
+            "update_checkpoints": [
+              2,
+              4,
+              8
+            ],
+            "update_width": 4,
+            "structured_iterations": 3,
+            "strength_grid": [
+              0.1,
+              1.0
+            ],
+            "batch_size": 2,
+            "solver_batch_size": 2,
+            "sbl_max_iterations": 10,
+            "sbl_tolerance": 0.001,
+            "bootstrap_samples": 50,
+            "log_every": 4,
+            "timeout_seconds": 900,
+            "implementation_only": true,
+            "parent_run": "corrected_sbl_smoke_20261020_v1",
+            "training_snrs_db": [
+              10.0
+            ]
+          },
+          "linear_baselines": {
+            "training_scenes": 6,
+            "validation_scenes": 4,
+            "screen_scenes": 4,
+            "screen_seed": 20269022,
+            "frequency_shrinkage_grid": [
+              0.0,
+              0.5,
+              1.0
+            ],
+            "timeout_seconds": 120,
+            "implementation_only": true,
+            "source_snr_run": "snr_comparison_smoke_20261020_v2",
+            "selection": "one shrinkage strength per bandwidth, mean validation NMSE over all SNRs and configuration counts"
+          }
+        },
+        "environment.json": {
+          "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+          "platform": "Windows-10-10.0.26300-SP0",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cpu",
+          "cuda": "12.8",
+          "gpu": null,
+          "command": [
+            "scripts/run_linear_baselines.py",
+            "--config",
+            "configs/linear_baselines_smoke.json",
+            "--parent",
+            "snr_comparison_smoke_20261020_v2",
+            "--run-id",
+            "linear_baselines_smoke_20261020_v1",
+            "--device",
+            "cpu"
+          ],
+          "git_commit": "48a6094779f4a22c3894f1f0707b4f8f18c4df2a",
+          "source_zip_sha256": "3422746810e6b6512804e823fc54f4fe289a4fc3e69783a8c5388dfcbe0ddd5f"
+        },
+        "source_manifest.json": {
+          "AGENTS.md": "eb29b8ca7088c6053cdfa8d744b0429bd4a85c21896f6bd3969c0e6ff2791eb7",
+          "README.md": "b3510c2fb1eb1a7c090ed20ef55f21bb1d4fa0d630c54a3853b8443264a5ba69",
+          "pyproject.toml": "afd9bb930fe35ef73d25bf40238d84969d5e0217710ae6671d5aef01a0d491ef",
+          ".gitignore": "3438cd7d9fcc8eb653609000af3c71f8e4f922c2c8ea71abaad4a9575df98d99",
+          ".gitattributes": "1d60e158806f63fc61cc05049288cedf431806a7d0897567b1201f03e1f772ad",
+          "src/dma_ce/conditional.py": "c53599b8ae048d07a8819c372f9931a5a89ee080a0d738d62ac5a8ca26baaddc",
+          "src/dma_ce/continuation.py": "0cf131613d9d8984db18f70103a1a72c0c70af866f784008e7c348df6a63b29e",
+          "src/dma_ce/data.py": "952b6c8536e549a1f3a1495d0f9c758a8e907936faaaa008f35aec4d392986d1",
+          "src/dma_ce/experiment.py": "fc5caf50e1184ef6b5d4df0d466124864d65f79955490b4ed275187d9f0b4532",
+          "src/dma_ce/research.py": "4e334c4db5f4a2b7783ab020e60ea36a80892541bc7c80210dc4eb747e083c52",
+          "src/dma_ce/sbl.py": "83d3d03fbd9736f255ed630e670629786a53026d29a430e6ccd29225d1297273",
+          "src/dma_ce/snr_study.py": "4e1d36952d1f89225ddbfddf8e5017c64e013a88840b0be8db1c62b4e9f6cf50",
+          "src/dma_ce/structured.py": "d42ac9f24f83e3e034cc5da7a31e7dce6522dc0bc5399d33dbfcc67273598fa4",
+          "src/dma_ce/suite.py": "fd4f401402769aeb9cd2bf08d3acf5d6847b5ff92e9719490b66d2da9693d1c7",
+          "src/dma_ce/__init__.py": "b639b35c4e623952e62c5633c888d31b7107042a999fdae65d6ed2ce5100bedf",
+          "src/dma_ce/_upstream/atmosphere.py": "45db4c5afbe0fac2bc8e053fed2f3fc8e2c959ede7f338733da4524ffeceecb6",
+          "src/dma_ce/_upstream/ddpm.py": "35d435278cb7c5f849f91ec94fb4ebf0c77e103232b36cde2ac822a630df6543",
+          "src/dma_ce/_upstream/dma.py": "ba667d0a19d80a356f11d2d58d5c14f4d6b5c910437b5c43ddfc377a17eed69c",
+          "src/dma_ce/_upstream/geometry.py": "1b59a0430d5867bcca38603ce76e9691cea34be9168c92b9f9baf206354e50bc",
+          "src/dma_ce/_upstream/__init__.py": "2ce696ff49d731d23cc426ac63688bce357500403dfe6354533bec195ed6cceb",
+          "scripts/audit_experiment.py": "3a523e287a9d267d80e208a129df3b6bb52b4436bd28016b19edf0b2dafc838c",
+          "scripts/audit_research.py": "824f8e47731a1936ae439342655c03a393718ab880a93be09846b509778e48f8",
+          "scripts/diagnose_validation.py": "24b101f11809c02203220368225f3f2aac9ef07e5cac900af0bb5cd4ccabad80",
+          "scripts/run_experiment.py": "ac1284957064269482aa10719e9fa0c727090faed2c3558b18c2a1d31cee8ab3",
+          "scripts/run_linear_baselines.py": "4decb7864d37241152cbf3b7cf015f8df3f6f7805311d57e91d66d6b8f821496",
+          "scripts/run_research.py": "d625fb0ce5381f3ece761d296a8163d9a7f90b8ec42c8a5d742146f7793482e6",
+          "scripts/run_snr_comparison.py": "b47198d6414dedecc5381079556e8d90ac3ffbec84b419d88b0c0b8a040445d5",
+          "scripts/select_sbl_budget.py": "c47179a41773b9fe137393cece919e19780166c8ab38859d7619143c8c64ddee",
+          "tests/test_core.py": "773a7b9db91ba9e6997de4935bc29bac68a0ed0f00c884052ec39821d0af6e3c",
+          "tests/test_research.py": "8396886affd45b4c63512d6bca85b91ba7b7aea59a9989185bdf2740855472f4",
+          "tests/test_snr_study.py": "1b9300b62ebe0ac77598359b3cd2a5ad9bb53381dc0691f1c37830032c9b5698",
+          "tests/test_structured.py": "67665f35c0314707b7007500e52ac3150f190103eee6589c62c357d41c9e7609",
+          "configs/deterministic.json": "2beec3f7578c4f771972485c48485d23d6bc042eedea715e01b2997b32088c1d",
+          "configs/deterministic_smoke.json": "873ba196af09c662dedb6b00069dd1672b742d51a7288b5f64af5a5252babf1c",
+          "configs/linear_baselines.json": "cb603ecc5d6d6f5ae0b23446972e5c91a72c4ce49623d9096c2e6ff82e4b0076",
+          "configs/linear_baselines_smoke.json": "82bd75b8cd817bd6e0ffda56a144baec58eb82139586f8193eba4a79e74aeb06",
+          "configs/pilot.json": "9815e16f16a82785fca43bd880974fe7ffdd5dcfaf4ff19e5bcf9e8b387eca02",
+          "configs/research.json": "67f4027cf2dd76cc1477e7ce8816d1c0fb49c04ae2cb21a829a1ab27850c6c53",
+          "configs/research_smoke.json": "565552f804cf58059d30acd69c1bad8d7a1265e1ca16d771fd6d1254e5483f87",
+          "configs/smoke.json": "1fc9d7cdfb615f273abdf522e03256610c2d721967e67e6f78c608f0aed834c6",
+          "configs/snr_comparison.json": "c438f265dad65b6652b6af9455c0a720f228cb649b9f8b5288c2d26c009999ba",
+          "configs/snr_comparison_smoke.json": "67df22f270118bc9895c88daf0538926b9c6fd6b6c4d7e21ccaf3e88d57d5458",
+          "docs/EXPERIMENT_PLAN.md": "146d852cc93694c8f1c0702bcd8ab7351f9b9f6e09065aa9445c495216bbda90",
+          "docs/REFERENCES.md": "30c2995866da12b9bcbe6819ceefb691d1d30e0489942837366ec760c6fdfc2d",
+          "docs/RESEARCH_STUDY.md": "f1c0b9d358e9beebc5dbd3a0b75aaa6bec96f6e53fa2b75068453dfc082736c0",
+          "docs/SBL_SOLVER.md": "0cd9f8090b0230aa39ab0c2107f46dcb2faaaaebdd44015430addf0b682f8b66",
+          "docs/SECOND_STAGE_PLAN.md": "bb9ad2df80ab65ec41be49a08ee9af403107e0232d1cd593c43a73bbc7c0e967",
+          "docs/SNR_COMPARISON.md": "af7aedbdea85350c0585d670dfd9ee8c17b65975f5b7edd0d98abc9bbed785df",
+          "docs/UPSTREAM_REUSE.json": "f2854bd1a5e4910ca9b0713175c6aca57e45df85a7df38032ca49177c19d0165"
+        }
+      },
+      "source_archive_sha256": "3422746810e6b6512804e823fc54f4fe289a4fc3e69783a8c5388dfcbe0ddd5f"
+    },
+    {
+      "run_id": "linear_baselines_smoke_20261020_v2",
+      "scope": "implementation_verification_only",
+      "retired_directory": "results/linear_baselines_smoke_20261020_v2",
+      "reports": {
+        "report.md": "## Material Passport\n\n- Origin Skill: academic-research-suite / experiment-agent\n- Origin Mode: run + validate\n- Origin Date: 2026-10-21\n- Verification Status: VERIFIED\n- Version Label: linear_baselines_smoke_20261020_v2\n\n# 实现检查\n\n仅用于检查实现，不用于性能判断。4个独立几何、12个条件、192条指标重算差0，48次LS误差分解通过。完整源码、配置和环境随目录保存。最终双精度版本为`linear_baselines_smoke_20261021_v3`。\n"
+      },
+      "checks": {
+        "audit.json": {
+          "metrics_rows": 192,
+          "maximum_recomputed_nmse_difference": 0.0,
+          "maximum_original_statistics_difference": 1.6196978165585978e-12,
+          "ls_decomposition_checks": 48,
+          "maximum_ls_decomposition_difference": 5.684341886080802e-14,
+          "fresh_independent_geometries": 4,
+          "validation_frozen_before_screen": true,
+          "common_observation_checks": 48,
+          "statistics_and_source_cache_unchanged": true,
+          "elapsed_seconds": 2.804253101348877
+        },
+        "status.json": {
+          "status": "complete",
+          "metrics_rows": 192,
+          "maximum_recomputed_nmse_difference": 0.0,
+          "maximum_original_statistics_difference": 1.6196978165585978e-12,
+          "ls_decomposition_checks": 48,
+          "maximum_ls_decomposition_difference": 5.684341886080802e-14,
+          "fresh_independent_geometries": 4,
+          "validation_frozen_before_screen": true,
+          "common_observation_checks": 48,
+          "statistics_and_source_cache_unchanged": true,
+          "elapsed_seconds": 2.804253101348877
+        }
+      },
+      "source_records": {
+        "config_resolved.json": {
+          "label": "linear_baseline_implementation_check",
+          "seed": 20261018,
+          "device": "cpu",
+          "timeout_seconds": 120,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              3000000000.0,
+              30000000000.0
+            ],
+            "antennas": 8,
+            "tones": 8,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              2,
+              4
+            ],
+            "snrs_db": [
+              -10,
+              10,
+              30
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 2,
+            "range_min_m": 0.005,
+            "range_max_m": 0.02,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 6,
+            "validation": 4,
+            "screen": 4,
+            "screen_seed": 20269022
+          },
+          "sbl": {
+            "angle_points": 5,
+            "range_points": 2,
+            "iterations": 5,
+            "tolerance": 0.001,
+            "batch_size": 2,
+            "early_stopping": false
+          },
+          "learning": {
+            "steps": 2,
+            "batch_size": 2,
+            "width": 8,
+            "learning_rate": 0.001,
+            "diffusion_steps": 10,
+            "sampling_steps": 3,
+            "log_every": 2,
+            "variants": [
+              "deterministic_no_reliability"
+            ]
+          },
+          "evaluation": {
+            "batch_size": 2,
+            "dc_multipliers": [
+              0.0,
+              0.1,
+              1.0
+            ],
+            "bootstrap_samples": 50,
+            "dc_selection_model": "deterministic_no_reliability",
+            "correct_coarse": true
+          },
+          "research": {
+            "training_seeds": [
+              101,
+              102
+            ],
+            "final_seeds": [
+              201,
+              202
+            ],
+            "shuffle_seeds": [
+              301,
+              302
+            ],
+            "checkpoints": [
+              2,
+              4,
+              6
+            ],
+            "eval_every": 2,
+            "training_stability_db": 100.0,
+            "train_curve_samples": 4,
+            "grids": [
+              {
+                "name": "coarse",
+                "angle_points": 5,
+                "range_points": 2
+              },
+              {
+                "name": "dense",
+                "angle_points": 9,
+                "range_points": 3
+              }
+            ],
+            "baseline_iterations": [
+              5,
+              10
+            ],
+            "stability": {
+              "overall_convergence": 0.0,
+              "context_convergence": 0.0,
+              "nmse_db": 100.0,
+              "variance_relative": 100.0
+            },
+            "sbl_budgets": [
+              2,
+              5
+            ],
+            "accuracy_tolerance_db": 0.1,
+            "averages": [
+              1,
+              4,
+              16
+            ],
+            "expansions": [
+              {
+                "name": "n16_k8",
+                "antennas": 16,
+                "tones": 8
+              },
+              {
+                "name": "n16_k16",
+                "antennas": 16,
+                "tones": 16
+              }
+            ],
+            "mismatches": [
+              {
+                "name": "paths3",
+                "channel": {
+                  "paths": 3
+                }
+              },
+              {
+                "name": "range_shift",
+                "channel": {
+                  "range_min_m": 0.01,
+                  "range_max_m": 0.03
+                }
+              }
+            ],
+            "communication": {
+              "coherence_symbols": 40,
+              "switch_symbols": 0.1
+            }
+          },
+          "comparison": {
+            "snrs_db": [
+              -10,
+              10,
+              30
+            ],
+            "seeds": [
+              201
+            ],
+            "training_scenes": 6,
+            "validation_scenes": 4,
+            "screen_scenes": 4,
+            "screen_seed": 20268940,
+            "prior_steps": 12,
+            "prior_checkpoints": [
+              4,
+              8,
+              12
+            ],
+            "update_steps": 8,
+            "update_checkpoints": [
+              2,
+              4,
+              8
+            ],
+            "update_width": 4,
+            "structured_iterations": 3,
+            "strength_grid": [
+              0.1,
+              1.0
+            ],
+            "batch_size": 2,
+            "solver_batch_size": 2,
+            "sbl_max_iterations": 10,
+            "sbl_tolerance": 0.001,
+            "bootstrap_samples": 50,
+            "log_every": 4,
+            "timeout_seconds": 900,
+            "implementation_only": true,
+            "parent_run": "corrected_sbl_smoke_20261020_v1",
+            "training_snrs_db": [
+              10.0
+            ]
+          },
+          "linear_baselines": {
+            "training_scenes": 6,
+            "validation_scenes": 4,
+            "screen_scenes": 4,
+            "screen_seed": 20269022,
+            "frequency_shrinkage_grid": [
+              0.0,
+              0.5,
+              1.0
+            ],
+            "timeout_seconds": 120,
+            "implementation_only": true,
+            "source_snr_run": "snr_comparison_smoke_20261020_v2",
+            "timing": "not measured; shared metric timing fields are placeholders",
+            "selection": "one shrinkage strength per bandwidth, mean validation NMSE over all SNRs and configuration counts"
+          }
+        },
+        "environment.json": {
+          "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+          "platform": "Windows-10-10.0.26300-SP0",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cpu",
+          "cuda": "12.8",
+          "gpu": null,
+          "command": [
+            "scripts/run_linear_baselines.py",
+            "--config",
+            "configs/linear_baselines_smoke.json",
+            "--parent",
+            "snr_comparison_smoke_20261020_v2",
+            "--run-id",
+            "linear_baselines_smoke_20261020_v2",
+            "--device",
+            "cpu"
+          ],
+          "git_commit": "48a6094779f4a22c3894f1f0707b4f8f18c4df2a",
+          "source_zip_sha256": "5ee741c3fe1c97e10238910038541df22c5700d99e855b27c51f00455009c6c8"
+        },
+        "source_manifest.json": {
+          "AGENTS.md": "eb29b8ca7088c6053cdfa8d744b0429bd4a85c21896f6bd3969c0e6ff2791eb7",
+          "README.md": "b3510c2fb1eb1a7c090ed20ef55f21bb1d4fa0d630c54a3853b8443264a5ba69",
+          "pyproject.toml": "afd9bb930fe35ef73d25bf40238d84969d5e0217710ae6671d5aef01a0d491ef",
+          ".gitignore": "3438cd7d9fcc8eb653609000af3c71f8e4f922c2c8ea71abaad4a9575df98d99",
+          ".gitattributes": "1d60e158806f63fc61cc05049288cedf431806a7d0897567b1201f03e1f772ad",
+          "src/dma_ce/conditional.py": "c53599b8ae048d07a8819c372f9931a5a89ee080a0d738d62ac5a8ca26baaddc",
+          "src/dma_ce/continuation.py": "0cf131613d9d8984db18f70103a1a72c0c70af866f784008e7c348df6a63b29e",
+          "src/dma_ce/data.py": "952b6c8536e549a1f3a1495d0f9c758a8e907936faaaa008f35aec4d392986d1",
+          "src/dma_ce/experiment.py": "fc5caf50e1184ef6b5d4df0d466124864d65f79955490b4ed275187d9f0b4532",
+          "src/dma_ce/research.py": "4e334c4db5f4a2b7783ab020e60ea36a80892541bc7c80210dc4eb747e083c52",
+          "src/dma_ce/sbl.py": "83d3d03fbd9736f255ed630e670629786a53026d29a430e6ccd29225d1297273",
+          "src/dma_ce/snr_study.py": "4e1d36952d1f89225ddbfddf8e5017c64e013a88840b0be8db1c62b4e9f6cf50",
+          "src/dma_ce/structured.py": "d42ac9f24f83e3e034cc5da7a31e7dce6522dc0bc5399d33dbfcc67273598fa4",
+          "src/dma_ce/suite.py": "fd4f401402769aeb9cd2bf08d3acf5d6847b5ff92e9719490b66d2da9693d1c7",
+          "src/dma_ce/__init__.py": "b639b35c4e623952e62c5633c888d31b7107042a999fdae65d6ed2ce5100bedf",
+          "src/dma_ce/_upstream/atmosphere.py": "45db4c5afbe0fac2bc8e053fed2f3fc8e2c959ede7f338733da4524ffeceecb6",
+          "src/dma_ce/_upstream/ddpm.py": "35d435278cb7c5f849f91ec94fb4ebf0c77e103232b36cde2ac822a630df6543",
+          "src/dma_ce/_upstream/dma.py": "ba667d0a19d80a356f11d2d58d5c14f4d6b5c910437b5c43ddfc377a17eed69c",
+          "src/dma_ce/_upstream/geometry.py": "1b59a0430d5867bcca38603ce76e9691cea34be9168c92b9f9baf206354e50bc",
+          "src/dma_ce/_upstream/__init__.py": "2ce696ff49d731d23cc426ac63688bce357500403dfe6354533bec195ed6cceb",
+          "scripts/audit_experiment.py": "3a523e287a9d267d80e208a129df3b6bb52b4436bd28016b19edf0b2dafc838c",
+          "scripts/audit_research.py": "824f8e47731a1936ae439342655c03a393718ab880a93be09846b509778e48f8",
+          "scripts/diagnose_validation.py": "24b101f11809c02203220368225f3f2aac9ef07e5cac900af0bb5cd4ccabad80",
+          "scripts/run_experiment.py": "ac1284957064269482aa10719e9fa0c727090faed2c3558b18c2a1d31cee8ab3",
+          "scripts/run_linear_baselines.py": "526dd58d0ac292fe91e8268aeff9bb0d39bbdaf42525d68dec171f8253bbab25",
+          "scripts/run_research.py": "d625fb0ce5381f3ece761d296a8163d9a7f90b8ec42c8a5d742146f7793482e6",
+          "scripts/run_snr_comparison.py": "b47198d6414dedecc5381079556e8d90ac3ffbec84b419d88b0c0b8a040445d5",
+          "scripts/select_sbl_budget.py": "c47179a41773b9fe137393cece919e19780166c8ab38859d7619143c8c64ddee",
+          "tests/test_core.py": "773a7b9db91ba9e6997de4935bc29bac68a0ed0f00c884052ec39821d0af6e3c",
+          "tests/test_research.py": "8396886affd45b4c63512d6bca85b91ba7b7aea59a9989185bdf2740855472f4",
+          "tests/test_snr_study.py": "1b9300b62ebe0ac77598359b3cd2a5ad9bb53381dc0691f1c37830032c9b5698",
+          "tests/test_structured.py": "67665f35c0314707b7007500e52ac3150f190103eee6589c62c357d41c9e7609",
+          "configs/deterministic.json": "2beec3f7578c4f771972485c48485d23d6bc042eedea715e01b2997b32088c1d",
+          "configs/deterministic_smoke.json": "873ba196af09c662dedb6b00069dd1672b742d51a7288b5f64af5a5252babf1c",
+          "configs/linear_baselines.json": "cb603ecc5d6d6f5ae0b23446972e5c91a72c4ce49623d9096c2e6ff82e4b0076",
+          "configs/linear_baselines_smoke.json": "82bd75b8cd817bd6e0ffda56a144baec58eb82139586f8193eba4a79e74aeb06",
+          "configs/pilot.json": "9815e16f16a82785fca43bd880974fe7ffdd5dcfaf4ff19e5bcf9e8b387eca02",
+          "configs/research.json": "67f4027cf2dd76cc1477e7ce8816d1c0fb49c04ae2cb21a829a1ab27850c6c53",
+          "configs/research_smoke.json": "565552f804cf58059d30acd69c1bad8d7a1265e1ca16d771fd6d1254e5483f87",
+          "configs/smoke.json": "1fc9d7cdfb615f273abdf522e03256610c2d721967e67e6f78c608f0aed834c6",
+          "configs/snr_comparison.json": "c438f265dad65b6652b6af9455c0a720f228cb649b9f8b5288c2d26c009999ba",
+          "configs/snr_comparison_smoke.json": "67df22f270118bc9895c88daf0538926b9c6fd6b6c4d7e21ccaf3e88d57d5458",
+          "docs/EXPERIMENT_PLAN.md": "146d852cc93694c8f1c0702bcd8ab7351f9b9f6e09065aa9445c495216bbda90",
+          "docs/LINEAR_BASELINES.md": "1eff6ee9f30e8065c4667dd9a2757b9298d0d311ec1cafe0fed9032094c38065",
+          "docs/REFERENCES.md": "30c2995866da12b9bcbe6819ceefb691d1d30e0489942837366ec760c6fdfc2d",
+          "docs/RESEARCH_STUDY.md": "f1c0b9d358e9beebc5dbd3a0b75aaa6bec96f6e53fa2b75068453dfc082736c0",
+          "docs/SBL_SOLVER.md": "0cd9f8090b0230aa39ab0c2107f46dcb2faaaaebdd44015430addf0b682f8b66",
+          "docs/SECOND_STAGE_PLAN.md": "bb9ad2df80ab65ec41be49a08ee9af403107e0232d1cd593c43a73bbc7c0e967",
+          "docs/SNR_COMPARISON.md": "af7aedbdea85350c0585d670dfd9ee8c17b65975f5b7edd0d98abc9bbed785df",
+          "docs/UPSTREAM_REUSE.json": "f2854bd1a5e4910ca9b0713175c6aca57e45df85a7df38032ca49177c19d0165"
+        }
+      },
+      "source_archive_sha256": "5ee741c3fe1c97e10238910038541df22c5700d99e855b27c51f00455009c6c8"
+    },
+    {
+      "run_id": "linear_baselines_smoke_20261021_v3",
+      "scope": "implementation_verification_only",
+      "retired_directory": "results/linear_baselines_smoke_20261021_v3",
+      "reports": {
+        "report.md": "## Material Passport\n\n- Origin Skill: academic-research-suite / experiment-agent\n- Origin Mode: run + validate\n- Origin Date: 2026-10-21\n- Verification Status: VERIFIED\n- Version Label: linear_baselines_smoke_20261021_v3\n\n# 实现检查\n\n仅用于检查实现，不用于性能判断。4个独立几何、12个条件、192条指标重算差0，48次LS误差分解通过。完整源码、配置和环境随目录保存。最终双精度版本为`linear_baselines_smoke_20261021_v3`。\n"
+      },
+      "checks": {
+        "audit.json": {
+          "metrics_rows": 192,
+          "maximum_recomputed_nmse_difference": 0.0,
+          "maximum_original_statistics_difference": 1.6196978165585978e-12,
+          "ls_decomposition_checks": 48,
+          "maximum_ls_decomposition_difference": 5.684341886080802e-14,
+          "fresh_independent_geometries": 4,
+          "validation_frozen_before_screen": true,
+          "common_observation_checks": 48,
+          "statistics_and_source_cache_unchanged": true,
+          "elapsed_seconds": 1.9243724346160889
+        },
+        "status.json": {
+          "status": "complete",
+          "metrics_rows": 192,
+          "maximum_recomputed_nmse_difference": 0.0,
+          "maximum_original_statistics_difference": 1.6196978165585978e-12,
+          "ls_decomposition_checks": 48,
+          "maximum_ls_decomposition_difference": 5.684341886080802e-14,
+          "fresh_independent_geometries": 4,
+          "validation_frozen_before_screen": true,
+          "common_observation_checks": 48,
+          "statistics_and_source_cache_unchanged": true,
+          "elapsed_seconds": 1.9243724346160889
+        }
+      },
+      "source_records": {
+        "config_resolved.json": {
+          "label": "linear_baseline_implementation_check",
+          "seed": 20261018,
+          "device": "cpu",
+          "timeout_seconds": 120,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              3000000000.0,
+              30000000000.0
+            ],
+            "antennas": 8,
+            "tones": 8,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              2,
+              4
+            ],
+            "snrs_db": [
+              -10,
+              10,
+              30
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 2,
+            "range_min_m": 0.005,
+            "range_max_m": 0.02,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 6,
+            "validation": 4,
+            "screen": 4,
+            "screen_seed": 20269022
+          },
+          "sbl": {
+            "angle_points": 5,
+            "range_points": 2,
+            "iterations": 5,
+            "tolerance": 0.001,
+            "batch_size": 2,
+            "early_stopping": false
+          },
+          "learning": {
+            "steps": 2,
+            "batch_size": 2,
+            "width": 8,
+            "learning_rate": 0.001,
+            "diffusion_steps": 10,
+            "sampling_steps": 3,
+            "log_every": 2,
+            "variants": [
+              "deterministic_no_reliability"
+            ]
+          },
+          "evaluation": {
+            "batch_size": 2,
+            "dc_multipliers": [
+              0.0,
+              0.1,
+              1.0
+            ],
+            "bootstrap_samples": 50,
+            "dc_selection_model": "deterministic_no_reliability",
+            "correct_coarse": true
+          },
+          "research": {
+            "training_seeds": [
+              101,
+              102
+            ],
+            "final_seeds": [
+              201,
+              202
+            ],
+            "shuffle_seeds": [
+              301,
+              302
+            ],
+            "checkpoints": [
+              2,
+              4,
+              6
+            ],
+            "eval_every": 2,
+            "training_stability_db": 100.0,
+            "train_curve_samples": 4,
+            "grids": [
+              {
+                "name": "coarse",
+                "angle_points": 5,
+                "range_points": 2
+              },
+              {
+                "name": "dense",
+                "angle_points": 9,
+                "range_points": 3
+              }
+            ],
+            "baseline_iterations": [
+              5,
+              10
+            ],
+            "stability": {
+              "overall_convergence": 0.0,
+              "context_convergence": 0.0,
+              "nmse_db": 100.0,
+              "variance_relative": 100.0
+            },
+            "sbl_budgets": [
+              2,
+              5
+            ],
+            "accuracy_tolerance_db": 0.1,
+            "averages": [
+              1,
+              4,
+              16
+            ],
+            "expansions": [
+              {
+                "name": "n16_k8",
+                "antennas": 16,
+                "tones": 8
+              },
+              {
+                "name": "n16_k16",
+                "antennas": 16,
+                "tones": 16
+              }
+            ],
+            "mismatches": [
+              {
+                "name": "paths3",
+                "channel": {
+                  "paths": 3
+                }
+              },
+              {
+                "name": "range_shift",
+                "channel": {
+                  "range_min_m": 0.01,
+                  "range_max_m": 0.03
+                }
+              }
+            ],
+            "communication": {
+              "coherence_symbols": 40,
+              "switch_symbols": 0.1
+            }
+          },
+          "comparison": {
+            "snrs_db": [
+              -10,
+              10,
+              30
+            ],
+            "seeds": [
+              201
+            ],
+            "training_scenes": 6,
+            "validation_scenes": 4,
+            "screen_scenes": 4,
+            "screen_seed": 20268940,
+            "prior_steps": 12,
+            "prior_checkpoints": [
+              4,
+              8,
+              12
+            ],
+            "update_steps": 8,
+            "update_checkpoints": [
+              2,
+              4,
+              8
+            ],
+            "update_width": 4,
+            "structured_iterations": 3,
+            "strength_grid": [
+              0.1,
+              1.0
+            ],
+            "batch_size": 2,
+            "solver_batch_size": 2,
+            "sbl_max_iterations": 10,
+            "sbl_tolerance": 0.001,
+            "bootstrap_samples": 50,
+            "log_every": 4,
+            "timeout_seconds": 900,
+            "implementation_only": true,
+            "parent_run": "corrected_sbl_smoke_20261020_v1",
+            "training_snrs_db": [
+              10.0
+            ]
+          },
+          "linear_baselines": {
+            "training_scenes": 6,
+            "validation_scenes": 4,
+            "screen_scenes": 4,
+            "screen_seed": 20269022,
+            "frequency_shrinkage_grid": [
+              0.0,
+              0.5,
+              1.0
+            ],
+            "timeout_seconds": 120,
+            "implementation_only": true,
+            "source_snr_run": "snr_comparison_smoke_20261020_v2",
+            "timing": "not measured; shared metric timing fields are placeholders",
+            "selection": "one shrinkage strength per bandwidth, mean validation NMSE over all SNRs and configuration counts"
+          }
+        },
+        "environment.json": {
+          "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+          "platform": "Windows-10-10.0.26300-SP0",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cpu",
+          "cuda": "12.8",
+          "gpu": null,
+          "command": [
+            "scripts/run_linear_baselines.py",
+            "--config",
+            "configs/linear_baselines_smoke.json",
+            "--parent",
+            "snr_comparison_smoke_20261020_v2",
+            "--run-id",
+            "linear_baselines_smoke_20261021_v3",
+            "--device",
+            "cpu"
+          ],
+          "git_commit": "48a6094779f4a22c3894f1f0707b4f8f18c4df2a",
+          "source_zip_sha256": "3f2133961d47cc841e9002f1b9a68cdfac352635fdc9637a3d228e23fd616116"
+        },
+        "source_manifest.json": {
+          "AGENTS.md": "eb29b8ca7088c6053cdfa8d744b0429bd4a85c21896f6bd3969c0e6ff2791eb7",
+          "README.md": "924ab53aa2379d06461b163e659fbc4df8896e392736be023f65ad442eb2f38a",
+          "pyproject.toml": "afd9bb930fe35ef73d25bf40238d84969d5e0217710ae6671d5aef01a0d491ef",
+          ".gitignore": "3438cd7d9fcc8eb653609000af3c71f8e4f922c2c8ea71abaad4a9575df98d99",
+          ".gitattributes": "1d60e158806f63fc61cc05049288cedf431806a7d0897567b1201f03e1f772ad",
+          "src/dma_ce/conditional.py": "c53599b8ae048d07a8819c372f9931a5a89ee080a0d738d62ac5a8ca26baaddc",
+          "src/dma_ce/continuation.py": "0cf131613d9d8984db18f70103a1a72c0c70af866f784008e7c348df6a63b29e",
+          "src/dma_ce/data.py": "952b6c8536e549a1f3a1495d0f9c758a8e907936faaaa008f35aec4d392986d1",
+          "src/dma_ce/experiment.py": "fc5caf50e1184ef6b5d4df0d466124864d65f79955490b4ed275187d9f0b4532",
+          "src/dma_ce/research.py": "4e334c4db5f4a2b7783ab020e60ea36a80892541bc7c80210dc4eb747e083c52",
+          "src/dma_ce/sbl.py": "83d3d03fbd9736f255ed630e670629786a53026d29a430e6ccd29225d1297273",
+          "src/dma_ce/snr_study.py": "4e1d36952d1f89225ddbfddf8e5017c64e013a88840b0be8db1c62b4e9f6cf50",
+          "src/dma_ce/structured.py": "173c135294cc9c5293dab04d43010e4845c8476eae192b3ce2d70cc9622e0d54",
+          "src/dma_ce/suite.py": "fd4f401402769aeb9cd2bf08d3acf5d6847b5ff92e9719490b66d2da9693d1c7",
+          "src/dma_ce/__init__.py": "b639b35c4e623952e62c5633c888d31b7107042a999fdae65d6ed2ce5100bedf",
+          "src/dma_ce/_upstream/atmosphere.py": "45db4c5afbe0fac2bc8e053fed2f3fc8e2c959ede7f338733da4524ffeceecb6",
+          "src/dma_ce/_upstream/ddpm.py": "35d435278cb7c5f849f91ec94fb4ebf0c77e103232b36cde2ac822a630df6543",
+          "src/dma_ce/_upstream/dma.py": "ba667d0a19d80a356f11d2d58d5c14f4d6b5c910437b5c43ddfc377a17eed69c",
+          "src/dma_ce/_upstream/geometry.py": "1b59a0430d5867bcca38603ce76e9691cea34be9168c92b9f9baf206354e50bc",
+          "src/dma_ce/_upstream/__init__.py": "2ce696ff49d731d23cc426ac63688bce357500403dfe6354533bec195ed6cceb",
+          "scripts/audit_experiment.py": "3a523e287a9d267d80e208a129df3b6bb52b4436bd28016b19edf0b2dafc838c",
+          "scripts/audit_research.py": "824f8e47731a1936ae439342655c03a393718ab880a93be09846b509778e48f8",
+          "scripts/diagnose_validation.py": "24b101f11809c02203220368225f3f2aac9ef07e5cac900af0bb5cd4ccabad80",
+          "scripts/run_experiment.py": "ac1284957064269482aa10719e9fa0c727090faed2c3558b18c2a1d31cee8ab3",
+          "scripts/run_linear_baselines.py": "526dd58d0ac292fe91e8268aeff9bb0d39bbdaf42525d68dec171f8253bbab25",
+          "scripts/run_research.py": "d625fb0ce5381f3ece761d296a8163d9a7f90b8ec42c8a5d742146f7793482e6",
+          "scripts/run_snr_comparison.py": "b47198d6414dedecc5381079556e8d90ac3ffbec84b419d88b0c0b8a040445d5",
+          "scripts/select_sbl_budget.py": "c47179a41773b9fe137393cece919e19780166c8ab38859d7619143c8c64ddee",
+          "tests/test_core.py": "773a7b9db91ba9e6997de4935bc29bac68a0ed0f00c884052ec39821d0af6e3c",
+          "tests/test_research.py": "8396886affd45b4c63512d6bca85b91ba7b7aea59a9989185bdf2740855472f4",
+          "tests/test_snr_study.py": "1b9300b62ebe0ac77598359b3cd2a5ad9bb53381dc0691f1c37830032c9b5698",
+          "tests/test_structured.py": "6b95134f951983b9c4145d4e461cc5c7d03577a6a86b8c4c2c195cf11af2d7f1",
+          "configs/deterministic.json": "2beec3f7578c4f771972485c48485d23d6bc042eedea715e01b2997b32088c1d",
+          "configs/deterministic_smoke.json": "873ba196af09c662dedb6b00069dd1672b742d51a7288b5f64af5a5252babf1c",
+          "configs/linear_baselines.json": "cb603ecc5d6d6f5ae0b23446972e5c91a72c4ce49623d9096c2e6ff82e4b0076",
+          "configs/linear_baselines_smoke.json": "82bd75b8cd817bd6e0ffda56a144baec58eb82139586f8193eba4a79e74aeb06",
+          "configs/pilot.json": "9815e16f16a82785fca43bd880974fe7ffdd5dcfaf4ff19e5bcf9e8b387eca02",
+          "configs/research.json": "67f4027cf2dd76cc1477e7ce8816d1c0fb49c04ae2cb21a829a1ab27850c6c53",
+          "configs/research_smoke.json": "565552f804cf58059d30acd69c1bad8d7a1265e1ca16d771fd6d1254e5483f87",
+          "configs/smoke.json": "1fc9d7cdfb615f273abdf522e03256610c2d721967e67e6f78c608f0aed834c6",
+          "configs/snr_comparison.json": "c438f265dad65b6652b6af9455c0a720f228cb649b9f8b5288c2d26c009999ba",
+          "configs/snr_comparison_smoke.json": "67df22f270118bc9895c88daf0538926b9c6fd6b6c4d7e21ccaf3e88d57d5458",
+          "docs/EXPERIMENT_PLAN.md": "146d852cc93694c8f1c0702bcd8ab7351f9b9f6e09065aa9445c495216bbda90",
+          "docs/LINEAR_BASELINES.md": "1675d18cc9e0ff9bd1308ac53bf751b99056829b4c7bd31889fd58e8b6803b88",
+          "docs/REFERENCES.md": "30c2995866da12b9bcbe6819ceefb691d1d30e0489942837366ec760c6fdfc2d",
+          "docs/RESEARCH_STUDY.md": "f1c0b9d358e9beebc5dbd3a0b75aaa6bec96f6e53fa2b75068453dfc082736c0",
+          "docs/SBL_SOLVER.md": "0cd9f8090b0230aa39ab0c2107f46dcb2faaaaebdd44015430addf0b682f8b66",
+          "docs/SECOND_STAGE_PLAN.md": "bb9ad2df80ab65ec41be49a08ee9af403107e0232d1cd593c43a73bbc7c0e967",
+          "docs/SNR_COMPARISON.md": "af7aedbdea85350c0585d670dfd9ee8c17b65975f5b7edd0d98abc9bbed785df",
+          "docs/UPSTREAM_REUSE.json": "f2854bd1a5e4910ca9b0713175c6aca57e45df85a7df38032ca49177c19d0165"
+        }
+      },
+      "source_archive_sha256": "3f2133961d47cc841e9002f1b9a68cdfac352635fdc9637a3d228e23fd616116"
+    },
+    {
+      "run_id": "research_smoke_20261018_v2",
+      "scope": "implementation_verification_only",
+      "retired_directory": "results/research_smoke_20261018_v2",
+      "reports": {
+        "report.md": "# 五步实验执行记录\n\n运行：research_smoke_20261018_v2。标签：five_step_smoke_implementation_only。\n\n各选择只使用训练/验证数据；最终各系统在保存模型和参数哈希后生成新的筛选几何。\n独立重复为训练初始化种子和几何场景；同一几何的带宽、配置与SNR按块配对。\n\n| 阶段 | 状态 |\n|---|---|\n| baseline | complete |\n| curves | complete |\n| factorial | complete |\n| reliability | complete |\n| budget | complete |\n| diffusion | complete |\n| final | complete |\n\n训练、验证曲线和精度—时间图保存在相应阶段目录。主NMSE先在线性尺度汇总再转dB。\n修正能量与真实残差对齐只用于评分诊断。可靠度标定和条件损失权重仅来自训练集。\n最终通信指标是单用户、单接收RF链、跨频共享DMA状态的接收速率，扣除导频与配置切换开销。\n所报时间包含SBL和精修的批量均摊时间，排除编译预热；不等同于单样本时延。\n\n这是小规模流程验证，迭代和训练预算已缩短；数值不能作为方法性能或论文结论。\n\n- [base/matched](final/base/matched/summary.csv)\n- [base/paths3](final/base/paths3/summary.csv)\n- [base/range_shift](final/base/range_shift/summary.csv)\n- [n16_k16/matched](final/n16_k16/matched/summary.csv)\n- [n16_k16/paths3](final/n16_k16/paths3/summary.csv)\n- [n16_k16/range_shift](final/n16_k16/range_shift/summary.csv)\n- [n16_k8/matched](final/n16_k8/matched/summary.csv)\n- [n16_k8/paths3](final/n16_k8/paths3/summary.csv)\n- [n16_k8/range_shift](final/n16_k8/range_shift/summary.csv)\n"
+      },
+      "checks": {
+        "audit.json": {
+          "status": "passed",
+          "source_archive_verified": true,
+          "data_caches_verified": 18,
+          "frozen_models_verified": 18,
+          "scenarios_verified": 9,
+          "metrics_recomputed": 4608,
+          "maximum_metric_difference": 0.0,
+          "sampler_replays": 15,
+          "maximum_replay_difference": 0.0,
+          "training_only_calibration": true,
+          "fresh_geometry_and_common_observations": true,
+          "communication_rates_recomputed": true,
+          "crossed_bootstrap_recomputed": true
+        }
+      },
+      "source_records": {
+        "config_resolved.json": {
+          "label": "five_step_smoke_implementation_only",
+          "seed": 20261018,
+          "device": "cuda",
+          "timeout_seconds": 1800,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              3000000000.0,
+              30000000000.0
+            ],
+            "antennas": 8,
+            "tones": 8,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              2,
+              4
+            ],
+            "snrs_db": [
+              10.0
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 2,
+            "range_min_m": 0.005,
+            "range_max_m": 0.02,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 6,
+            "validation": 4,
+            "screen": 4,
+            "screen_seed": 20261019
+          },
+          "sbl": {
+            "angle_points": 5,
+            "range_points": 2,
+            "iterations": 5,
+            "tolerance": 0.001,
+            "batch_size": 2
+          },
+          "learning": {
+            "steps": 2,
+            "batch_size": 2,
+            "width": 8,
+            "learning_rate": 0.001,
+            "diffusion_steps": 10,
+            "sampling_steps": 3,
+            "log_every": 2,
+            "variants": [
+              "deterministic_no_reliability",
+              "deterministic"
+            ]
+          },
+          "evaluation": {
+            "batch_size": 2,
+            "dc_multipliers": [
+              0.0,
+              0.1,
+              1.0
+            ],
+            "bootstrap_samples": 50,
+            "dc_selection_model": "deterministic_no_reliability",
+            "correct_coarse": true
+          },
+          "research": {
+            "training_seeds": [
+              101,
+              102
+            ],
+            "final_seeds": [
+              201,
+              202
+            ],
+            "shuffle_seeds": [
+              301,
+              302
+            ],
+            "checkpoints": [
+              2,
+              4,
+              6
+            ],
+            "eval_every": 2,
+            "training_stability_db": 100.0,
+            "train_curve_samples": 4,
+            "grids": [
+              {
+                "name": "coarse",
+                "angle_points": 5,
+                "range_points": 2
+              },
+              {
+                "name": "dense",
+                "angle_points": 9,
+                "range_points": 3
+              }
+            ],
+            "baseline_iterations": [
+              5,
+              10
+            ],
+            "stability": {
+              "overall_convergence": 0.0,
+              "context_convergence": 0.0,
+              "nmse_db": 100.0,
+              "variance_relative": 100.0
+            },
+            "sbl_budgets": [
+              2,
+              5
+            ],
+            "accuracy_tolerance_db": 0.1,
+            "averages": [
+              1,
+              4,
+              16
+            ],
+            "expansions": [
+              {
+                "name": "n16_k8",
+                "antennas": 16,
+                "tones": 8
+              },
+              {
+                "name": "n16_k16",
+                "antennas": 16,
+                "tones": 16
+              }
+            ],
+            "mismatches": [
+              {
+                "name": "paths3",
+                "channel": {
+                  "paths": 3
+                }
+              },
+              {
+                "name": "range_shift",
+                "channel": {
+                  "range_min_m": 0.01,
+                  "range_max_m": 0.03
+                }
+              }
+            ],
+            "communication": {
+              "coherence_symbols": 40,
+              "switch_symbols": 0.1
+            }
+          }
+        },
+        "environment.json": {
+          "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+          "platform": "Windows-10-10.0.26300-SP0",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cuda",
+          "cuda": "12.8",
+          "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+          "command": [
+            "scripts/run_research.py",
+            "--config",
+            "configs/research_smoke.json",
+            "--run-id",
+            "research_smoke_20261018_v2"
+          ],
+          "git_commit": "7a3b2dec3d00f6c50e2843b65124652292a598e0",
+          "source_zip_sha256": "6a60492da5918c00d9aaae754c9759664b263903005a74367f590cd573007b11"
+        },
+        "source_manifest.json": {
+          "AGENTS.md": "eb29b8ca7088c6053cdfa8d744b0429bd4a85c21896f6bd3969c0e6ff2791eb7",
+          "README.md": "debd381f992b26b867123a72733b70ddcece45adada6863a7d4807df0df8e85a",
+          "pyproject.toml": "afd9bb930fe35ef73d25bf40238d84969d5e0217710ae6671d5aef01a0d491ef",
+          ".gitignore": "3438cd7d9fcc8eb653609000af3c71f8e4f922c2c8ea71abaad4a9575df98d99",
+          ".gitattributes": "1d60e158806f63fc61cc05049288cedf431806a7d0897567b1201f03e1f772ad",
+          "src/dma_ce/conditional.py": "99db81f40e8d6b64943485e8a33d38780f720567a1203b4a1a206d0dcf2017e4",
+          "src/dma_ce/data.py": "a3f4e329a1543358434ba402552fb10ebbe8bd99cebd84cabbbb5a3756a6d251",
+          "src/dma_ce/experiment.py": "28c7e304ff46a672b3ad01a5062cebbae0c461d28b2b6f6042322c4310d9b826",
+          "src/dma_ce/research.py": "c0427ca843ed8f635fd1d7686fd934855c091bc28c6d8b58eed17eaf6f39a8ed",
+          "src/dma_ce/sbl.py": "376fa0c4a8ef3b18ed1d65d5505fc403a311bac0d1ee55e1e61524f8c48befa8",
+          "src/dma_ce/suite.py": "48c33feb9eaa306df9b60735fc7053ad6f135315ea2184b492317f3e229d1058",
+          "src/dma_ce/__init__.py": "b639b35c4e623952e62c5633c888d31b7107042a999fdae65d6ed2ce5100bedf",
+          "src/dma_ce/_upstream/atmosphere.py": "45db4c5afbe0fac2bc8e053fed2f3fc8e2c959ede7f338733da4524ffeceecb6",
+          "src/dma_ce/_upstream/ddpm.py": "35d435278cb7c5f849f91ec94fb4ebf0c77e103232b36cde2ac822a630df6543",
+          "src/dma_ce/_upstream/dma.py": "ba667d0a19d80a356f11d2d58d5c14f4d6b5c910437b5c43ddfc377a17eed69c",
+          "src/dma_ce/_upstream/geometry.py": "1b59a0430d5867bcca38603ce76e9691cea34be9168c92b9f9baf206354e50bc",
+          "src/dma_ce/_upstream/__init__.py": "2ce696ff49d731d23cc426ac63688bce357500403dfe6354533bec195ed6cceb",
+          "scripts/audit_experiment.py": "3a523e287a9d267d80e208a129df3b6bb52b4436bd28016b19edf0b2dafc838c",
+          "scripts/audit_research.py": "64304b458b9882981bc85c8b277901f945ddfb9115951433f789f24597bffd44",
+          "scripts/diagnose_validation.py": "8e2cb086dd1888c8b5abf8a05398f1df84c72c987d053409305ddd67a56b4deb",
+          "scripts/run_experiment.py": "ac1284957064269482aa10719e9fa0c727090faed2c3558b18c2a1d31cee8ab3",
+          "scripts/run_research.py": "045563b4efb6db32962e9a814a838786a1d5cf58db0f1e1abcb9c1b7c8306212",
+          "scripts/select_sbl_budget.py": "74804ef07f1f97ffce99b6b0ab41a73932892e71cea54bbe5885b03ea65106e5",
+          "tests/test_core.py": "b72314e51358c3c4e004798b7426734f2f96e8a1646c10e048971f914a4ebf73",
+          "tests/test_research.py": "df0b520ced4fdded4f158158d51fb941ae1f425212f45723ee89a571cb38b112",
+          "configs/deterministic.json": "2beec3f7578c4f771972485c48485d23d6bc042eedea715e01b2997b32088c1d",
+          "configs/deterministic_smoke.json": "873ba196af09c662dedb6b00069dd1672b742d51a7288b5f64af5a5252babf1c",
+          "configs/pilot.json": "9815e16f16a82785fca43bd880974fe7ffdd5dcfaf4ff19e5bcf9e8b387eca02",
+          "configs/research.json": "f75a558817a679b8b443466e17d3b30e68f11b43e355f08a12b43f744df44119",
+          "configs/research_smoke.json": "6233058a55f3e655133c835ebad3ca9becf89cf2dd565c874dc288b5f92bcd7d",
+          "configs/smoke.json": "1fc9d7cdfb615f273abdf522e03256610c2d721967e67e6f78c608f0aed834c6",
+          "docs/EXPERIMENT_PLAN.md": "146d852cc93694c8f1c0702bcd8ab7351f9b9f6e09065aa9445c495216bbda90",
+          "docs/REFERENCES.md": "5c6ecfd346a955fa58ce889b64722b75cf136d33f968403a37dc85de412b937f",
+          "docs/RESEARCH_STUDY.md": "d84db542072bba9715b23603b8fc78258e55c07f488814e7f7dcdd9b3e0dad85",
+          "docs/SECOND_STAGE_PLAN.md": "bb9ad2df80ab65ec41be49a08ee9af403107e0232d1cd593c43a73bbc7c0e967",
+          "docs/UPSTREAM_REUSE.json": "f2854bd1a5e4910ca9b0713175c6aca57e45df85a7df38032ca49177c19d0165"
+        }
+      },
+      "source_archive_sha256": "6a60492da5918c00d9aaae754c9759664b263903005a74367f590cd573007b11"
+    },
+    {
+      "run_id": "smoke_20261016_v1",
+      "scope": "implementation_verification_only",
+      "retired_directory": "results/smoke_20261016_v1",
+      "reports": {
+        "report.md": "# 首轮条件生成实验\n\n## Material Passport\n\n- Origin Skill: ARS-Codex experiment-agent\n- Origin Mode: run\n- Origin Date: 2026-10-16\n- Verification Status: ANALYZED\n- Version Label: pilot_v1\n\n状态：完成。标签：smoke_connectivity_only。\n独立筛选几何8个，条件2组，逐场景指标176行。\n同一几何的条件按块配对；区间仅描述该单训练种子下的几何差异。\n\n| 对照 | 配对平均差/dB | 描述性95%区间/dB |\n|---|---:|---|\n| reliable_residual − residual | 0.0122 | [0.0099, 0.0144] |\n| reliable_residual_dc − residual_dc | 0.0118 | [0.0078, 0.0153] |\n| reliable_residual_shuffled − reliable_residual | 0.0001 | [-0.0024, 0.0025] |\n| reliable_residual_shuffled_dc − reliable_residual_dc | -0.0004 | [-0.0033, 0.0027] |\n| deterministic_dc − reliable_residual_dc | -21.0527 | [-22.6866, -19.6030] |\n\n负值表示左侧方法更好。此表均值是逐场景dB配对差，不等于线性均值再转dB之差。\n\n![完整CSI](nmse.png)\n\n![可靠度校准](calibration.png)\n\nSBL非收敛比例见summary.csv，逐场景迭代/残差见metrics.csv。后验对角是模型内代理，图中实测误差只用于评分。\n计算时间为批量均摊，不是单样本在线时延；该缩小系统不支持完整尺寸或通信净速率结论。\n"
+      },
+      "checks": {
+        "status.json": {
+          "status": "complete",
+          "label": "smoke_connectivity_only",
+          "elapsed_seconds": 12.102290868759155,
+          "metrics_rows": 176,
+          "data_sha256": "a0a64034d3017664795d692de8a729015de798f3c2eb4426293313fb755607e0",
+          "frozen_validation_sha256": "ab0b367371213aaa5d4cec2166b5bf6db8d351d98183a9090fe6948d8d460ec9"
+        }
+      },
+      "source_records": {
+        "config_resolved.json": {
+          "label": "smoke_connectivity_only",
+          "seed": 20261017,
+          "device": "cuda",
+          "timeout_seconds": 1800,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              30000000000.0
+            ],
+            "antennas": 16,
+            "tones": 16,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              4,
+              8
+            ],
+            "snrs_db": [
+              10.0
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 3,
+            "range_min_m": 0.03,
+            "range_max_m": 0.1,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 16,
+            "validation": 8,
+            "screen": 8
+          },
+          "sbl": {
+            "angle_points": 17,
+            "range_points": 4,
+            "iterations": 20,
+            "tolerance": 0.001,
+            "batch_size": 8
+          },
+          "learning": {
+            "steps": 20,
+            "batch_size": 8,
+            "width": 16,
+            "learning_rate": 0.001,
+            "diffusion_steps": 100,
+            "sampling_steps": 10,
+            "log_every": 10
+          },
+          "evaluation": {
+            "batch_size": 8,
+            "dc_multipliers": [
+              0.1,
+              1.0,
+              10.0
+            ],
+            "bootstrap_samples": 200
+          }
+        },
+        "environment.json": {
+          "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+          "platform": "Windows-10-10.0.26300-SP0",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cuda",
+          "cuda": "12.8",
+          "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+          "command": [
+            "scripts/run_experiment.py",
+            "--config",
+            "configs/smoke.json",
+            "--run-id",
+            "smoke_20261016_v1"
+          ],
+          "training_seed": 20261017
+        },
+        "source_manifest.json": {
+          ".gitignore": "3438cd7d9fcc8eb653609000af3c71f8e4f922c2c8ea71abaad4a9575df98d99",
+          "AGENTS.md": "eb29b8ca7088c6053cdfa8d744b0429bd4a85c21896f6bd3969c0e6ff2791eb7",
+          "pyproject.toml": "afd9bb930fe35ef73d25bf40238d84969d5e0217710ae6671d5aef01a0d491ef",
+          "src/dma_ce/conditional.py": "95b186348457b280082dcb4872451cbfec2a490c0108912d47d6be15c5aa9ee1",
+          "src/dma_ce/data.py": "e7dda7f9973e68982f2b0b9d148e8bc362f2cd11fcb093686d0e744cf424b089",
+          "src/dma_ce/experiment.py": "9060d0d45da67e8862b322be83b269f94f447545eba4fd4f047627f2cc45372d",
+          "src/dma_ce/sbl.py": "0daeb7cbf53f204a23eac347f4aa968f0ac62baf7a7f22efa4c708e6b48cdfbd",
+          "src/dma_ce/__init__.py": "b639b35c4e623952e62c5633c888d31b7107042a999fdae65d6ed2ce5100bedf",
+          "src/dma_ce/_upstream/atmosphere.py": "45db4c5afbe0fac2bc8e053fed2f3fc8e2c959ede7f338733da4524ffeceecb6",
+          "src/dma_ce/_upstream/ddpm.py": "35d435278cb7c5f849f91ec94fb4ebf0c77e103232b36cde2ac822a630df6543",
+          "src/dma_ce/_upstream/dma.py": "ba667d0a19d80a356f11d2d58d5c14f4d6b5c910437b5c43ddfc377a17eed69c",
+          "src/dma_ce/_upstream/geometry.py": "1b59a0430d5867bcca38603ce76e9691cea34be9168c92b9f9baf206354e50bc",
+          "src/dma_ce/_upstream/__init__.py": "2ce696ff49d731d23cc426ac63688bce357500403dfe6354533bec195ed6cceb",
+          "scripts/run_experiment.py": "ac1284957064269482aa10719e9fa0c727090faed2c3558b18c2a1d31cee8ab3",
+          "configs/pilot.json": "9815e16f16a82785fca43bd880974fe7ffdd5dcfaf4ff19e5bcf9e8b387eca02",
+          "configs/smoke.json": "1fc9d7cdfb615f273abdf522e03256610c2d721967e67e6f78c608f0aed834c6",
+          "tests/test_core.py": "ffca688760289104bd57c71564582dd3245fd25cb0d0539646ddce30736ba4e8"
+        }
+      },
+      "source_archive_sha256": "5d80172a5d2e393ba6f258751e2f373d4e1fa43fa5f76997da8ce34919da2e28"
+    },
+    {
+      "run_id": "snr_comparison_smoke_20261020_v1",
+      "scope": "implementation_verification_only",
+      "retired_directory": "results/snr_comparison_smoke_20261020_v1",
+      "reports": {
+        "report.md": "# DMA信道估计：SNR扫描与DDPM先验结构化更新\n\n运行：`snr_comparison_smoke_20261020_v1`。父运行：`corrected_sbl_smoke_20261020_v1`。\n\n这是在既有实验结果基础上设计的新探索性比较。所有方法共享每个场景的真实DMA观测和噪声。\n系统：8阵元、8频点、单RF链；角度±60.0°、距离0.005–0.02 m。\nSNR点：[-10, 10, 30] dB；独立筛选几何4个；学习方法初始化[201]。\nSNR按训练集在白化观测域中的平均接收功率定义；逐场景实际SNR也保存在原始CSV。\n\n## 方法与信息条件\n\n- LS使用逐频Moore–Penrose最小范数解。\n- LMMSE使用训练几何估计完整阵元—频率联合均值和协方差，保留跨频统计。\n- 主SBL采用密字典，最多10次更新，按标准化一阶条件0.001停止；逐场景实际次数和非收敛完整保存。\n- 最新DDPM为父运行已冻结的条件残差模型；主图使用16次平均，辅助图保留单次输出。其SBL初始化与训练时预算一致。\n- 新DDPM直接学习完整干净信道分布；冻结后以LMMSE初始化，交替DDPM去噪与真实逐频DMA的高斯观测更新。\n- 学习更新版本只预测正的阵元—频率先验方差，复均值仍由解析条件式计算。固定更新消融使用同一先验、初始化、迭代数及验证选择的全局强度。\n- DDPM参数、更新网络及超参数只从训练/验证数据获得；新筛选几何在冻结记录写出后生成。\n- 旧条件模型和新更新网络的带噪训练仍使用父运行的SNR配置；其余SNR检验冻结权重的迁移。DDPM先验训练的人工扩散噪声不等同于导频SNR。\n- 该交替算法是plug-and-play近似；内部对角方差未标定为真实后验误差。Li等TCOM2026提供学习先验方差更新的启发，其原文不使用DDPM。\n\n## 曲线\n\n![五方法SNR–NMSE](snr_nmse_main.png)\n\n![固定/学习更新与确定性对照](snr_nmse_ablation.png)\n\n每个标记对应实际运行点，相邻线段仅用于连接。NMSE先逐场景归一化、在线性尺度平均，再转dB。\n阴影为95%几何场景bootstrap区间；先平均各训练初始化，再按几何块重采样，包含所有配对SNR/硬件条件。阴影不包括训练初始化不确定性。\n\n## 全部条件平均\n\n| 方法 | NMSE/dB |\n|---|---:|\n| Minimum-norm LS | 11.0943 |\n| Joint-frequency LMMSE | 2.8761 |\n| SBL (dense dictionary) | -1.0688 |\n| SBL (100 updates) | 0.7140 |\n| Latest conditional DDPM (1 draw) | 8.5599 |\n| Latest conditional DDPM (4 draws) | 4.3699 |\n| Latest conditional DDPM (16 draws) | 1.8949 |\n| Latest deterministic refinement | 0.6955 |\n| DDPM prior + fixed Gaussian updates | 2.8594 |\n| DDPM prior + learned variance updates | 2.8596 |\n\n密字典SBL有12个条件的一阶条件通过率低于90%；各点通过率见summary.csv。\n审计重算480条指标，最大差0.0；4次结构化恢复重放最大差0.0。\n\n[逐场景数据](metrics.csv) · [汇总与区间](summary.csv) · [配对差异](paired_effects.csv) · [冻结参数](frozen.json) · [审计](audit.json)\n\n在线时间包含初始化与恢复的批量均摊应用时间，已知矩阵预计算、训练和预热另行排除；它不等于单样本时延。\n当与固定更新、LMMSE或密字典SBL相比没有改善时，保留原始结果，不用观测残差下降替代完整CSI改善。\n\n本运行仅为缩小预算的实现验证，其性能数值不作为方法结论。\n"
+      },
+      "checks": {
+        "audit.json": {
+          "status": "passed",
+          "source_archive_verified": true,
+          "metrics_recomputed": 480,
+          "maximum_metric_difference": 0.0,
+          "structured_replays": 4,
+          "maximum_replay_difference": 0.0,
+          "same_observations": true,
+          "selection_split": "validation",
+          "normalization": "parent training-only global scale",
+          "frozen_at_unix": 1792487849.0651503,
+          "screen_generated_after_freeze": true
+        }
+      },
+      "source_records": {
+        "config_resolved.json": {
+          "label": "snr_ddpm_prior_structured_implementation_only",
+          "seed": 20261018,
+          "device": "cuda",
+          "timeout_seconds": 900,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              3000000000.0,
+              30000000000.0
+            ],
+            "antennas": 8,
+            "tones": 8,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              2,
+              4
+            ],
+            "snrs_db": [
+              -10,
+              10,
+              30
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 2,
+            "range_min_m": 0.005,
+            "range_max_m": 0.02,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 6,
+            "validation": 4,
+            "screen": 4,
+            "screen_seed": 20268940
+          },
+          "sbl": {
+            "angle_points": 5,
+            "range_points": 2,
+            "iterations": 5,
+            "tolerance": 0.001,
+            "batch_size": 2,
+            "early_stopping": false
+          },
+          "learning": {
+            "steps": 2,
+            "batch_size": 2,
+            "width": 8,
+            "learning_rate": 0.001,
+            "diffusion_steps": 10,
+            "sampling_steps": 3,
+            "log_every": 2,
+            "variants": [
+              "deterministic_no_reliability"
+            ]
+          },
+          "evaluation": {
+            "batch_size": 2,
+            "dc_multipliers": [
+              0.0,
+              0.1,
+              1.0
+            ],
+            "bootstrap_samples": 50,
+            "dc_selection_model": "deterministic_no_reliability",
+            "correct_coarse": true
+          },
+          "research": {
+            "training_seeds": [
+              101,
+              102
+            ],
+            "final_seeds": [
+              201,
+              202
+            ],
+            "shuffle_seeds": [
+              301,
+              302
+            ],
+            "checkpoints": [
+              2,
+              4,
+              6
+            ],
+            "eval_every": 2,
+            "training_stability_db": 100.0,
+            "train_curve_samples": 4,
+            "grids": [
+              {
+                "name": "coarse",
+                "angle_points": 5,
+                "range_points": 2
+              },
+              {
+                "name": "dense",
+                "angle_points": 9,
+                "range_points": 3
+              }
+            ],
+            "baseline_iterations": [
+              5,
+              10
+            ],
+            "stability": {
+              "overall_convergence": 0.0,
+              "context_convergence": 0.0,
+              "nmse_db": 100.0,
+              "variance_relative": 100.0
+            },
+            "sbl_budgets": [
+              2,
+              5
+            ],
+            "accuracy_tolerance_db": 0.1,
+            "averages": [
+              1,
+              4,
+              16
+            ],
+            "expansions": [
+              {
+                "name": "n16_k8",
+                "antennas": 16,
+                "tones": 8
+              },
+              {
+                "name": "n16_k16",
+                "antennas": 16,
+                "tones": 16
+              }
+            ],
+            "mismatches": [
+              {
+                "name": "paths3",
+                "channel": {
+                  "paths": 3
+                }
+              },
+              {
+                "name": "range_shift",
+                "channel": {
+                  "range_min_m": 0.01,
+                  "range_max_m": 0.03
+                }
+              }
+            ],
+            "communication": {
+              "coherence_symbols": 40,
+              "switch_symbols": 0.1
+            }
+          },
+          "comparison": {
+            "snrs_db": [
+              -10,
+              10,
+              30
+            ],
+            "seeds": [
+              201
+            ],
+            "training_scenes": 6,
+            "validation_scenes": 4,
+            "screen_scenes": 4,
+            "screen_seed": 20268940,
+            "prior_steps": 12,
+            "prior_checkpoints": [
+              4,
+              8,
+              12
+            ],
+            "update_steps": 8,
+            "update_checkpoints": [
+              2,
+              4,
+              8
+            ],
+            "update_width": 4,
+            "structured_iterations": 3,
+            "strength_grid": [
+              0.1,
+              1.0
+            ],
+            "batch_size": 2,
+            "solver_batch_size": 2,
+            "sbl_max_iterations": 10,
+            "sbl_tolerance": 0.001,
+            "bootstrap_samples": 50,
+            "log_every": 4,
+            "timeout_seconds": 900,
+            "implementation_only": true,
+            "parent_run": "corrected_sbl_smoke_20261020_v1",
+            "training_snrs_db": [
+              10.0
+            ]
+          }
+        },
+        "environment.json": {
+          "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+          "platform": "Windows-10-10.0.26300-SP0",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cuda",
+          "cuda": "12.8",
+          "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+          "command": [
+            "scripts/run_snr_comparison.py",
+            "--config",
+            "configs/snr_comparison_smoke.json",
+            "--parent",
+            "corrected_sbl_smoke_20261020_v1",
+            "--run-id",
+            "snr_comparison_smoke_20261020_v1"
+          ],
+          "git_commit": "2b69aa3751a3cb7b5a405e32676e7f460640e774",
+          "source_zip_sha256": "6f0607af89439b282b66e69f9bc8fbbdc497ec96982d25dc09d8fab2db74e08b"
+        },
+        "source_manifest.json": {
+          "AGENTS.md": "eb29b8ca7088c6053cdfa8d744b0429bd4a85c21896f6bd3969c0e6ff2791eb7",
+          "README.md": "4d6d0d0d0dbdce918ef99711957863b480c50720b54ebe6b5f185c5627cc2603",
+          "pyproject.toml": "afd9bb930fe35ef73d25bf40238d84969d5e0217710ae6671d5aef01a0d491ef",
+          ".gitignore": "3438cd7d9fcc8eb653609000af3c71f8e4f922c2c8ea71abaad4a9575df98d99",
+          ".gitattributes": "1d60e158806f63fc61cc05049288cedf431806a7d0897567b1201f03e1f772ad",
+          "src/dma_ce/conditional.py": "c53599b8ae048d07a8819c372f9931a5a89ee080a0d738d62ac5a8ca26baaddc",
+          "src/dma_ce/continuation.py": "0cf131613d9d8984db18f70103a1a72c0c70af866f784008e7c348df6a63b29e",
+          "src/dma_ce/data.py": "952b6c8536e549a1f3a1495d0f9c758a8e907936faaaa008f35aec4d392986d1",
+          "src/dma_ce/experiment.py": "fc5caf50e1184ef6b5d4df0d466124864d65f79955490b4ed275187d9f0b4532",
+          "src/dma_ce/research.py": "4e334c4db5f4a2b7783ab020e60ea36a80892541bc7c80210dc4eb747e083c52",
+          "src/dma_ce/sbl.py": "83d3d03fbd9736f255ed630e670629786a53026d29a430e6ccd29225d1297273",
+          "src/dma_ce/snr_study.py": "d276822ede5673715d9c93f90a5c1c7f3c74c9e4483a7a2498670b99ad7ac4ef",
+          "src/dma_ce/structured.py": "a95d834c684574fbe7a7b2e7f7734e3d5e58487b5c618f5b02b7d00f1ed4e7c3",
+          "src/dma_ce/suite.py": "fd4f401402769aeb9cd2bf08d3acf5d6847b5ff92e9719490b66d2da9693d1c7",
+          "src/dma_ce/__init__.py": "b639b35c4e623952e62c5633c888d31b7107042a999fdae65d6ed2ce5100bedf",
+          "src/dma_ce/_upstream/atmosphere.py": "45db4c5afbe0fac2bc8e053fed2f3fc8e2c959ede7f338733da4524ffeceecb6",
+          "src/dma_ce/_upstream/ddpm.py": "35d435278cb7c5f849f91ec94fb4ebf0c77e103232b36cde2ac822a630df6543",
+          "src/dma_ce/_upstream/dma.py": "ba667d0a19d80a356f11d2d58d5c14f4d6b5c910437b5c43ddfc377a17eed69c",
+          "src/dma_ce/_upstream/geometry.py": "1b59a0430d5867bcca38603ce76e9691cea34be9168c92b9f9baf206354e50bc",
+          "src/dma_ce/_upstream/__init__.py": "2ce696ff49d731d23cc426ac63688bce357500403dfe6354533bec195ed6cceb",
+          "scripts/audit_experiment.py": "3a523e287a9d267d80e208a129df3b6bb52b4436bd28016b19edf0b2dafc838c",
+          "scripts/audit_research.py": "824f8e47731a1936ae439342655c03a393718ab880a93be09846b509778e48f8",
+          "scripts/diagnose_validation.py": "24b101f11809c02203220368225f3f2aac9ef07e5cac900af0bb5cd4ccabad80",
+          "scripts/run_experiment.py": "ac1284957064269482aa10719e9fa0c727090faed2c3558b18c2a1d31cee8ab3",
+          "scripts/run_research.py": "d625fb0ce5381f3ece761d296a8163d9a7f90b8ec42c8a5d742146f7793482e6",
+          "scripts/run_snr_comparison.py": "b47198d6414dedecc5381079556e8d90ac3ffbec84b419d88b0c0b8a040445d5",
+          "scripts/select_sbl_budget.py": "c47179a41773b9fe137393cece919e19780166c8ab38859d7619143c8c64ddee",
+          "tests/test_core.py": "773a7b9db91ba9e6997de4935bc29bac68a0ed0f00c884052ec39821d0af6e3c",
+          "tests/test_research.py": "8396886affd45b4c63512d6bca85b91ba7b7aea59a9989185bdf2740855472f4",
+          "tests/test_snr_study.py": "003ce5c175a433923f2dfcdd158ab204763f91e1dc39fc92197e76bb5ab8841e",
+          "tests/test_structured.py": "74203604110caeb0b397bf8d3f303bb866cac4b995860fb769ce49d9d1caf409",
+          "configs/deterministic.json": "2beec3f7578c4f771972485c48485d23d6bc042eedea715e01b2997b32088c1d",
+          "configs/deterministic_smoke.json": "873ba196af09c662dedb6b00069dd1672b742d51a7288b5f64af5a5252babf1c",
+          "configs/pilot.json": "9815e16f16a82785fca43bd880974fe7ffdd5dcfaf4ff19e5bcf9e8b387eca02",
+          "configs/research.json": "67f4027cf2dd76cc1477e7ce8816d1c0fb49c04ae2cb21a829a1ab27850c6c53",
+          "configs/research_smoke.json": "565552f804cf58059d30acd69c1bad8d7a1265e1ca16d771fd6d1254e5483f87",
+          "configs/smoke.json": "1fc9d7cdfb615f273abdf522e03256610c2d721967e67e6f78c608f0aed834c6",
+          "configs/snr_comparison.json": "c438f265dad65b6652b6af9455c0a720f228cb649b9f8b5288c2d26c009999ba",
+          "configs/snr_comparison_smoke.json": "67df22f270118bc9895c88daf0538926b9c6fd6b6c4d7e21ccaf3e88d57d5458",
+          "docs/EXPERIMENT_PLAN.md": "146d852cc93694c8f1c0702bcd8ab7351f9b9f6e09065aa9445c495216bbda90",
+          "docs/REFERENCES.md": "30c2995866da12b9bcbe6819ceefb691d1d30e0489942837366ec760c6fdfc2d",
+          "docs/RESEARCH_STUDY.md": "f1c0b9d358e9beebc5dbd3a0b75aaa6bec96f6e53fa2b75068453dfc082736c0",
+          "docs/SBL_SOLVER.md": "0cd9f8090b0230aa39ab0c2107f46dcb2faaaaebdd44015430addf0b682f8b66",
+          "docs/SECOND_STAGE_PLAN.md": "bb9ad2df80ab65ec41be49a08ee9af403107e0232d1cd593c43a73bbc7c0e967",
+          "docs/SNR_COMPARISON.md": "e9ed1aead9a3d699f436be3a12b861623c6c92776f4c3f4758ad036f541ef7d2",
+          "docs/UPSTREAM_REUSE.json": "f2854bd1a5e4910ca9b0713175c6aca57e45df85a7df38032ca49177c19d0165"
+        }
+      },
+      "source_archive_sha256": "6f0607af89439b282b66e69f9bc8fbbdc497ec96982d25dc09d8fab2db74e08b"
+    },
+    {
+      "run_id": "snr_comparison_smoke_20261020_v2",
+      "scope": "implementation_verification_only",
+      "retired_directory": "results/snr_comparison_smoke_20261020_v2",
+      "reports": {
+        "implementation_verification.md": "# SNR比较流程实现验证\n\n## Material Passport\n\n- Origin Skill: academic-research-suite / experiment-agent\n- Origin Mode: validate\n- Origin Date: 2026-10-20\n- Verification Status: VERIFIED\n- Version Label: snr_comparison_smoke_v2\n\n8阵元、8频点，3/30 GHz、2/4次配置、−10/10/30 dB，共12组条件；6个训练几何、4个验证几何、4个筛选几何、一个初始化。CSI先验训练12步，方差网络训练8步。本运行检查流程与数学实现。\n\n整体56项单元检查通过，包含14项新增结构化数学检查。随后补充的优化器/随机状态恢复与冻结模型哈希检查，所在的5项流程检查全部通过；当前共58项独立检查。\n\n数学检查覆盖：\n\n- 复高斯条件均值与完整矩阵公式一致，方差及复杂梯度正确。\n- 联合频率LMMSE保留复交叉协方差，并采用训练样本的无偏协方差。\n- DDPM实方差为复误差方差的一半，扩散时间与Tweedie去噪式一致。\n- 零初始化方差网络与固定更新逐位一致，训练梯度能够穿过冻结DDPM的输入。\n\n实际短流程完成480条逐场景指标。全部指标由保存预测重算，最大差0；固定与学习结构各两次重放，最大差0。各方法的观测哈希一致，筛选观测在冻结记录之后生成。\n\n同ID恢复复用了全部12个条件，新增训练步数为0；再次重算480条指标与4次结构恢复，差值仍为0。模拟中断检查另验证了优化器、随机状态及断点选择可恢复。\n\n执行源码哈希：\n\n- `snr_study.py`：`4e1d36952d1f89225ddbfddf8e5017c64e013a88840b0be8db1c62b4e9f6cf50`\n- `structured.py`：`a95d834c684574fbe7a7b2e7f7734e3d5e58487b5c618f5b02b7d00f1ed4e7c3`\n\n[原始审计](audit.json) · [恢复核验](resume_verification.json) · [配置](config_resolved.json) · [流程输出](report.md)\n\n正式性能比较使用独立的32×32服务器运行。\n",
+        "report.md": "# DMA信道估计：SNR扫描与DDPM先验结构化更新\n\n运行：`snr_comparison_smoke_20261020_v2`。父运行：`corrected_sbl_smoke_20261020_v1`。\n\n这是在既有实验结果基础上设计的新探索性比较。所有方法共享每个场景的真实DMA观测和噪声。\n系统：8阵元、8频点、单RF链；角度±60.0°、距离0.005–0.02 m。\nSNR点：[-10, 10, 30] dB；独立筛选几何4个；学习方法初始化[201]。\nSNR按训练集在白化观测域中的平均接收功率定义；逐场景实际SNR也保存在原始CSV。\n\n## 方法与信息条件\n\n- LS使用逐频Moore–Penrose最小范数解。\n- LMMSE使用训练几何估计完整阵元—频率联合均值和协方差，保留跨频统计。\n- 主SBL采用密字典，最多10次更新，按标准化一阶条件0.001停止；逐场景实际次数和非收敛完整保存。\n- 最新DDPM为父运行已冻结的条件残差模型；主图使用16次平均，辅助图保留单次输出。其SBL初始化与训练时预算一致。\n- 新DDPM直接学习完整干净信道分布；冻结后以LMMSE初始化，交替DDPM去噪与真实逐频DMA的高斯观测更新。\n- 学习更新版本只预测正的阵元—频率先验方差，复均值仍由解析条件式计算。固定更新消融使用同一先验、初始化、迭代数及验证选择的全局强度。\n- DDPM参数、更新网络及超参数只从训练/验证数据获得；新筛选几何在冻结记录写出后生成。\n- 旧条件模型和新更新网络的带噪训练仍使用父运行的SNR配置；其余SNR检验冻结权重的迁移。DDPM先验训练的人工扩散噪声不等同于导频SNR。\n- 该交替算法是plug-and-play近似；内部对角方差未标定为真实后验误差。Li等TCOM2026提供学习先验方差更新的启发，其原文不使用DDPM。\n\n## 曲线\n\n![五方法SNR–NMSE](snr_nmse_main.png)\n\n![固定/学习更新与确定性对照](snr_nmse_ablation.png)\n\n每个标记对应实际运行点，相邻线段仅用于连接。NMSE先逐场景归一化、在线性尺度平均，再转dB。\n阴影为95%几何场景bootstrap区间；先平均各训练初始化，再按几何块重采样，包含所有配对SNR/硬件条件。阴影不包括训练初始化不确定性。\n\n## 全部条件平均\n\n| 方法 | NMSE/dB |\n|---|---:|\n| Minimum-norm LS | 11.0943 |\n| Joint-frequency LMMSE | 2.8761 |\n| SBL (dense dictionary) | -1.0688 |\n| SBL (100 updates) | 0.7140 |\n| Latest conditional DDPM (1 draw) | 8.5599 |\n| Latest conditional DDPM (4 draws) | 4.3699 |\n| Latest conditional DDPM (16 draws) | 1.8949 |\n| Latest deterministic refinement | 0.6955 |\n| DDPM prior + fixed Gaussian updates | 2.8594 |\n| DDPM prior + learned variance updates | 2.8596 |\n\n密字典SBL有12个条件的一阶条件通过率低于90%；各点通过率见summary.csv。\n审计重算480条指标，最大差0.0；4次结构化恢复重放最大差0.0。\n\n[逐场景数据](metrics.csv) · [汇总与区间](summary.csv) · [配对差异](paired_effects.csv) · [冻结参数](frozen.json) · [审计](audit.json)\n\n在线时间包含初始化与恢复的批量均摊应用时间，已知矩阵预计算、训练和预热另行排除；它不等于单样本时延。\n当与固定更新、LMMSE或密字典SBL相比没有改善时，保留原始结果，不用观测残差下降替代完整CSI改善。\n\n本运行仅为缩小预算的实现验证，其性能数值不作为方法结论。\n"
+      },
+      "checks": {
+        "audit.json": {
+          "status": "passed",
+          "source_archive_verified": true,
+          "metrics_recomputed": 480,
+          "maximum_metric_difference": 0.0,
+          "structured_replays": 4,
+          "maximum_replay_difference": 0.0,
+          "same_observations": true,
+          "selection_split": "validation",
+          "normalization": "parent training-only global scale",
+          "frozen_at_unix": 1792488088.2341413,
+          "screen_generated_after_freeze": true
+        },
+        "resume_verification.json": {
+          "resume_contexts": 12,
+          "new_training_steps": 0,
+          "audit": {
+            "status": "passed",
+            "source_archive_verified": true,
+            "metrics_recomputed": 480,
+            "maximum_metric_difference": 0.0,
+            "structured_replays": 4,
+            "maximum_replay_difference": 0.0,
+            "same_observations": true,
+            "selection_split": "validation",
+            "normalization": "parent training-only global scale",
+            "frozen_at_unix": 1792488088.2341413,
+            "screen_generated_after_freeze": true
+          }
+        }
+      },
+      "source_records": {
+        "config_resolved.json": {
+          "label": "snr_ddpm_prior_structured_implementation_only",
+          "seed": 20261018,
+          "device": "cuda",
+          "timeout_seconds": 900,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              3000000000.0,
+              30000000000.0
+            ],
+            "antennas": 8,
+            "tones": 8,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              2,
+              4
+            ],
+            "snrs_db": [
+              -10,
+              10,
+              30
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 2,
+            "range_min_m": 0.005,
+            "range_max_m": 0.02,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 6,
+            "validation": 4,
+            "screen": 4,
+            "screen_seed": 20268940
+          },
+          "sbl": {
+            "angle_points": 5,
+            "range_points": 2,
+            "iterations": 5,
+            "tolerance": 0.001,
+            "batch_size": 2,
+            "early_stopping": false
+          },
+          "learning": {
+            "steps": 2,
+            "batch_size": 2,
+            "width": 8,
+            "learning_rate": 0.001,
+            "diffusion_steps": 10,
+            "sampling_steps": 3,
+            "log_every": 2,
+            "variants": [
+              "deterministic_no_reliability"
+            ]
+          },
+          "evaluation": {
+            "batch_size": 2,
+            "dc_multipliers": [
+              0.0,
+              0.1,
+              1.0
+            ],
+            "bootstrap_samples": 50,
+            "dc_selection_model": "deterministic_no_reliability",
+            "correct_coarse": true
+          },
+          "research": {
+            "training_seeds": [
+              101,
+              102
+            ],
+            "final_seeds": [
+              201,
+              202
+            ],
+            "shuffle_seeds": [
+              301,
+              302
+            ],
+            "checkpoints": [
+              2,
+              4,
+              6
+            ],
+            "eval_every": 2,
+            "training_stability_db": 100.0,
+            "train_curve_samples": 4,
+            "grids": [
+              {
+                "name": "coarse",
+                "angle_points": 5,
+                "range_points": 2
+              },
+              {
+                "name": "dense",
+                "angle_points": 9,
+                "range_points": 3
+              }
+            ],
+            "baseline_iterations": [
+              5,
+              10
+            ],
+            "stability": {
+              "overall_convergence": 0.0,
+              "context_convergence": 0.0,
+              "nmse_db": 100.0,
+              "variance_relative": 100.0
+            },
+            "sbl_budgets": [
+              2,
+              5
+            ],
+            "accuracy_tolerance_db": 0.1,
+            "averages": [
+              1,
+              4,
+              16
+            ],
+            "expansions": [
+              {
+                "name": "n16_k8",
+                "antennas": 16,
+                "tones": 8
+              },
+              {
+                "name": "n16_k16",
+                "antennas": 16,
+                "tones": 16
+              }
+            ],
+            "mismatches": [
+              {
+                "name": "paths3",
+                "channel": {
+                  "paths": 3
+                }
+              },
+              {
+                "name": "range_shift",
+                "channel": {
+                  "range_min_m": 0.01,
+                  "range_max_m": 0.03
+                }
+              }
+            ],
+            "communication": {
+              "coherence_symbols": 40,
+              "switch_symbols": 0.1
+            }
+          },
+          "comparison": {
+            "snrs_db": [
+              -10,
+              10,
+              30
+            ],
+            "seeds": [
+              201
+            ],
+            "training_scenes": 6,
+            "validation_scenes": 4,
+            "screen_scenes": 4,
+            "screen_seed": 20268940,
+            "prior_steps": 12,
+            "prior_checkpoints": [
+              4,
+              8,
+              12
+            ],
+            "update_steps": 8,
+            "update_checkpoints": [
+              2,
+              4,
+              8
+            ],
+            "update_width": 4,
+            "structured_iterations": 3,
+            "strength_grid": [
+              0.1,
+              1.0
+            ],
+            "batch_size": 2,
+            "solver_batch_size": 2,
+            "sbl_max_iterations": 10,
+            "sbl_tolerance": 0.001,
+            "bootstrap_samples": 50,
+            "log_every": 4,
+            "timeout_seconds": 900,
+            "implementation_only": true,
+            "parent_run": "corrected_sbl_smoke_20261020_v1",
+            "training_snrs_db": [
+              10.0
+            ]
+          }
+        },
+        "environment.json": {
+          "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+          "platform": "Windows-10-10.0.26300-SP0",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cuda",
+          "cuda": "12.8",
+          "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+          "command": [
+            "scripts/run_snr_comparison.py",
+            "--config",
+            "configs/snr_comparison_smoke.json",
+            "--parent",
+            "corrected_sbl_smoke_20261020_v1",
+            "--run-id",
+            "snr_comparison_smoke_20261020_v2"
+          ],
+          "git_commit": "2b69aa3751a3cb7b5a405e32676e7f460640e774",
+          "source_zip_sha256": "7adf14a7af20b7fe210926bcf9e781b3cefdefe5130aee652f14e212b348aceb"
+        },
+        "source_manifest.json": {
+          "AGENTS.md": "eb29b8ca7088c6053cdfa8d744b0429bd4a85c21896f6bd3969c0e6ff2791eb7",
+          "README.md": "4d6d0d0d0dbdce918ef99711957863b480c50720b54ebe6b5f185c5627cc2603",
+          "pyproject.toml": "afd9bb930fe35ef73d25bf40238d84969d5e0217710ae6671d5aef01a0d491ef",
+          ".gitignore": "3438cd7d9fcc8eb653609000af3c71f8e4f922c2c8ea71abaad4a9575df98d99",
+          ".gitattributes": "1d60e158806f63fc61cc05049288cedf431806a7d0897567b1201f03e1f772ad",
+          "src/dma_ce/conditional.py": "c53599b8ae048d07a8819c372f9931a5a89ee080a0d738d62ac5a8ca26baaddc",
+          "src/dma_ce/continuation.py": "0cf131613d9d8984db18f70103a1a72c0c70af866f784008e7c348df6a63b29e",
+          "src/dma_ce/data.py": "952b6c8536e549a1f3a1495d0f9c758a8e907936faaaa008f35aec4d392986d1",
+          "src/dma_ce/experiment.py": "fc5caf50e1184ef6b5d4df0d466124864d65f79955490b4ed275187d9f0b4532",
+          "src/dma_ce/research.py": "4e334c4db5f4a2b7783ab020e60ea36a80892541bc7c80210dc4eb747e083c52",
+          "src/dma_ce/sbl.py": "83d3d03fbd9736f255ed630e670629786a53026d29a430e6ccd29225d1297273",
+          "src/dma_ce/snr_study.py": "4e1d36952d1f89225ddbfddf8e5017c64e013a88840b0be8db1c62b4e9f6cf50",
+          "src/dma_ce/structured.py": "a95d834c684574fbe7a7b2e7f7734e3d5e58487b5c618f5b02b7d00f1ed4e7c3",
+          "src/dma_ce/suite.py": "fd4f401402769aeb9cd2bf08d3acf5d6847b5ff92e9719490b66d2da9693d1c7",
+          "src/dma_ce/__init__.py": "b639b35c4e623952e62c5633c888d31b7107042a999fdae65d6ed2ce5100bedf",
+          "src/dma_ce/_upstream/atmosphere.py": "45db4c5afbe0fac2bc8e053fed2f3fc8e2c959ede7f338733da4524ffeceecb6",
+          "src/dma_ce/_upstream/ddpm.py": "35d435278cb7c5f849f91ec94fb4ebf0c77e103232b36cde2ac822a630df6543",
+          "src/dma_ce/_upstream/dma.py": "ba667d0a19d80a356f11d2d58d5c14f4d6b5c910437b5c43ddfc377a17eed69c",
+          "src/dma_ce/_upstream/geometry.py": "1b59a0430d5867bcca38603ce76e9691cea34be9168c92b9f9baf206354e50bc",
+          "src/dma_ce/_upstream/__init__.py": "2ce696ff49d731d23cc426ac63688bce357500403dfe6354533bec195ed6cceb",
+          "scripts/audit_experiment.py": "3a523e287a9d267d80e208a129df3b6bb52b4436bd28016b19edf0b2dafc838c",
+          "scripts/audit_research.py": "824f8e47731a1936ae439342655c03a393718ab880a93be09846b509778e48f8",
+          "scripts/diagnose_validation.py": "24b101f11809c02203220368225f3f2aac9ef07e5cac900af0bb5cd4ccabad80",
+          "scripts/run_experiment.py": "ac1284957064269482aa10719e9fa0c727090faed2c3558b18c2a1d31cee8ab3",
+          "scripts/run_research.py": "d625fb0ce5381f3ece761d296a8163d9a7f90b8ec42c8a5d742146f7793482e6",
+          "scripts/run_snr_comparison.py": "b47198d6414dedecc5381079556e8d90ac3ffbec84b419d88b0c0b8a040445d5",
+          "scripts/select_sbl_budget.py": "c47179a41773b9fe137393cece919e19780166c8ab38859d7619143c8c64ddee",
+          "tests/test_core.py": "773a7b9db91ba9e6997de4935bc29bac68a0ed0f00c884052ec39821d0af6e3c",
+          "tests/test_research.py": "8396886affd45b4c63512d6bca85b91ba7b7aea59a9989185bdf2740855472f4",
+          "tests/test_snr_study.py": "1b9300b62ebe0ac77598359b3cd2a5ad9bb53381dc0691f1c37830032c9b5698",
+          "tests/test_structured.py": "74203604110caeb0b397bf8d3f303bb866cac4b995860fb769ce49d9d1caf409",
+          "configs/deterministic.json": "2beec3f7578c4f771972485c48485d23d6bc042eedea715e01b2997b32088c1d",
+          "configs/deterministic_smoke.json": "873ba196af09c662dedb6b00069dd1672b742d51a7288b5f64af5a5252babf1c",
+          "configs/pilot.json": "9815e16f16a82785fca43bd880974fe7ffdd5dcfaf4ff19e5bcf9e8b387eca02",
+          "configs/research.json": "67f4027cf2dd76cc1477e7ce8816d1c0fb49c04ae2cb21a829a1ab27850c6c53",
+          "configs/research_smoke.json": "565552f804cf58059d30acd69c1bad8d7a1265e1ca16d771fd6d1254e5483f87",
+          "configs/smoke.json": "1fc9d7cdfb615f273abdf522e03256610c2d721967e67e6f78c608f0aed834c6",
+          "configs/snr_comparison.json": "c438f265dad65b6652b6af9455c0a720f228cb649b9f8b5288c2d26c009999ba",
+          "configs/snr_comparison_smoke.json": "67df22f270118bc9895c88daf0538926b9c6fd6b6c4d7e21ccaf3e88d57d5458",
+          "docs/EXPERIMENT_PLAN.md": "146d852cc93694c8f1c0702bcd8ab7351f9b9f6e09065aa9445c495216bbda90",
+          "docs/REFERENCES.md": "30c2995866da12b9bcbe6819ceefb691d1d30e0489942837366ec760c6fdfc2d",
+          "docs/RESEARCH_STUDY.md": "f1c0b9d358e9beebc5dbd3a0b75aaa6bec96f6e53fa2b75068453dfc082736c0",
+          "docs/SBL_SOLVER.md": "0cd9f8090b0230aa39ab0c2107f46dcb2faaaaebdd44015430addf0b682f8b66",
+          "docs/SECOND_STAGE_PLAN.md": "bb9ad2df80ab65ec41be49a08ee9af403107e0232d1cd593c43a73bbc7c0e967",
+          "docs/SNR_COMPARISON.md": "e9ed1aead9a3d699f436be3a12b861623c6c92776f4c3f4758ad036f541ef7d2",
+          "docs/UPSTREAM_REUSE.json": "f2854bd1a5e4910ca9b0713175c6aca57e45df85a7df38032ca49177c19d0165"
+        }
+      },
+      "source_archive_sha256": "7adf14a7af20b7fe210926bcf9e781b3cefdefe5130aee652f14e212b348aceb"
+    },
+    {
+      "run_id": "continuation_state_probe_20261019_v1",
+      "scope": "implementation_verification_only",
+      "retired_directory": "results/continuation_state_probe_20261019_v1",
+      "reports": {
+        "report.md": "# 真实服务器断点的单步续训检查\n\n这是实现验证：从 research_001 复制全部六个扩散断点，仅选择一个模型恢复优化器和随机状态，从20,000步执行到20,001步。末端学习率0.0001。\n\n检查通过；原运行的379个文件哈希保持不变，继承模型、缓存、前五阶段与日志前缀核对通过。本记录未运行完整扩散选择阶段和最终筛选，不能作为方法性能结果。\n"
+      },
+      "checks": {},
+      "source_records": {
+        "config_resolved.json": {
+          "label": "five_step_validation_selected_study",
+          "seed": 20261016,
+          "device": "cuda",
+          "timeout_seconds": 604800,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              3000000000.0,
+              30000000000.0
+            ],
+            "antennas": 32,
+            "tones": 32,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              8,
+              16
+            ],
+            "snrs_db": [
+              10.0,
+              20.0
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 3,
+            "range_min_m": 0.1,
+            "range_max_m": 0.4,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 512,
+            "validation": 64,
+            "screen": 128,
+            "screen_seed": 20261018
+          },
+          "sbl": {
+            "angle_points": 49,
+            "range_points": 7,
+            "iterations": 1000,
+            "tolerance": 0.001,
+            "batch_size": 16
+          },
+          "learning": {
+            "steps": 2000,
+            "batch_size": 32,
+            "width": 32,
+            "learning_rate": 0.001,
+            "diffusion_steps": 100,
+            "sampling_steps": 20,
+            "log_every": 500,
+            "variants": [
+              "deterministic_no_reliability",
+              "deterministic"
+            ]
+          },
+          "evaluation": {
+            "batch_size": 32,
+            "dc_multipliers": [
+              0.0,
+              0.1,
+              1.0,
+              10.0
+            ],
+            "bootstrap_samples": 2000,
+            "dc_selection_model": "deterministic_no_reliability",
+            "correct_coarse": true
+          },
+          "research": {
+            "training_seeds": [
+              101,
+              102,
+              103
+            ],
+            "final_seeds": [
+              201,
+              202,
+              203,
+              204,
+              205
+            ],
+            "shuffle_seeds": [
+              301,
+              302,
+              303,
+              304,
+              305
+            ],
+            "checkpoints": [
+              2000,
+              8000,
+              20000
+            ],
+            "eval_every": 2000,
+            "training_stability_db": 0.1,
+            "train_curve_samples": 128,
+            "grids": [
+              {
+                "name": "coarse",
+                "angle_points": 49,
+                "range_points": 7
+              },
+              {
+                "name": "dense",
+                "angle_points": 97,
+                "range_points": 13
+              }
+            ],
+            "baseline_iterations": [
+              1000,
+              2000,
+              4000,
+              8000
+            ],
+            "stability": {
+              "overall_convergence": 0.95,
+              "context_convergence": 0.9,
+              "nmse_db": 0.1,
+              "variance_relative": 0.05
+            },
+            "sbl_budgets": [
+              100,
+              300,
+              500,
+              1000
+            ],
+            "accuracy_tolerance_db": 0.1,
+            "averages": [
+              1,
+              4,
+              16
+            ],
+            "expansions": [
+              {
+                "name": "n128_k32",
+                "antennas": 128,
+                "tones": 32
+              },
+              {
+                "name": "n128_k128",
+                "antennas": 128,
+                "tones": 128
+              }
+            ],
+            "mismatches": [
+              {
+                "name": "paths5",
+                "channel": {
+                  "paths": 5
+                }
+              },
+              {
+                "name": "range_shift",
+                "channel": {
+                  "range_min_m": 0.2,
+                  "range_max_m": 0.6
+                }
+              }
+            ],
+            "communication": {
+              "coherence_symbols": 200,
+              "switch_symbols": 0.1
+            },
+            "diffusion_checkpoints": [
+              2000,
+              8000,
+              20000,
+              20001
+            ]
+          }
+        },
+        "environment.json": {
+          "python": "3.10.21 (main, Aug 27 2026, 14:42:07) [GCC 14.3.0]",
+          "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cuda",
+          "cuda": "12.8",
+          "gpu": "NVIDIA GeForce RTX 3090",
+          "command": [
+            "tmp/remote_continuation_probe_20261019.py"
+          ],
+          "git_commit": "0b08cdabb043d8cc6cb046bd13176a58f5a48bb2",
+          "source_zip_sha256": "87ea394693454fd2c9aa045b25ec3f8efaa46b356cf0f561ad8411b2b2efdc57"
+        },
+        "source_manifest.json": {
+          "AGENTS.md": "eb29b8ca7088c6053cdfa8d744b0429bd4a85c21896f6bd3969c0e6ff2791eb7",
+          "README.md": "4ee992d9fd1f0b85b16b589e05ce1c9bfe4acf0d3c88ea95125efb5f0c2509c3",
+          "pyproject.toml": "afd9bb930fe35ef73d25bf40238d84969d5e0217710ae6671d5aef01a0d491ef",
+          ".gitignore": "3438cd7d9fcc8eb653609000af3c71f8e4f922c2c8ea71abaad4a9575df98d99",
+          ".gitattributes": "1d60e158806f63fc61cc05049288cedf431806a7d0897567b1201f03e1f772ad",
+          "src/dma_ce/sbl.py": "376fa0c4a8ef3b18ed1d65d5505fc403a311bac0d1ee55e1e61524f8c48befa8",
+          "src/dma_ce/conditional.py": "99db81f40e8d6b64943485e8a33d38780f720567a1203b4a1a206d0dcf2017e4",
+          "src/dma_ce/experiment.py": "28c7e304ff46a672b3ad01a5062cebbae0c461d28b2b6f6042322c4310d9b826",
+          "src/dma_ce/research.py": "4e334c4db5f4a2b7783ab020e60ea36a80892541bc7c80210dc4eb747e083c52",
+          "src/dma_ce/__init__.py": "b639b35c4e623952e62c5633c888d31b7107042a999fdae65d6ed2ce5100bedf",
+          "src/dma_ce/suite.py": "7ad16f383c8ca74b34f55afeba7c3346adbc6f6e309239b0279e82296d409176",
+          "src/dma_ce/data.py": "a3f4e329a1543358434ba402552fb10ebbe8bd99cebd84cabbbb5a3756a6d251",
+          "src/dma_ce/continuation.py": "d14029d48a785e9a22b493d18b5a4e3ac041b425de827f9d520578559b63be7e",
+          "src/dma_ce/_upstream/geometry.py": "1b59a0430d5867bcca38603ce76e9691cea34be9168c92b9f9baf206354e50bc",
+          "src/dma_ce/_upstream/dma.py": "ba667d0a19d80a356f11d2d58d5c14f4d6b5c910437b5c43ddfc377a17eed69c",
+          "src/dma_ce/_upstream/atmosphere.py": "45db4c5afbe0fac2bc8e053fed2f3fc8e2c959ede7f338733da4524ffeceecb6",
+          "src/dma_ce/_upstream/__init__.py": "2ce696ff49d731d23cc426ac63688bce357500403dfe6354533bec195ed6cceb",
+          "src/dma_ce/_upstream/ddpm.py": "35d435278cb7c5f849f91ec94fb4ebf0c77e103232b36cde2ac822a630df6543",
+          "scripts/run_experiment.py": "ac1284957064269482aa10719e9fa0c727090faed2c3558b18c2a1d31cee8ab3",
+          "scripts/audit_research.py": "824f8e47731a1936ae439342655c03a393718ab880a93be09846b509778e48f8",
+          "scripts/diagnose_validation.py": "8e2cb086dd1888c8b5abf8a05398f1df84c72c987d053409305ddd67a56b4deb",
+          "scripts/select_sbl_budget.py": "74804ef07f1f97ffce99b6b0ab41a73932892e71cea54bbe5885b03ea65106e5",
+          "scripts/run_research.py": "cea7b6e730a7989126e4fe4031b00c45a0db080193d5c3a912f981eed66bbd7e",
+          "scripts/audit_experiment.py": "3a523e287a9d267d80e208a129df3b6bb52b4436bd28016b19edf0b2dafc838c",
+          "tests/test_core.py": "b72314e51358c3c4e004798b7426734f2f96e8a1646c10e048971f914a4ebf73",
+          "tests/test_research.py": "a5a9b3f87a4f2860909d7b02bb5180d8fb3143e0eb7a8ff6a64d3e493300a09e",
+          "configs/smoke.json": "1fc9d7cdfb615f273abdf522e03256610c2d721967e67e6f78c608f0aed834c6",
+          "configs/research_smoke.json": "6233058a55f3e655133c835ebad3ca9becf89cf2dd565c874dc288b5f92bcd7d",
+          "configs/deterministic_smoke.json": "873ba196af09c662dedb6b00069dd1672b742d51a7288b5f64af5a5252babf1c",
+          "configs/deterministic.json": "2beec3f7578c4f771972485c48485d23d6bc042eedea715e01b2997b32088c1d",
+          "configs/research.json": "f75a558817a679b8b443466e17d3b30e68f11b43e355f08a12b43f744df44119",
+          "configs/pilot.json": "9815e16f16a82785fca43bd880974fe7ffdd5dcfaf4ff19e5bcf9e8b387eca02",
+          "docs/SECOND_STAGE_PLAN.md": "bb9ad2df80ab65ec41be49a08ee9af403107e0232d1cd593c43a73bbc7c0e967",
+          "docs/REFERENCES.md": "5c6ecfd346a955fa58ce889b64722b75cf136d33f968403a37dc85de412b937f",
+          "docs/UPSTREAM_REUSE.json": "6c8af4a5822c96f4f9eea12147ffba64e6950447d773805485c58e8b475d019d",
+          "docs/RESEARCH_STUDY.md": "6ea035796073eb406f1d76c6a7ac229dd28da8ea34e10caee0a1fa3dd03ac4d4",
+          "docs/EXPERIMENT_PLAN.md": "146d852cc93694c8f1c0702bcd8ab7351f9b9f6e09065aa9445c495216bbda90"
+        }
+      },
+      "source_archive_sha256": "87ea394693454fd2c9aa045b25ec3f8efaa46b356cf0f561ad8411b2b2efdc57"
+    },
+    {
+      "run_id": "research_shape128_20261018_v2",
+      "scope": "implementation_verification_only",
+      "retired_directory": "results/research_shape128_20261018_v2",
+      "reports": {
+        "report.md": "# 128×128双样本实现检查\n\n状态：通过。运行ID：research_shape128_20261018_v2。\n\n在300 GHz、30 GHz带宽、16个DMA观测配置下，使用128阵元、128子载波，训练与验证各2个独立几何，执行以下检查：\n\n- 49×7、97×13两个角距字典，均使用同一物理观测；每组SBL仅运行2次迭代。\n- 跨频二维卷积与逐频点一维阵元卷积，参数量分别为15,428和15,198。\n- 每种结构分别训练确定性残差与扩散残差模型，各更新2次；模型输入为粗估与后验方差图。\n- 确定性输出、扩散1/4/16次平均均为有限值，输出尺寸和残差分解检查通过，共16行评分记录。\n\n检查耗时5.46秒。批量大小为2，GPU峰值实际分配498,459,648字节、保留612,368,384字节。配置和环境保存在同目录，实际执行脚本作为来源记录保存在probe.py；正式服务器入口见项目运行文档。\n\n这是输入尺寸、字典规模、训练与推理的实现检查。SBL未达到收敛阈值，2次网络更新也不足以评价方法性能。该记录不用于方法筛选或论文结果。\n"
+      },
+      "checks": {
+        "status.json": {
+          "status": "passed",
+          "label": "shape128_two_scene_implementation_only",
+          "scenes_per_split": 2,
+          "antennas": 128,
+          "tones": 128,
+          "dictionary_atoms": [
+            343,
+            1261
+          ],
+          "models": [
+            {
+              "recipe": {
+                "architecture": "cross_frequency",
+                "loss": "condition",
+                "reliability": "map",
+                "kind": "deterministic",
+                "width": 32
+              },
+              "parameters": 15428,
+              "checkpoint_sha256": "7dfe2abaaaf155280f297ea0970e90d3b9703840bee2fc7a80d597ca4c5289b4"
+            },
+            {
+              "recipe": {
+                "architecture": "cross_frequency",
+                "loss": "condition",
+                "reliability": "map",
+                "kind": "diffusion",
+                "width": 32
+              },
+              "parameters": 15428,
+              "checkpoint_sha256": "4e9486fd86c71f288fc180d39c29866507e19a2c778b6bc13925b4d84e66b79f"
+            },
+            {
+              "recipe": {
+                "architecture": "per_tone",
+                "loss": "condition",
+                "reliability": "map",
+                "kind": "deterministic",
+                "width": 55
+              },
+              "parameters": 15198,
+              "checkpoint_sha256": "3b7a65f428f0aee0ab06a2a0c87f4a865528a52402bf74e551a577bbeb5af9ea"
+            },
+            {
+              "recipe": {
+                "architecture": "per_tone",
+                "loss": "condition",
+                "reliability": "map",
+                "kind": "diffusion",
+                "width": 55
+              },
+              "parameters": 15198,
+              "checkpoint_sha256": "bdba46455853174178f8f364a45562579ecd40273e8f9c7c06e1647165af75b8"
+            }
+          ],
+          "metrics_rows": 16,
+          "seconds": 5.463822799996706,
+          "peak_cuda_allocated_bytes": 498459648,
+          "peak_cuda_reserved_bytes": 612368384,
+          "probe_sha256": "178627c70d6fcc67b04d2d69fe7a97a2b43f6d578c8f35434d597a1c9ee28c99"
+        }
+      },
+      "source_records": {
+        "config_resolved.json": {
+          "label": "shape128_two_scene_implementation_only",
+          "seed": 20261016,
+          "device": "cuda",
+          "timeout_seconds": 604800,
+          "system": {
+            "carrier_hz": 300000000000.0,
+            "bandwidths_hz": [
+              30000000000.0
+            ],
+            "antennas": 128,
+            "tones": 128,
+            "spacing_wavelengths": 0.5,
+            "configurations": [
+              16
+            ],
+            "snrs_db": [
+              10.0
+            ],
+            "quality_factor": 50.0,
+            "tuning_bandwidth_hz": 30000000000.0,
+            "waveguide_effective_index": 1.4,
+            "waveguide_end_power_fraction": 0.8,
+            "rf_noise_fraction": 0.05
+          },
+          "channel": {
+            "paths": 3,
+            "range_min_m": 1.6783558792924038,
+            "range_max_m": 6.713423517169615,
+            "angle_limit_deg": 60.0,
+            "include_absorption": false
+          },
+          "data": {
+            "train": 2,
+            "validation": 2,
+            "screen": 2,
+            "screen_seed": 20261018
+          },
+          "sbl": {
+            "angle_points": 49,
+            "range_points": 7,
+            "iterations": 2,
+            "tolerance": 0.001,
+            "batch_size": 1
+          },
+          "learning": {
+            "steps": 2,
+            "batch_size": 2,
+            "width": 32,
+            "learning_rate": 0.001,
+            "diffusion_steps": 100,
+            "sampling_steps": 20,
+            "log_every": 1,
+            "variants": [
+              "deterministic_no_reliability",
+              "deterministic"
+            ]
+          },
+          "evaluation": {
+            "batch_size": 2,
+            "dc_multipliers": [
+              0.0,
+              0.1,
+              1.0,
+              10.0
+            ],
+            "bootstrap_samples": 10,
+            "dc_selection_model": "deterministic_no_reliability",
+            "correct_coarse": true
+          },
+          "research": {
+            "training_seeds": [
+              101
+            ],
+            "final_seeds": [
+              201
+            ],
+            "shuffle_seeds": [
+              301
+            ],
+            "checkpoints": [
+              1,
+              2
+            ],
+            "eval_every": 2,
+            "training_stability_db": 0.1,
+            "train_curve_samples": 2,
+            "grids": [
+              {
+                "name": "coarse",
+                "angle_points": 49,
+                "range_points": 7
+              },
+              {
+                "name": "dense",
+                "angle_points": 97,
+                "range_points": 13
+              }
+            ],
+            "baseline_iterations": [
+              2,
+              5
+            ],
+            "stability": {
+              "overall_convergence": 0.95,
+              "context_convergence": 0.9,
+              "nmse_db": 0.1,
+              "variance_relative": 0.05
+            },
+            "sbl_budgets": [
+              2
+            ],
+            "accuracy_tolerance_db": 0.1,
+            "averages": [
+              1,
+              4,
+              16
+            ],
+            "expansions": [],
+            "mismatches": [],
+            "communication": {
+              "coherence_symbols": 200,
+              "switch_symbols": 0.1
+            }
+          }
+        },
+        "environment.json": {
+          "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+          "platform": "Windows-10-10.0.26300-SP0",
+          "torch": "2.11.0+cu128",
+          "numpy": "1.26.4",
+          "device": "cuda",
+          "cuda": "12.8",
+          "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+          "command": [
+            "tmp/shape_probe.py"
+          ],
+          "git_commit": "7a3b2dec3d00f6c50e2843b65124652292a598e0",
+          "source_zip_sha256": "c43cbd0832bd52e4a58bec980760959503653210ebd4539b5fc7e2f4bdb86521"
+        },
+        "source_manifest.json": {
+          "AGENTS.md": "eb29b8ca7088c6053cdfa8d744b0429bd4a85c21896f6bd3969c0e6ff2791eb7",
+          "README.md": "debd381f992b26b867123a72733b70ddcece45adada6863a7d4807df0df8e85a",
+          "pyproject.toml": "afd9bb930fe35ef73d25bf40238d84969d5e0217710ae6671d5aef01a0d491ef",
+          ".gitignore": "3438cd7d9fcc8eb653609000af3c71f8e4f922c2c8ea71abaad4a9575df98d99",
+          ".gitattributes": "1d60e158806f63fc61cc05049288cedf431806a7d0897567b1201f03e1f772ad",
+          "src/dma_ce/conditional.py": "99db81f40e8d6b64943485e8a33d38780f720567a1203b4a1a206d0dcf2017e4",
+          "src/dma_ce/data.py": "a3f4e329a1543358434ba402552fb10ebbe8bd99cebd84cabbbb5a3756a6d251",
+          "src/dma_ce/experiment.py": "28c7e304ff46a672b3ad01a5062cebbae0c461d28b2b6f6042322c4310d9b826",
+          "src/dma_ce/research.py": "c0427ca843ed8f635fd1d7686fd934855c091bc28c6d8b58eed17eaf6f39a8ed",
+          "src/dma_ce/sbl.py": "376fa0c4a8ef3b18ed1d65d5505fc403a311bac0d1ee55e1e61524f8c48befa8",
+          "src/dma_ce/suite.py": "48c33feb9eaa306df9b60735fc7053ad6f135315ea2184b492317f3e229d1058",
+          "src/dma_ce/__init__.py": "b639b35c4e623952e62c5633c888d31b7107042a999fdae65d6ed2ce5100bedf",
+          "src/dma_ce/_upstream/atmosphere.py": "45db4c5afbe0fac2bc8e053fed2f3fc8e2c959ede7f338733da4524ffeceecb6",
+          "src/dma_ce/_upstream/ddpm.py": "35d435278cb7c5f849f91ec94fb4ebf0c77e103232b36cde2ac822a630df6543",
+          "src/dma_ce/_upstream/dma.py": "ba667d0a19d80a356f11d2d58d5c14f4d6b5c910437b5c43ddfc377a17eed69c",
+          "src/dma_ce/_upstream/geometry.py": "1b59a0430d5867bcca38603ce76e9691cea34be9168c92b9f9baf206354e50bc",
+          "src/dma_ce/_upstream/__init__.py": "2ce696ff49d731d23cc426ac63688bce357500403dfe6354533bec195ed6cceb",
+          "scripts/audit_experiment.py": "3a523e287a9d267d80e208a129df3b6bb52b4436bd28016b19edf0b2dafc838c",
+          "scripts/audit_research.py": "64304b458b9882981bc85c8b277901f945ddfb9115951433f789f24597bffd44",
+          "scripts/diagnose_validation.py": "8e2cb086dd1888c8b5abf8a05398f1df84c72c987d053409305ddd67a56b4deb",
+          "scripts/run_experiment.py": "ac1284957064269482aa10719e9fa0c727090faed2c3558b18c2a1d31cee8ab3",
+          "scripts/run_research.py": "045563b4efb6db32962e9a814a838786a1d5cf58db0f1e1abcb9c1b7c8306212",
+          "scripts/select_sbl_budget.py": "74804ef07f1f97ffce99b6b0ab41a73932892e71cea54bbe5885b03ea65106e5",
+          "tests/test_core.py": "b72314e51358c3c4e004798b7426734f2f96e8a1646c10e048971f914a4ebf73",
+          "tests/test_research.py": "820fb54090b0d6d4352f0146a76d0d39879058b484812651926b472a75479d31",
+          "configs/deterministic.json": "2beec3f7578c4f771972485c48485d23d6bc042eedea715e01b2997b32088c1d",
+          "configs/deterministic_smoke.json": "873ba196af09c662dedb6b00069dd1672b742d51a7288b5f64af5a5252babf1c",
+          "configs/pilot.json": "9815e16f16a82785fca43bd880974fe7ffdd5dcfaf4ff19e5bcf9e8b387eca02",
+          "configs/research.json": "f75a558817a679b8b443466e17d3b30e68f11b43e355f08a12b43f744df44119",
+          "configs/research_smoke.json": "6233058a55f3e655133c835ebad3ca9becf89cf2dd565c874dc288b5f92bcd7d",
+          "configs/smoke.json": "1fc9d7cdfb615f273abdf522e03256610c2d721967e67e6f78c608f0aed834c6",
+          "docs/EXPERIMENT_PLAN.md": "146d852cc93694c8f1c0702bcd8ab7351f9b9f6e09065aa9445c495216bbda90",
+          "docs/REFERENCES.md": "5c6ecfd346a955fa58ce889b64722b75cf136d33f968403a37dc85de412b937f",
+          "docs/RESEARCH_STUDY.md": "d84db542072bba9715b23603b8fc78258e55c07f488814e7f7dcdd9b3e0dad85",
+          "docs/SECOND_STAGE_PLAN.md": "bb9ad2df80ab65ec41be49a08ee9af403107e0232d1cd593c43a73bbc7c0e967",
+          "docs/UPSTREAM_REUSE.json": "f2854bd1a5e4910ca9b0713175c6aca57e45df85a7df38032ca49177c19d0165"
+        }
+      },
+      "source_archive_sha256": "c43cbd0832bd52e4a58bec980760959503653210ebd4539b5fc7e2f4bdb86521"
+    }
+  ]
+}

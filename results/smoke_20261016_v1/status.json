@@ -1,8 +1,0 @@
-{
-  "status": "complete",
-  "label": "smoke_connectivity_only",
-  "elapsed_seconds": 12.102290868759155,
-  "metrics_rows": 176,
-  "data_sha256": "a0a64034d3017664795d692de8a729015de798f3c2eb4426293313fb755607e0",
-  "frozen_validation_sha256": "ab0b367371213aaa5d4cec2166b5bf6db8d351d98183a9090fe6948d8d460ec9"
-}

@@ -1,8 +1,0 @@
-{
-  "status": "complete",
-  "label": "connectivity_deterministic_controls",
-  "elapsed_seconds": 3.987133264541626,
-  "metrics_rows": 128,
-  "data_sha256": "0d3755f2b164b392f26faf8fbb0a0b6b9ca6709046f87a4f28e89fe8e1d744ad",
-  "frozen_validation_sha256": "6ec3a041ed1afdfe928bde02e7ab9ebb6a751478e75a965b6a0b3f2a8929d1ba"
-}

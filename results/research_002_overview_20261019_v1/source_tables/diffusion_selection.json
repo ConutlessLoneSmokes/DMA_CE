@@ -1,0 +1,233 @@
+{
+  "status": "complete",
+  "selection": {
+    "selected": {
+      "mode": "none",
+      "steps": 40000,
+      "average": 16,
+      "mean_nmse_linear": 0.10408878487563318,
+      "mean_total_ms": 116.54881135666528
+    },
+    "candidates": [
+      {
+        "mode": "none",
+        "steps": 2000,
+        "average": 1,
+        "mean_nmse_linear": 0.18257460366172987,
+        "mean_total_ms": 108.52259700326765
+      },
+      {
+        "mode": "none",
+        "steps": 2000,
+        "average": 4,
+        "mean_nmse_linear": 0.1301899861879671,
+        "mean_total_ms": 110.12029945648767
+      },
+      {
+        "mode": "none",
+        "steps": 2000,
+        "average": 16,
+        "mean_nmse_linear": 0.11711563914316987,
+        "mean_total_ms": 116.54228531267563
+      },
+      {
+        "mode": "none",
+        "steps": 8000,
+        "average": 1,
+        "mean_nmse_linear": 0.166317000169632,
+        "mean_total_ms": 108.5222149714582
+      },
+      {
+        "mode": "none",
+        "steps": 8000,
+        "average": 4,
+        "mean_nmse_linear": 0.11996516748452753,
+        "mean_total_ms": 110.11964536544383
+      },
+      {
+        "mode": "none",
+        "steps": 8000,
+        "average": 16,
+        "mean_nmse_linear": 0.10849912385568435,
+        "mean_total_ms": 116.53707169716654
+      },
+      {
+        "mode": "none",
+        "steps": 20000,
+        "average": 1,
+        "mean_nmse_linear": 0.1465370484511368,
+        "mean_total_ms": 108.52256710753257
+      },
+      {
+        "mode": "none",
+        "steps": 20000,
+        "average": 4,
+        "mean_nmse_linear": 0.11269584099075776,
+        "mean_total_ms": 110.1200158791092
+      },
+      {
+        "mode": "none",
+        "steps": 20000,
+        "average": 16,
+        "mean_nmse_linear": 0.10429065187554443,
+        "mean_total_ms": 116.5432053907504
+      },
+      {
+        "mode": "none",
+        "steps": 30000,
+        "average": 1,
+        "mean_nmse_linear": 0.1479705546156159,
+        "mean_total_ms": 108.52264708599553
+      },
+      {
+        "mode": "none",
+        "steps": 30000,
+        "average": 4,
+        "mean_nmse_linear": 0.11290796189374912,
+        "mean_total_ms": 110.12045634511954
+      },
+      {
+        "mode": "none",
+        "steps": 30000,
+        "average": 16,
+        "mean_nmse_linear": 0.10423949750975225,
+        "mean_total_ms": 116.5455079271472
+      },
+      {
+        "mode": "none",
+        "steps": 40000,
+        "average": 1,
+        "mean_nmse_linear": 0.14894337957836493,
+        "mean_total_ms": 108.52240428391724
+      },
+      {
+        "mode": "none",
+        "steps": 40000,
+        "average": 4,
+        "mean_nmse_linear": 0.11299313713152515,
+        "mean_total_ms": 110.1213285613009
+      },
+      {
+        "mode": "none",
+        "steps": 40000,
+        "average": 16,
+        "mean_nmse_linear": 0.10408878487563318,
+        "mean_total_ms": 116.54881135666528
+      },
+      {
+        "mode": "scalar",
+        "steps": 2000,
+        "average": 1,
+        "mean_nmse_linear": 0.2702628126280615,
+        "mean_total_ms": 108.52074773712654
+      },
+      {
+        "mode": "scalar",
+        "steps": 2000,
+        "average": 4,
+        "mean_nmse_linear": 0.15677249144603897,
+        "mean_total_ms": 110.11427018960755
+      },
+      {
+        "mode": "scalar",
+        "steps": 2000,
+        "average": 16,
+        "mean_nmse_linear": 0.12887293555619786,
+        "mean_total_ms": 116.51957413198488
+      },
+      {
+        "mode": "scalar",
+        "steps": 8000,
+        "average": 1,
+        "mean_nmse_linear": 0.18389767502837154,
+        "mean_total_ms": 108.52214970899847
+      },
+      {
+        "mode": "scalar",
+        "steps": 8000,
+        "average": 4,
+        "mean_nmse_linear": 0.12211738038483115,
+        "mean_total_ms": 110.1142295314806
+      },
+      {
+        "mode": "scalar",
+        "steps": 8000,
+        "average": 16,
+        "mean_nmse_linear": 0.10693292767655294,
+        "mean_total_ms": 116.51493223359921
+      },
+      {
+        "mode": "scalar",
+        "steps": 20000,
+        "average": 1,
+        "mean_nmse_linear": 0.17052455746852502,
+        "mean_total_ms": 108.52041712121263
+      },
+      {
+        "mode": "scalar",
+        "steps": 20000,
+        "average": 4,
+        "mean_nmse_linear": 0.1173392961927675,
+        "mean_total_ms": 110.11467427101707
+      },
+      {
+        "mode": "scalar",
+        "steps": 20000,
+        "average": 16,
+        "mean_nmse_linear": 0.10423666480983229,
+        "mean_total_ms": 116.52032314092746
+      },
+      {
+        "mode": "scalar",
+        "steps": 30000,
+        "average": 1,
+        "mean_nmse_linear": 0.1723828092945041,
+        "mean_total_ms": 108.52076741794765
+      },
+      {
+        "mode": "scalar",
+        "steps": 30000,
+        "average": 4,
+        "mean_nmse_linear": 0.117640435300018,
+        "mean_total_ms": 110.11343886862808
+      },
+      {
+        "mode": "scalar",
+        "steps": 30000,
+        "average": 16,
+        "mean_nmse_linear": 0.10417101633174752,
+        "mean_total_ms": 116.51876199800881
+      },
+      {
+        "mode": "scalar",
+        "steps": 40000,
+        "average": 1,
+        "mean_nmse_linear": 0.1717216693056495,
+        "mean_total_ms": 108.52153175267176
+      },
+      {
+        "mode": "scalar",
+        "steps": 40000,
+        "average": 4,
+        "mean_nmse_linear": 0.11753258348456559,
+        "mean_total_ms": 110.11429369269383
+      },
+      {
+        "mode": "scalar",
+        "steps": 40000,
+        "average": 16,
+        "mean_nmse_linear": 0.10418512024231556,
+        "mean_total_ms": 116.52033768181506
+      }
+    ],
+    "best_at_largest_budget": true,
+    "last_interval_improvement_db": 0.006283705315499182,
+    "interval_steps": [
+      30000,
+      40000
+    ],
+    "learning_rate_horizon": 20000,
+    "deterministic_validation_mean_nmse_linear": 0.09200806057181883
+  },
+  "completed_at_unix": 1792376990.5606265
+}

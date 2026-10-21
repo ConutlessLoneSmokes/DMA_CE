@@ -1,8 +1,0 @@
-{"event": "stage_reused", "elapsed_seconds_this_process": 1.015, "stage": "baseline"}
-{"event": "stage_reused", "elapsed_seconds_this_process": 1.016, "stage": "curves"}
-{"event": "stage_reused", "elapsed_seconds_this_process": 1.017, "stage": "factorial"}
-{"event": "stage_reused", "elapsed_seconds_this_process": 1.018, "stage": "reliability"}
-{"event": "stage_reused", "elapsed_seconds_this_process": 1.019, "stage": "budget"}
-{"event": "stage_reused", "elapsed_seconds_this_process": 1.02, "stage": "diffusion"}
-{"event": "stage_reused", "elapsed_seconds_this_process": 1.021, "stage": "final"}
-C:\Users\Milo\Desktop\DMA_CE\results\corrected_sbl_smoke_20261020_v1

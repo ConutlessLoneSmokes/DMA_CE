@@ -1,5 +1,7 @@
 # research_002：当前验证集结果图与实验说明
 
+本记录使用修正前SBL，仅保留为历史验证结果。当前方法比较见[research_003核验](../research_003_review_20261020_v1/report.md)。
+
 本图汇总服务器 `/home/lsy/DMA_CE/results/research_002` 已完成的验证结果。最好的总体方案是带标量可靠度的确定性残差精修，NMSE为−10.36174 dB，比粗字典SBL改善0.88810 dB。当前最佳扩散平均16次后为−9.82596 dB，仍比该确定性方案差0.53578 dB。
 
 ![四联结果图：确定性精修总体最好；扩散在30 GHz的四种条件下均弱于SBL；平均生成输出有效，延长训练的改善很小。](validation_overview.png)
@@ -54,11 +56,11 @@ NMSE衡量完整32×32信道的归一化平方误差，数值越低越好。总�
 
 ## 数据与复现
 
-逐场景源表保存在服务器原结果目录，以及本机 `runs/research_002_overview_20261019_v1/source_tables/`。绘图检查了512组“条件×几何”观测哈希的跨方法一致性，检查各分组的64个几何和三个训练种子完整，并从CSV重算所有30个扩散候选的汇总NMSE，核对原冻结选择值。
+逐场景源表已集中保存在本目录的 `source_tables/`，可从GitHub获取；旧运行的训练缓存已清理。原绘图检查了512组“条件×几何”观测哈希的跨方法一致性，检查各分组的64个几何和三个训练种子完整，并从CSV重算所有30个扩散候选的汇总NMSE，核对原冻结选择值。
 
 - [完整种子×条件汇总](all_method_seed_context_means.csv)保留源表中的全部字典预算、可靠度置换和扩散候选。
 - [源表哈希](source_data_manifest.json)、[图形来源与导出记录](figure_provenance.json)、[原验证审计](validation_audit.json)绑定数据、处理方式和输出。
 - [完整配置](config_resolved.json)、[训练环境](training_environment.json)和[图形核对记录](figure_audit.json)保存本轮设置及导出检查。
-- [绘图代码](plot_results.py)可在仓库目录执行：`python results/research_002_overview_20261019_v1/plot_results.py`。服务器已有原始表时可将 `/home/lsy/DMA_CE/results/research_002` 作为唯一位置参数。
+- [绘图代码](plot_results.py)可在仓库目录执行：`python results/research_002_overview_20261019_v1/plot_results.py`，默认读取本目录的保留源表。
 
 以上是用于模型选择的验证集结果。独立筛选几何、5个新初始化及128阵元扩展结果由最终阶段另行生成。

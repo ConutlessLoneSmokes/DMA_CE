@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "scope": "validation_only",
+  "ready_for_final": true,
+  "diffusion_status": "complete",
+  "source_archive_verified": true,
+  "continuation_verified": true,
+  "data_caches_verified": 11,
+  "diffusion_checkpoints_replayed": 30,
+  "validation_metrics_recomputed": 46080,
+  "maximum_metric_difference": 0.0,
+  "last_interval_improvement_db": 0.006283705315499182,
+  "training_only_calibration": true,
+  "training_validation_geometry_disjoint": true,
+  "screening_data_read": false
+}

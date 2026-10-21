@@ -1,6 +1,7 @@
 tmp/
 output/
 runs/
+upstream/
 .venv/
 __pycache__/
 *.py[cod]

@@ -1,0 +1,61 @@
+{
+  "server_result_directory": "/home/lsy/DMA_CE/results/research_002",
+  "files": {
+    "config_resolved.json": {
+      "sha256": "000da86a94b7371996b2585c91d5e777d0ca32e341927ecfa460661c9b2a8c14",
+      "bytes": 3137
+    },
+    "environment.json": {
+      "sha256": "0c1a8bc4ad7260f826f43d424f265015824526129a4a3d578291ef6e85f01709",
+      "bytes": 621
+    },
+    "source.zip": {
+      "sha256": "bf7d3535ab9cda78d526910b9fba718b151b0bbf60f75bb0f9db5c465b1c90c4",
+      "bytes": 88679
+    },
+    "source_manifest.json": {
+      "sha256": "864d5797bc6a216958a0b275fe56e98fbff8f5fc2c6ffb962bb43c02dec2db3b",
+      "bytes": 3574
+    },
+    "continuation.json": {
+      "sha256": "32a94ba02bffc8027ec84e1fe77f6fc3089b11c3aa659f3dffd0c10c4ad87d48",
+      "bytes": 50310
+    },
+    "validation_audit.json": {
+      "sha256": "8e9af7665e04bb77ff57a77a3493e934d2ca65f743595279b7216b0ac65c4572",
+      "bytes": 505
+    },
+    "baseline_selection.json": {
+      "sha256": "efbf661a5a4ecce28c5205ab15edd0a7f5aa643ff30af8cb88da56f7c3f1a205",
+      "bytes": 1009
+    },
+    "reliability_selection.json": {
+      "sha256": "c4072351999bf9706ac5dc0d19d73b4a4d707125691a4106dca3b1666f36563f",
+      "bytes": 699
+    },
+    "budget_selection.json": {
+      "sha256": "5c6cbbaaf345d48d0d46e377f598bc14868ebf7186cf6b937a248981b1b05aee",
+      "bytes": 1664
+    },
+    "diffusion_selection.json": {
+      "sha256": "f70b1c55812e3926ec231a3abfadcfa2779a7e9fff385cac53b2ec837a2f3fc3",
+      "bytes": 5962
+    },
+    "base_baseline/selection.json": {
+      "sha256": "d8409d6b3eb7791248a96aceb147e44f392a6c13ca6c0423c1620f2e8e1d7a59",
+      "bytes": 732
+    },
+    "base_baseline/metrics.csv": {
+      "sha256": "8dca315d4212765c1512141634784c6a4378dbf4f773e318b5787d3a6d4b4899",
+      "bytes": 435150
+    },
+    "reliability/metrics.csv": {
+      "sha256": "f3d416ae5dfe4fa95d636115107f53c2dd0fd7579d81e4dc5b7849b366884ecc",
+      "bytes": 5137754
+    },
+    "diffusion/metrics.csv": {
+      "sha256": "f94402fcd0f0f1b9c6948aa77b0a72539111ebebba6056b0ac7cb68d84a66166",
+      "bytes": 20114464
+    }
+  }
+}
