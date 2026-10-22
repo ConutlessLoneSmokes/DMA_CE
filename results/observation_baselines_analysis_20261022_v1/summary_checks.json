@@ -1,0 +1,88 @@
+{
+  "status": "passed",
+  "sbl_mean_nmse_and_mse_decrease_with_J_in_all_8_curves": true,
+  "sbl_lowest_mean_nmse_in_all_48_conditions_at_snr_0_15_30": true,
+  "convergence": [
+    {
+      "bandwidth_ghz": 3,
+      "outputs": 4096,
+      "nonconverged": 1,
+      "median_updates": 1381.5,
+      "maximum_updates": 32000,
+      "maximum_recorded_kkt": 0.0011620521545410156,
+      "nonconverged_rows": [
+        {
+          "case": "physical_absorption",
+          "scene": "65",
+          "context": "3",
+          "method": "sbl_dense",
+          "bandwidth_hz": "3000000000.0",
+          "configurations": "4",
+          "pilot_re": "128",
+          "snr_db": "30.0",
+          "realized_snr_db": "25.900074005126953",
+          "observation_sha256": "9b95e5a40e1562d5d7d8eab6df65fc1a88f1d202daf2e3efd3837cdde7b7400d",
+          "nmse_linear": "0.7285626530647278",
+          "nmse_db": "-1.375330924987793",
+          "row_nmse_linear": "0.0002005391870625317",
+          "null_nmse_linear": "0.7283620834350586",
+          "observation_residual": "6.351835327222943e-05",
+          "sbl_converged": "False",
+          "sbl_iterations": "32000",
+          "sbl_relative_change": "6.494612989627058e-06",
+          "coarse_batch_ms_per_sample": "1132.4641903358952",
+          "refine_batch_ms_per_sample": "0.0",
+          "network_calls": "0",
+          "sbl_optimality_residual": "0.0011620521545410156",
+          "sbl_objective_per_tone": "-4.939890384674072",
+          "sbl_solver": "convex_bound_kkt_v1",
+          "sbl_early_stopping": "True",
+          "transmit_power_dbm": "9.352675527210106",
+          "physical_white_noise_per_tone_w": "3.831300975e-13",
+          "mse_normalized": "0.9921835348463238",
+          "mse_physical": "9.320972460109329e-07",
+          "solver_applicable": "True"
+        }
+      ]
+    },
+    {
+      "bandwidth_ghz": 30,
+      "outputs": 4096,
+      "nonconverged": 0,
+      "median_updates": 1345.0,
+      "maximum_updates": 19109,
+      "maximum_recorded_kkt": 0.0009999275207519531,
+      "nonconverged_rows": []
+    }
+  ],
+  "validation_selection": [
+    {
+      "bandwidth_ghz": 3,
+      "frozen_coefficient": 0.1,
+      "validation_mean_linear_nmse": {
+        "0.0": 0.5671777529623796,
+        "0.1": 0.5567783408441755,
+        "0.25": 0.5614157540549058,
+        "0.5": 0.5753324333345518,
+        "0.75": 0.5975805063571897,
+        "0.9": 0.6207567852034117,
+        "1.0": 0.6515124039360671
+      }
+    },
+    {
+      "bandwidth_ghz": 30,
+      "frozen_coefficient": 1.0,
+      "validation_mean_linear_nmse": {
+        "0.0": 1.1461394932121038,
+        "0.1": 0.8078055337755359,
+        "0.25": 0.7390252602199325,
+        "0.5": 0.6873979682932259,
+        "0.75": 0.6614177684168681,
+        "0.9": 0.6538298941450194,
+        "1.0": 0.6528376835776726
+      }
+    }
+  ],
+  "summary_ci_schema_note": "Formal summary fields nmse_linear_ci95_low/high contain dB limits; plots correctly use them with mean_nmse_db. Raw exports preserved.",
+  "script_sha256": "30fc9c0eacf64b9987e752f2948ea2c95d1b2953ab57de910020f6207eb5a34b"
+}

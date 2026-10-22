@@ -1,0 +1,26 @@
+{
+  "selected_frequency_shrinkage": {
+    "gaussian_free_space": {
+      "3000000000.0": 0.25,
+      "30000000000.0": 0.9
+    },
+    "physical_free_space": {
+      "3000000000.0": 0.25,
+      "30000000000.0": 1.0
+    },
+    "physical_absorption": {
+      "3000000000.0": 0.25,
+      "30000000000.0": 1.0
+    }
+  },
+  "frozen_at_unix": 1792571978.4756358,
+  "selection_split": "validation",
+  "screening_used": false,
+  "cache_sha256": {
+    "gaussian_free_space.pt": "40bfb5f5fb4299788a131ff1eb42c716a84972926158321399971cae73254d13",
+    "physical_free_space.pt": "fbc67893f96531720d6df538aa8484086adaa60755f35e3ae1349e1851fb4e45",
+    "physical_absorption.pt": "b0dcc0f36da6684b55193c9028fced080ad1141201407337ba0bcc5edead2a13",
+    "statistics.pt": "6cfda9f30dd7b554bb5a2a7e9a3e7229ae49b37b883189fa37bb34e48bec65e7"
+  },
+  "source_archive_sha256": "693ae8c501050f539e4eb96423768c9dfe72c71bae66db16c1d8347bc335985b"
+}

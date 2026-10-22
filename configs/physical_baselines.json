@@ -1,0 +1,59 @@
+{
+  "label": "paired_thermal_power_and_physical_path_probe",
+  "seed": 20261016,
+  "device": "cuda",
+  "timeout_seconds": 14400,
+  "system": {
+    "carrier_hz": 300000000000.0,
+    "bandwidths_hz": [3000000000.0, 30000000000.0],
+    "antennas": 32,
+    "tones": 32,
+    "spacing_wavelengths": 0.5,
+    "configurations": [8, 16],
+    "transmit_power_dbm": [-30, -20, -10, 0, 10, 20],
+    "quality_factor": 50.0,
+    "tuning_bandwidth_hz": 30000000000.0,
+    "waveguide_effective_index": 1.4,
+    "waveguide_end_power_fraction": 0.8,
+    "thermal_noise": {
+      "antenna_temperature_k": 296.0,
+      "receiver_reference_temperature_k": 290.0,
+      "noise_figure_db": 6.0
+    }
+  },
+  "channel": {
+    "paths": 3,
+    "range_min_m": 0.1,
+    "range_max_m": 0.4,
+    "angle_limit_deg": 60.0,
+    "model": "li2026",
+    "include_absorption": true,
+    "antenna_gain_dbi": 15.0,
+    "reflection_refractive_index": 1.5,
+    "surface_roughness_m": 0.000088,
+    "absorption_table_path": "upstream/THz_DMA/data/atmosphere/data_freq_abscoe.txt",
+    "absorption_table_sha256": "3aa52bf00e30831c82b98b06d48ea8fdd8ebe7cc2da6e233ad2ed3238dc4dca8"
+  },
+  "data": {"train": 512, "validation": 64, "screen": 128, "screen_seed": 20269121},
+  "sbl": {"angle_points": 97, "range_points": 13, "iterations": 32000, "tolerance": 0.001, "batch_size": 64, "early_stopping": true},
+  "frequency_shrinkage_grid": [0.0, 0.1, 0.25, 0.5, 0.75, 0.9, 1.0],
+  "bootstrap_samples": 1000,
+  "cases": [
+    {"name": "gaussian_free_space", "model": "gaussian", "include_absorption": false},
+    {"name": "physical_free_space", "model": "li2026", "include_absorption": false},
+    {"name": "physical_absorption", "model": "li2026", "include_absorption": true}
+  ],
+  "paper_source": {
+    "title": "Wideband Hybrid-Field THz UM-MIMO Channel Estimation: A Dual-Attention-Aided Deep-Unfolded Bayesian Learning Approach",
+    "doi": "10.1109/TCOMM.2026.3675428",
+    "pdf_sha256": "dd386788c72b8ec02cf07c07df7d5a95bbda2e656cebdf87b9c557d2e4302f8b",
+    "equations": [4, 11, 12, 18, 19, 20, 21, 22, 24],
+    "scope": "Propagation formulas adapted to the existing 32-element ULA/DMA; not a reproduction of the paper's 144-element AoSA system."
+  },
+  "assumptions": {
+    "reflection_material": "Constant real refractive index 1.5 is a declared material assumption; its value is not specified in the supplied paper.",
+    "absorption_conditions": "The supplied table lacks temperature, pressure, humidity and HITRAN-version metadata; do not label it a verified 296 K/1 atm table.",
+    "noise_temperature": "Antenna temperature includes the thermal environment. Atmospheric emission is not added again.",
+    "noise_figure": "6 dB is an assumed receiver value, not measured DMA hardware calibration."
+  }
+}

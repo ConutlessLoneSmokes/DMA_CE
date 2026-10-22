@@ -1,0 +1,39 @@
+{
+  "label": "observation_count_implementation_only",
+  "seed": 20261016,
+  "device": "cpu",
+  "timeout_seconds": 300,
+  "system": {
+    "carrier_hz": 300000000000.0,
+    "bandwidths_hz": [3000000000.0, 30000000000.0],
+    "antennas": 8,
+    "tones": 4,
+    "spacing_wavelengths": 0.5,
+    "configurations": [2, 8, 12],
+    "snrs_db": [-10, 0, 15, 30],
+    "quality_factor": 50.0,
+    "tuning_bandwidth_hz": 30000000000.0,
+    "waveguide_effective_index": 1.4,
+    "waveguide_end_power_fraction": 0.8,
+    "thermal_noise": {"antenna_temperature_k": 296.0, "receiver_reference_temperature_k": 290.0, "noise_figure_db": 6.0}
+  },
+  "channel": {
+    "paths": 3,
+    "range_min_m": 0.1,
+    "range_max_m": 0.4,
+    "angle_limit_deg": 60.0,
+    "model": "li2026",
+    "include_absorption": true,
+    "antenna_gain_dbi": 15.0,
+    "reflection_refractive_index": 1.5,
+    "surface_roughness_m": 0.000088,
+    "absorption_table_path": "upstream/THz_DMA/data/atmosphere/data_freq_abscoe.txt",
+    "absorption_table_sha256": "3aa52bf00e30831c82b98b06d48ea8fdd8ebe7cc2da6e233ad2ed3238dc4dca8"
+  },
+  "data": {"train": 12, "validation": 4, "screen": 4, "screen_seed": 20269222},
+  "sbl": {"angle_points": 9, "range_points": 3, "iterations": 12, "tolerance": 0.001, "batch_size": 4, "early_stopping": true},
+  "frequency_shrinkage_grid": [0.0, 0.5, 1.0],
+  "bootstrap_samples": 20,
+  "cases": [{"name": "physical_absorption", "model": "li2026", "include_absorption": true}],
+  "implementation_only": true
+}

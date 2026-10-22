@@ -1,0 +1,4 @@
+{"replayed_case": "gaussian_free_space", "metrics_checked": 15360}
+{"replayed_case": "physical_free_space", "metrics_checked": 30720}
+{"replayed_case": "physical_absorption", "metrics_checked": 46080}
+{"status": "passed", "metrics": 46080, "sbl_nonconverged": 0}

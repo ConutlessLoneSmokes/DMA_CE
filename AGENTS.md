@@ -10,3 +10,19 @@
 - 首轮为缩小系统的单种子方法筛选；完整尺寸、多种子和通信闭环在筛选结果基础上设计。
 - 如实记录失败和非收敛。候选A是否有效由对照决定，不以更小观测残差代替完整CSI改善。
 - 修改新逻辑后运行相关数学/物理检查。中文汇报，区别实现验证、探索性实验和论文主结果。
+
+## Agent skills
+
+### Issue tracker
+
+任务与规格使用 GitHub Issues（ConutlessLoneSmokes/DMA_CE）；操作约定见 [docs/agents/issue-tracker.md](docs/agents/issue-tracker.md)。
+
+### Triage labels
+
+使用默认五个分流标签；含义见 [docs/agents/triage-labels.md](docs/agents/triage-labels.md)。
+
+### Domain docs
+
+采用单一领域布局：根目录 `GLOSSARY.md` 与按需建立的 `docs/adr/`；读取规则见 [docs/agents/domain.md](docs/agents/domain.md)。
+
+开始任务时按 [工作流程](docs/WORKFLOW.md) 选择适用 skill；查找运行指南、实验状态或历史证据时使用 [文档索引](docs/README.md)。

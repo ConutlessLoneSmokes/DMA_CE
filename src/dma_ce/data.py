@@ -6,10 +6,11 @@ import time
 import numpy as np
 import torch
 
-from ._upstream.atmosphere import C0_M_PER_S, free_space_amplitude
+from ._upstream.atmosphere import AbsorptionTable, C0_M_PER_S, free_space_amplitude
 from ._upstream.geometry import ofdm_frequencies, ula_positions, los_element_channel, rayleigh_distance_m
 from ._upstream.dma import dma_weight_matrix
 from .sbl import SOLVER_VERSION, joint_sbl
+from .physics import element_channel, paper_channel, thermal_budget
 
 
 def encode(channel):
@@ -28,21 +29,53 @@ def tensor_hash(value):
 def build_hardware(config, bandwidth, bank):
     system, channel, settings = config["system"], config["channel"], config["sbl"]
     carrier, n = system["carrier_hz"], system["antennas"]
+    rf = system.get("rf_chains", 1)
+    if type(rf) is not int or rf < 1 or n % rf or bank.ndim != 2 or bank.shape[1] != n:
+        raise ValueError("positive RF count dividing the antenna count and matching state bank required")
+    elements = n // rf
     spacing = system["spacing_wavelengths"] * C0_M_PER_S / carrier
     positions = ula_positions(n, spacing)
+    if rf > 1:
+        strip_spacing = system["strip_spacing_wavelengths"] * C0_M_PER_S / carrier
+        if (not np.isfinite(strip_spacing) or strip_spacing <= 0
+                or not np.isfinite(channel["elevation_deg"]) or not -90 < channel["elevation_deg"] < 90):
+            raise ValueError("positive strip spacing and fixed elevation in (-90, 90) required")
+        positions = np.column_stack((np.tile(ula_positions(elements, spacing), rf), np.zeros(n),
+            np.repeat(ula_positions(rf, strip_spacing), elements)))
     frequencies = ofdm_frequencies(carrier, bandwidth, system["tones"])
-    feed = np.arange(n) * spacing
-    raw = np.stack([dma_weight_matrix(frequencies, row, feed,
+    feed = np.tile(np.arange(elements) * spacing, rf)
+    response = np.stack([dma_weight_matrix(frequencies, row, feed,
         quality_factor=system["quality_factor"], reference_frequency_hz=carrier,
         waveguide_effective_index=system["waveguide_effective_index"],
         waveguide_end_power_fraction=system["waveguide_end_power_fraction"]) for row in bank], axis=1)
-    noise_gain = np.sum(abs(raw) ** 2, axis=-1) + system["rf_noise_fraction"]
+    if rf == 1:
+        raw = response
+    else:
+        raw = np.zeros((len(frequencies), len(bank), rf, n), dtype=complex)
+        for strip in range(rf):
+            span = slice(strip * elements, (strip + 1) * elements)
+            raw[:, :, strip, span] = response[:, :, span]
+        raw = raw.reshape(len(frequencies), len(bank) * rf, n)
+    budget = thermal_budget(system["thermal_noise"], bandwidth, system["tones"]) if "thermal_noise" in system else None
+    receiver_fraction = budget["receiver_noise_fraction"] if budget else system["rf_noise_fraction"]
+    noise_gain = np.sum(abs(raw) ** 2, axis=-1) + receiver_fraction
     matrix = raw.conj() / np.sqrt(noise_gain)[..., None]
+    absorption = None
+    if channel.get("include_absorption", False):
+        from pathlib import Path
+        path = Path(channel["absorption_table_path"])
+        if not path.is_absolute():
+            path = Path(__file__).resolve().parents[2] / path
+        if hashlib.sha256(path.read_bytes()).hexdigest() != channel["absorption_table_sha256"].lower():
+            raise ValueError("absorption table hash differs from the declared source")
+        absorption = AbsorptionTable.from_txt(path, max_frequency_hz=1e12)
     angles = np.deg2rad(np.linspace(-channel["angle_limit_deg"], channel["angle_limit_deg"], settings["angle_points"]))
     ranges = 1 / np.linspace(1 / channel["range_max_m"], 1 / channel["range_min_m"], settings["range_points"])
     atoms = []
     for angle, radius in itertools.product(angles, ranges):
-        atom = los_element_channel(frequencies, positions, radius, angle, include_absorption=False)
+        atom = element_channel(frequencies, positions, radius, angle,
+            absorption_table=absorption, include_absorption=absorption is not None,
+            elevation_deg=channel.get("elevation_deg", 0.))
         reference = free_space_amplitude(frequencies, radius) * np.exp(-2j * np.pi * frequencies * radius / C0_M_PER_S)
         atom = atom / reference[:, None]
         atoms.append(atom / np.linalg.norm(atom, axis=-1, keepdims=True))
@@ -50,8 +83,11 @@ def build_hardware(config, bandwidth, bank):
     return {"matrix": torch.tensor(matrix, dtype=torch.complex64),
         "dictionary": torch.tensor(dictionary, dtype=torch.complex64),
         "noise_gain": torch.tensor(noise_gain, dtype=torch.float64),
+        "channel_settings": channel, "absorption_table": absorption, "thermal_budget": budget,
         "positions": positions, "frequencies": frequencies,
-        "rayleigh_distance_m": rayleigh_distance_m(carrier, positions)}
+        "rf_chains": rf, "elements_per_strip": elements,
+        "rayleigh_distance_m": (2 * float(np.sum(np.ptp(positions, axis=0)**2)) * carrier / C0_M_PER_S
+            if positions.ndim == 2 else rayleigh_distance_m(carrier, positions))}
 
 
 def sample_scenes(config, split_index, count):
@@ -61,17 +97,23 @@ def sample_scenes(config, split_index, count):
     shape = (count, channel["paths"])
     ranges = rng.uniform(channel["range_min_m"], channel["range_max_m"], shape)
     angles = np.deg2rad(rng.uniform(-channel["angle_limit_deg"], channel["angle_limit_deg"], shape))
-    gains = (rng.normal(size=shape) + 1j * rng.normal(size=shape)) / np.sqrt(2 * channel["paths"])
+    gains = (np.ones(shape, dtype=np.complex128) if channel.get("model", "gaussian") == "li2026" else
+        (rng.normal(size=shape) + 1j * rng.normal(size=shape)) / np.sqrt(2 * channel["paths"]))
     return ranges, angles, gains
 
 
 def physical_channels(hardware, scenes):
+    settings = hardware.get("channel_settings", {})
+    if settings.get("model", "gaussian") == "li2026":
+        return torch.tensor(paper_channel(hardware, scenes), dtype=torch.complex64)
     ranges, angles, gains = scenes
     channels = []
     for radius, angle, gain in zip(ranges, angles, gains):
-        paths = [g * los_element_channel(hardware["frequencies"], hardware["positions"], r, a,
-            include_absorption=False) for r, a, g in zip(radius, angle, gain)]
-        channels.append(np.sum(paths, axis=0))
+        paths = [g * element_channel(hardware["frequencies"], hardware["positions"], r, a,
+            absorption_table=hardware.get("absorption_table"),
+            include_absorption=hardware.get("absorption_table") is not None,
+            elevation_deg=settings.get("elevation_deg", 0.)) for r, a, g in zip(radius, angle, gain)]
+        channels.append(np.sum(paths, axis=0) * 10 ** (settings.get("antenna_gain_dbi", 0.) / 20))
     return torch.tensor(np.stack(channels), dtype=torch.complex64)
 
 
@@ -178,7 +220,8 @@ def prepare(config, device, log, *, split_names=("train", "validation", "screen"
     for band_index, hw in enumerate(hardware):
         dictionary = hw["dictionary"].to(device)
         for configurations, snr_db in itertools.product(system["configurations"], system["snrs_db"]):
-            matrix = hw["matrix"][:, :configurations].contiguous()
+            measurements = configurations * hw["rf_chains"]
+            matrix = hw["matrix"][:, :measurements].contiguous()
             if reference is None:
                 training_h = physical["train"][band_index] / scale
                 train_y = torch.einsum("kjn,bkn->bkj", matrix, training_h)
@@ -194,12 +237,13 @@ def prepare(config, device, log, *, split_names=("train", "validation", "screen"
             context_index = len(result["contexts"])
             result["contexts"].append({"bandwidth_hz": system["bandwidths_hz"][band_index],
                 "configurations": configurations, "snr_db": snr_db,
-                "pilot_re": configurations * system["tones"], "rf_chains": 1,
+                "pilot_re": configurations * system["tones"], "rf_chains": hw["rf_chains"],
+                "measurements_per_tone": measurements,
                 "training_symbols": configurations, "switches": configurations - 1,
                 "training_white_power": power, "noise_complex_variance": variance,
                 "physical_element_noise_variance": variance * scale ** 2,
                 "matrix": matrix, "matrix_sha256": tensor_hash(matrix),
-                "raw_noise_gain": hw["noise_gain"][:, :configurations],
+                "raw_noise_gain": hw["noise_gain"][:, :measurements],
                 "rayleigh_distance_m": hw["rayleigh_distance_m"]})
             for split in split_names:
                 split_index = ("train", "validation", "screen").index(split)
@@ -208,9 +252,9 @@ def prepare(config, device, log, *, split_names=("train", "validation", "screen"
                 clean = torch.einsum("kjn,bkn->bkj", matrix, truth)
                 seed = config["data"].get("screen_seed", config["seed"]) if split == "screen" else config["seed"]
                 noise_rng = np.random.default_rng(np.random.SeedSequence([seed, split_index, band_index, 811]))
-                shape = (count, system["tones"], len(bank))
+                shape = (count, system["tones"], len(bank) * hw["rf_chains"])
                 standard = (noise_rng.normal(size=shape) + 1j * noise_rng.normal(size=shape)) / np.sqrt(2)
-                noise = torch.tensor(standard[:, :, :configurations], dtype=torch.complex64) * np.sqrt(variance)
+                noise = torch.tensor(standard[:, :, :measurements], dtype=torch.complex64) * np.sqrt(variance)
                 observed = clean + noise
                 entry = {"truth": truth, "observation": observed,
                     "variance": torch.full((count,), variance), "context_index": context_index,

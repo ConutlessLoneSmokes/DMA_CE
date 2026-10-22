@@ -1,0 +1,36 @@
+{
+  "status": "passed",
+  "runs": [
+    {
+      "run": "observation_baselines_20261022_3ghz_v1",
+      "metrics_independently_recomputed_complex128": 20480,
+      "geometry_splits_disjoint": true,
+      "source_and_freeze_hashes_verified": true,
+      "full_column_or_row_rank_all_tones": true,
+      "maximum_errors": {
+        "nmse_relative": 4.444868985545556e-07,
+        "mse_relative": 0.0,
+        "ls_relative": 2.5495977495678454e-08,
+        "snr_db": 4.2978520298220246e-07,
+        "paired_noise": 3.287141338096687e-05
+      }
+    },
+    {
+      "run": "observation_baselines_20261022_30ghz_v1",
+      "metrics_independently_recomputed_complex128": 20480,
+      "geometry_splits_disjoint": true,
+      "source_and_freeze_hashes_verified": true,
+      "full_column_or_row_rank_all_tones": true,
+      "maximum_errors": {
+        "nmse_relative": 3.7293937646684344e-07,
+        "mse_relative": 0.0,
+        "ls_relative": 2.5519998689938305e-08,
+        "snr_db": 4.5716310971249865e-07,
+        "paired_noise": 4.278771775568459e-05
+      }
+    }
+  ],
+  "paired_geometry_and_dma_bank_across_bandwidths": true,
+  "script_sha256": "2988568cc146fbcd2cf04b8c75c3f167cdcb60e8f1441d90dc26084957508289",
+  "scope": "Read-only saved-output checks; analytic covariance/LS diagnostics; no SBL refit or hyperparameter selection."
+}

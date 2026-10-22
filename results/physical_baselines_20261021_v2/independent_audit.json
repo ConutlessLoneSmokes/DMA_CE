@@ -1,0 +1,49 @@
+{
+  "status": "passed",
+  "script_sha256": "64777546bbe85f1283782d5e4e1305649e67b9d5f229bcb18f5577aebad42bd5",
+  "metrics_recomputed_in_float64": 46080,
+  "maximum_nmse_relative_difference": 4.143877847243509e-07,
+  "linear_predictions_replayed": 36864,
+  "maximum_linear_prediction_relative_difference": 1.0838339774277284e-11,
+  "maximum_ls_bias_noise_identity_relative_error": 6.2200517651706e-08,
+  "maximum_thermal_variance_relative_error": 0.0,
+  "maximum_physical_observation_equivalence_relative_error": 1.5663235330976022e-07,
+  "independent_screen_geometry_count": 128,
+  "screen_created_after_freeze": true,
+  "training_only_scale_reproduced": true,
+  "paired_physical_noise_regenerated_from_seed": true,
+  "sbl_nonconverged": 0,
+  "sbl_scope": "saved outputs and first-order stopping records checked; solver not rerun",
+  "parallel_workers": [
+    {
+      "source_sha256": "2219fd09360f1c5cc88b02c769516040872f468b5c4fb6424e414305c7510163",
+      "source_path": "results/physical_baselines_20261021_v2/parallel_cpu.py",
+      "compute_device": "cpu",
+      "cpu_threads": 16,
+      "visible_devices": "",
+      "started_at_unix": 1792573733.3739119,
+      "scope": "same frozen solver/settings; online latency is not compared",
+      "status": "stopped_low_throughput_before_any_output",
+      "stopped_at_unix": 1792574324.4620106,
+      "published_outputs": 0,
+      "reason": "CPU pilot worker was substantially slower than GPU workers; no estimator or scientific setting changed"
+    },
+    {
+      "source_sha256": "84910626c96a5d9b0b0df1b6feb08632f6c3b3de773d1a26f5ea679a2ff47565",
+      "source_path": "results/physical_baselines_20261021_v2/parallel_tail.py",
+      "gpu": "NVIDIA GeForce RTX 3090",
+      "visible_devices": "1",
+      "started_at_unix": 1792575507.3210888,
+      "scope": "same frozen solver/settings; online latency is not compared"
+    },
+    {
+      "source_sha256": "2d1c57b077127a6655aad071feafd870c6dfc01f40dbc7975179488fbe28f334",
+      "source_path": "results/physical_baselines_20261021_v2/parallel_physical.py",
+      "gpu": "NVIDIA GeForce RTX 3090",
+      "visible_devices": "1",
+      "started_at_unix": 1792572268.407472,
+      "scope": "same frozen solver/settings; online latency is not compared"
+    }
+  ],
+  "source_archive_sha256": "693ae8c501050f539e4eb96423768c9dfe72c71bae66db16c1d8347bc335985b"
+}

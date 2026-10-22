@@ -61,6 +61,6 @@ python scripts/run_linear_baselines.py --config configs/linear_baselines.json --
 
 本轮区分的是无结构联合样本协方差与跨频正则化。它不增加训练几何，不等同于已知总体协方差的理想LMMSE。现有统计量的精度和线性估计的误差下限需按实际结果报告。
 
-## 已完成结果
+## 结果与核验
 
-2026-10-21完成上述冻结与新筛选，并将非整数收缩系数的掩码乘法修正为双精度。v2沿用首次冻结后的256筛选几何，验证选择仍为3 GHz系数0.1、30 GHz系数0.9，候选与选择规则保持相同。30 dB时，原联合LMMSE、逐频LMMSE、收缩LMMSE分别为+1.778、−2.253、−2.039 dB。原联合统计量重建逐元素差0，144次预测重放及36,864条五项指标重算差0，9,216次LS误差分解通过。详细归因、全部SNR数据与训练样本数对照见[复查报告](../results/linear_baselines_20261021_v2/report.md)。
+已完成运行 `linear_baselines_20261021_v2` 的结果、精度修正、LS分解和样本数对照见[复查报告](../results/linear_baselines_20261021_v2/report.md)。当前状态统一见[实验日志](EXPERIMENT_LOG.md)。

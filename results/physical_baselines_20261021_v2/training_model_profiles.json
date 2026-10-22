@@ -1,0 +1,106 @@
+{
+  "scope": "truth-based training diagnostics; not estimator inputs or causal isolation",
+  "profiles": [
+    {
+      "case": "gaussian_free_space",
+      "split": "train",
+      "geometries": 512,
+      "complex_channel_rms": [
+        0.0022539354395121336,
+        0.002253142884001136
+      ],
+      "received_snr_at_0_dbm": [
+        {
+          "bandwidth_hz": 3000000000.0,
+          "configurations": 8,
+          "snr_db": 25.511460397022176
+        },
+        {
+          "bandwidth_hz": 3000000000.0,
+          "configurations": 16,
+          "snr_db": 25.5465610056925
+        },
+        {
+          "bandwidth_hz": 30000000000.0,
+          "configurations": 8,
+          "snr_db": 15.16390230277495
+        },
+        {
+          "bandwidth_hz": 30000000000.0,
+          "configurations": 16,
+          "snr_db": 15.125100350958455
+        }
+      ]
+    },
+    {
+      "case": "physical_free_space",
+      "split": "train",
+      "geometries": 512,
+      "complex_channel_rms": [
+        0.00137084792368114,
+        0.0013723504962399602
+      ],
+      "received_snr_at_0_dbm": [
+        {
+          "bandwidth_hz": 3000000000.0,
+          "configurations": 8,
+          "snr_db": 20.783643803063573
+        },
+        {
+          "bandwidth_hz": 3000000000.0,
+          "configurations": 16,
+          "snr_db": 20.834439359140152
+        },
+        {
+          "bandwidth_hz": 30000000000.0,
+          "configurations": 8,
+          "snr_db": 10.631206698285638
+        },
+        {
+          "bandwidth_hz": 30000000000.0,
+          "configurations": 16,
+          "snr_db": 10.596671900029417
+        }
+      ],
+      "reflected_to_los_incoherent_energy_median_db": -15.921630859375,
+      "reflected_to_los_incoherent_energy_q95_db": -0.9599137902259827
+    },
+    {
+      "case": "physical_absorption",
+      "split": "train",
+      "geometries": 512,
+      "complex_channel_rms": [
+        0.0013707226607948542,
+        0.0013722230214625597
+      ],
+      "received_snr_at_0_dbm": [
+        {
+          "bandwidth_hz": 3000000000.0,
+          "configurations": 8,
+          "snr_db": 20.782850403306053
+        },
+        {
+          "bandwidth_hz": 3000000000.0,
+          "configurations": 16,
+          "snr_db": 20.83364752499797
+        },
+        {
+          "bandwidth_hz": 30000000000.0,
+          "configurations": 8,
+          "snr_db": 10.630402532248395
+        },
+        {
+          "bandwidth_hz": 30000000000.0,
+          "configurations": 16,
+          "snr_db": 10.595868390789319
+        }
+      ],
+      "reflected_to_los_incoherent_energy_median_db": -15.922026634216309,
+      "reflected_to_los_incoherent_energy_q95_db": -0.9599292874336243,
+      "absorption_only_channel_relative_mse": [
+        1.5947376752478704e-08,
+        1.6680608894148463e-08
+      ]
+    }
+  ]
+}

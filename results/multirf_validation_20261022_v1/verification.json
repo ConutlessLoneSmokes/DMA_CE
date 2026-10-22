@@ -1,0 +1,46 @@
+{
+  "status": "passed",
+  "unit_tests": 77,
+  "full_suite_seconds": 17.308,
+  "checks": {
+    "multirf_smoke_20261022_v2": {
+      "status": "passed",
+      "metrics_recomputed": 144,
+      "maximum_relative_nmse_difference": 2.9936811698865745e-07,
+      "independent_screen_geometries": 4,
+      "frozen_before_screen": true,
+      "physical_noise_fixed_across_snr": true,
+      "maximum_snr_calibration_error_db": 0.0,
+      "implementation_only": true,
+      "sbl_nonconverged": 36,
+      "elapsed_seconds": 1.4781861305236816
+    },
+    "multirf_shape_20261022_v2": {
+      "status": "passed",
+      "metrics_recomputed": 72,
+      "maximum_relative_nmse_difference": 1.620759528089387e-07,
+      "independent_screen_geometries": 2,
+      "frozen_before_screen": true,
+      "physical_noise_fixed_across_snr": true,
+      "maximum_snr_calibration_error_db": 0.0,
+      "implementation_only": true,
+      "sbl_nonconverged": 18,
+      "elapsed_seconds": 86.26384162902832
+    }
+  },
+  "resume_unchanged": [
+    "metrics.csv",
+    "summary.csv",
+    "frozen.json"
+  ],
+  "formal_experiment_started": false,
+  "execution_source_sha256": {
+    "src/dma_ce/data.py": "7c99cc4b01607d63e3df9b1be1c616c55cdefcaf40af63ddb95c918aa6c00df8",
+    "src/dma_ce/physics.py": "61ec7e62eb7409867b53a20307ada9ea8977c34335b64e1f3c1b03c8ecdf7b22",
+    "src/dma_ce/physical_study.py": "1c7bf615fce5d639e1ab6dc0d7065bf4e6edd2f772b6066755e2a46fc84781bf",
+    "src/dma_ce/snr_study.py": "acf832f2fdc1e0d46fc6e513475105a39fad59a2bb7e9ea893749ef758442d82",
+    "src/dma_ce/factor_lmmse.py": "0228a4a0fa355549d1f907034dda404d28e42b8b30ea3172c26d97a047b84495",
+    "src/dma_ce/multirf_study.py": "838ae1c290e84c703b042c1514de62250d19bdd234d2cd5af32301a93a09c1cd",
+    "scripts/run_multirf_snr.py": "278a87984f17ffca7c76f41bd43a9a16b5878360bd12456518bf93d82e72a37e"
+  }
+}

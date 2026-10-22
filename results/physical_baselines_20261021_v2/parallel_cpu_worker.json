@@ -1,0 +1,13 @@
+{
+  "source_sha256": "2219fd09360f1c5cc88b02c769516040872f468b5c4fb6424e414305c7510163",
+  "source_path": "results/physical_baselines_20261021_v2/parallel_cpu.py",
+  "compute_device": "cpu",
+  "cpu_threads": 16,
+  "visible_devices": "",
+  "started_at_unix": 1792573733.3739119,
+  "scope": "same frozen solver/settings; online latency is not compared",
+  "status": "stopped_low_throughput_before_any_output",
+  "stopped_at_unix": 1792574324.4620106,
+  "published_outputs": 0,
+  "reason": "CPU pilot worker was substantially slower than GPU workers; no estimator or scientific setting changed"
+}

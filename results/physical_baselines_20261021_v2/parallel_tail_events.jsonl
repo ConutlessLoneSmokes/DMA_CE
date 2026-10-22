@@ -1,0 +1,25 @@
+{"event": "coarse_batch", "at_unix": 1792575660.8657894, "context": 23, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792575796.832111, "context": 23, "completed": 128}
+{"event": "tail_worker_context", "at_unix": 1792575796.8504717, "case": "physical_free_space", "context": 23, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792575854.573361, "context": 22, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792575909.3380003, "context": 22, "completed": 128}
+{"event": "tail_worker_context", "at_unix": 1792575909.3549519, "case": "physical_free_space", "context": 22, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792575938.9305382, "context": 21, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792575971.4209032, "context": 21, "completed": 128}
+{"event": "tail_worker_context", "at_unix": 1792575971.4376614, "case": "physical_free_space", "context": 21, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792575991.7313821, "context": 20, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792576021.7606406, "context": 20, "completed": 128}
+{"event": "tail_worker_context", "at_unix": 1792576021.7780282, "case": "physical_free_space", "context": 20, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792576123.1822236, "context": 19, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792576178.4108303, "context": 19, "completed": 128}
+{"event": "tail_worker_context", "at_unix": 1792576178.4277952, "case": "physical_free_space", "context": 19, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792576253.3156002, "context": 18, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792576315.9594367, "context": 18, "completed": 128}
+{"event": "tail_worker_context", "at_unix": 1792576315.9766686, "case": "physical_free_space", "context": 18, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792576359.114657, "context": 17, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792576414.8999975, "context": 17, "completed": 128}
+{"event": "tail_worker_context", "at_unix": 1792576414.9158318, "case": "physical_free_space", "context": 17, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792576432.0265827, "context": 16, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792576459.285892, "context": 16, "completed": 128}
+{"event": "tail_worker_context", "at_unix": 1792576459.2995653, "case": "physical_free_space", "context": 16, "converged": 128}
+{"event": "tail_worker_complete", "at_unix": 1792576459.2998078}

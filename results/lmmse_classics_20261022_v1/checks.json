@@ -1,0 +1,9 @@
+{
+  "self_checks": "Quadratic expectation and observation-mean consistency passed.",
+  "per_scene_rows": 8448,
+  "groups_recomputed": 36,
+  "power_snr_rows": 72,
+  "parent_freeze_verified": true,
+  "new_fitting_or_selection": false,
+  "review_note": "An initial hand-entered context-index assertion used 2/8 instead of 3/9 for 3 GHz at 0 dBm; corrected verification to match context metadata, estimator outputs unchanged."
+}

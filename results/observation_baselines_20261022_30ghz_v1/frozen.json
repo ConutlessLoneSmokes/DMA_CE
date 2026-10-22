@@ -1,0 +1,15 @@
+{
+  "selected_frequency_shrinkage": {
+    "physical_absorption": {
+      "30000000000.0": 1.0
+    }
+  },
+  "frozen_at_unix": 1792644366.4640872,
+  "selection_split": "validation",
+  "screening_used": false,
+  "cache_sha256": {
+    "physical_absorption.pt": "fabe51e082fb79ba107d8dd48546a2aa0954b2de3d66b202e3c557bca2ca618a",
+    "statistics.pt": "f86d6ee1304a87477e26fa3b280b185a4b7df69d3e2a4ec688c7353361e52287"
+  },
+  "source_archive_sha256": "4743d067cc1b270e86692e58a42678baf1169650690e01604ab353bf44dbfa87"
+}

@@ -1,0 +1,44 @@
+{
+  "nature": "implementation verification only; short SBL budgets are not accuracy results",
+  "unit_tests": {
+    "passed": 73,
+    "seconds": 16.987
+  },
+  "resume_scientific_files_unchanged": true,
+  "runs": [
+    {
+      "run_id": "observation_smoke_20261022_3ghz_v1",
+      "metric_rows_independently_recomputed": 240,
+      "max_mse_relative_error": 0.0,
+      "max_nmse_relative_error": 2.2318726067283023e-07,
+      "max_independent_snr_calibration_error_db": 3.522480547246687e-07,
+      "source_archive_and_frozen_cache_hashes_verified": true
+    },
+    {
+      "run_id": "observation_smoke_20261022_30ghz_v1",
+      "metric_rows_independently_recomputed": 240,
+      "max_mse_relative_error": 0.0,
+      "max_nmse_relative_error": 1.8411979740839968e-07,
+      "max_independent_snr_calibration_error_db": 2.404493759655679e-07,
+      "source_archive_and_frozen_cache_hashes_verified": true
+    },
+    {
+      "run_id": "physical_regression_20261022_v1",
+      "metric_rows_independently_recomputed": 600,
+      "max_mse_relative_error": 0.0,
+      "max_nmse_relative_error": 2.2065911686741657e-07,
+      "max_independent_snr_calibration_error_db": 4.303401146543706e-07,
+      "source_archive_and_frozen_cache_hashes_verified": true
+    },
+    {
+      "run_id": "observation_shape_20261022_j64_v1",
+      "metric_rows_independently_recomputed": 80,
+      "max_mse_relative_error": 0.0,
+      "max_nmse_relative_error": 2.1900343116776355e-07,
+      "max_independent_snr_calibration_error_db": 2.3773154467221502e-07,
+      "source_archive_and_frozen_cache_hashes_verified": true
+    }
+  ],
+  "figures_visually_reviewed": true,
+  "formal_experiment_started": false
+}

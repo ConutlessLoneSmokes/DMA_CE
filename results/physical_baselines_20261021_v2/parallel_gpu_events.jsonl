@@ -1,0 +1,104 @@
+{"event": "coarse_batch", "at_unix": 1792572311.02144, "context": 0, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792572327.3190887, "context": 0, "completed": 128}
+{"event": "worker_context", "at_unix": 1792572327.3343947, "case": "physical_absorption", "context": 0, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792572336.1420765, "context": 1, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792572352.8388796, "context": 1, "completed": 128}
+{"event": "worker_context", "at_unix": 1792572352.8547153, "case": "physical_absorption", "context": 1, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792572364.8304574, "context": 2, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792572375.7697153, "context": 2, "completed": 128}
+{"event": "worker_context", "at_unix": 1792572375.7843418, "case": "physical_absorption", "context": 2, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792572416.5530083, "context": 3, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792572444.0415723, "context": 3, "completed": 128}
+{"event": "worker_context", "at_unix": 1792572444.0567737, "case": "physical_absorption", "context": 3, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792572466.123225, "context": 4, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792572536.3168747, "context": 4, "completed": 128}
+{"event": "worker_context", "at_unix": 1792572536.3298576, "case": "physical_absorption", "context": 4, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792572577.357081, "context": 5, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792572621.7744823, "context": 5, "completed": 128}
+{"event": "worker_context", "at_unix": 1792572621.7895439, "case": "physical_absorption", "context": 5, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792572676.2828634, "context": 6, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792572724.7874606, "context": 6, "completed": 128}
+{"event": "worker_context", "at_unix": 1792572724.804957, "case": "physical_absorption", "context": 6, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792572757.4616425, "context": 7, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792572785.232085, "context": 7, "completed": 128}
+{"event": "worker_context", "at_unix": 1792572785.2469306, "case": "physical_absorption", "context": 7, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792572886.69899, "context": 8, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792572919.384126, "context": 8, "completed": 128}
+{"event": "worker_context", "at_unix": 1792572919.3998003, "case": "physical_absorption", "context": 8, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792573021.763021, "context": 9, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792573121.062699, "context": 9, "completed": 128}
+{"event": "worker_context", "at_unix": 1792573121.0793836, "case": "physical_absorption", "context": 9, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792573213.6645904, "context": 10, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792573419.7651372, "context": 10, "completed": 128}
+{"event": "worker_context", "at_unix": 1792573419.7816088, "case": "physical_absorption", "context": 10, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792573517.6032257, "context": 11, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792573592.2440279, "context": 11, "completed": 128}
+{"event": "worker_context", "at_unix": 1792573592.2604895, "case": "physical_absorption", "context": 11, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792573624.0430372, "context": 12, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792573650.7567914, "context": 12, "completed": 128}
+{"event": "worker_context", "at_unix": 1792573650.7697372, "case": "physical_absorption", "context": 12, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792573668.844379, "context": 13, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792573683.1720505, "context": 13, "completed": 128}
+{"event": "worker_context", "at_unix": 1792573683.1838968, "case": "physical_absorption", "context": 13, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792573692.4217384, "context": 14, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792573705.6514583, "context": 14, "completed": 128}
+{"event": "worker_context", "at_unix": 1792573705.663444, "case": "physical_absorption", "context": 14, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792573715.4487672, "context": 15, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792573731.7182028, "context": 15, "completed": 128}
+{"event": "worker_context", "at_unix": 1792573731.731849, "case": "physical_absorption", "context": 15, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792573749.0211303, "context": 16, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792573776.8678644, "context": 16, "completed": 128}
+{"event": "worker_context", "at_unix": 1792573776.8825707, "case": "physical_absorption", "context": 16, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792573821.1270912, "context": 17, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792573877.5214407, "context": 17, "completed": 128}
+{"event": "worker_context", "at_unix": 1792573877.5348523, "case": "physical_absorption", "context": 17, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792573954.5527778, "context": 18, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792574018.919015, "context": 18, "completed": 128}
+{"event": "worker_context", "at_unix": 1792574018.9354541, "case": "physical_absorption", "context": 18, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792574122.959177, "context": 19, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792574179.5504148, "context": 19, "completed": 128}
+{"event": "worker_context", "at_unix": 1792574179.5663621, "case": "physical_absorption", "context": 19, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792574200.4606147, "context": 20, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792574231.3350925, "context": 20, "completed": 128}
+{"event": "worker_context", "at_unix": 1792574231.3495917, "case": "physical_absorption", "context": 20, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792574261.7849786, "context": 21, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792574295.4092698, "context": 21, "completed": 128}
+{"event": "worker_context", "at_unix": 1792574295.4253302, "case": "physical_absorption", "context": 21, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792574353.6930838, "context": 22, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792574408.5187037, "context": 22, "completed": 128}
+{"event": "worker_context", "at_unix": 1792574408.5340612, "case": "physical_absorption", "context": 22, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792574556.6744504, "context": 23, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792574689.0166814, "context": 23, "completed": 128}
+{"event": "worker_context", "at_unix": 1792574689.0321245, "case": "physical_absorption", "context": 23, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792574730.0545757, "context": 0, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792574746.3765335, "context": 0, "completed": 128}
+{"event": "worker_context", "at_unix": 1792574746.3894396, "case": "physical_free_space", "context": 0, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792574755.226882, "context": 1, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792574768.4141798, "context": 1, "completed": 128}
+{"event": "worker_context", "at_unix": 1792574768.4263737, "case": "physical_free_space", "context": 1, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792574780.0528407, "context": 2, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792574790.6818633, "context": 2, "completed": 128}
+{"event": "worker_context", "at_unix": 1792574790.6955411, "case": "physical_free_space", "context": 2, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792574830.292332, "context": 3, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792574854.0237956, "context": 3, "completed": 128}
+{"event": "worker_context", "at_unix": 1792574854.0379019, "case": "physical_free_space", "context": 3, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792574875.5029366, "context": 4, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792574940.8397348, "context": 4, "completed": 128}
+{"event": "worker_context", "at_unix": 1792574940.8527148, "case": "physical_free_space", "context": 4, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792574980.6622002, "context": 5, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792575020.8436882, "context": 5, "completed": 128}
+{"event": "worker_context", "at_unix": 1792575020.857921, "case": "physical_free_space", "context": 5, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792575071.251863, "context": 6, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792575118.8731515, "context": 6, "completed": 128}
+{"event": "worker_context", "at_unix": 1792575118.8870838, "case": "physical_free_space", "context": 6, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792575147.779028, "context": 7, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792575175.0840025, "context": 7, "completed": 128}
+{"event": "worker_context", "at_unix": 1792575175.0999215, "case": "physical_free_space", "context": 7, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792575271.700572, "context": 8, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792575300.587255, "context": 8, "completed": 128}
+{"event": "worker_context", "at_unix": 1792575300.6032777, "case": "physical_free_space", "context": 8, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792575398.0497108, "context": 9, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792575492.7887607, "context": 9, "completed": 128}
+{"event": "worker_context", "at_unix": 1792575492.8048782, "case": "physical_free_space", "context": 9, "converged": 128}
+{"event": "yield_to_primary", "at_unix": 1792575492.8050458, "case": "physical_free_space"}
+{"event": "worker_complete", "at_unix": 1792575492.8050618}

@@ -1,0 +1,141 @@
+{"event": "validation_ready", "at_unix": 1792571967.9417589, "case": "gaussian_free_space", "selected_shrinkage": {"3000000000.0": 0.25, "30000000000.0": 0.9}}
+{"event": "validation_ready", "at_unix": 1792571972.6898332, "case": "physical_free_space", "selected_shrinkage": {"3000000000.0": 0.25, "30000000000.0": 1.0}}
+{"event": "validation_ready", "at_unix": 1792571977.5585575, "case": "physical_absorption", "selected_shrinkage": {"3000000000.0": 0.25, "30000000000.0": 1.0}}
+{"event": "frozen", "at_unix": 1792571982.024796, "sha256": "962188493960394e1b56c8e317d99ea3e3c618f25684e66060b3b36143483f78"}
+{"event": "coarse_batch", "at_unix": 1792572001.4848073, "context": 0, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792572021.7029934, "context": 0, "completed": 128}
+{"event": "screen_context", "at_unix": 1792572021.827918, "case": "gaussian_free_space", "context": 0, "transmit_power_dbm": -30, "training_received_snr_db": -4.488539602977825, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792572040.6173105, "context": 1, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792572058.705607, "context": 1, "completed": 128}
+{"event": "screen_context", "at_unix": 1792572058.8264854, "case": "gaussian_free_space", "context": 1, "transmit_power_dbm": -20, "training_received_snr_db": 5.511460397022176, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792572080.276477, "context": 2, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792572107.2395618, "context": 2, "completed": 128}
+{"event": "screen_context", "at_unix": 1792572107.363029, "case": "gaussian_free_space", "context": 2, "transmit_power_dbm": -10, "training_received_snr_db": 15.511460397022175, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792572212.0956762, "context": 3, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792572274.7782414, "context": 3, "completed": 128}
+{"event": "screen_context", "at_unix": 1792572274.909391, "case": "gaussian_free_space", "context": 3, "transmit_power_dbm": 0, "training_received_snr_db": 25.511460397022176, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792572385.3082325, "context": 4, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792572462.218878, "context": 4, "completed": 128}
+{"event": "screen_context", "at_unix": 1792572462.340624, "case": "gaussian_free_space", "context": 4, "transmit_power_dbm": 10, "training_received_snr_db": 35.51146039702218, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792572603.4785945, "context": 5, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792572719.0049617, "context": 5, "completed": 128}
+{"event": "screen_context", "at_unix": 1792572719.1266909, "case": "gaussian_free_space", "context": 5, "transmit_power_dbm": 20, "training_received_snr_db": 45.51146039702218, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792572756.6949015, "context": 6, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792572786.2544432, "context": 6, "completed": 128}
+{"event": "screen_context", "at_unix": 1792572786.4057093, "case": "gaussian_free_space", "context": 6, "transmit_power_dbm": -30, "training_received_snr_db": -4.4534389943075015, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792572834.5480533, "context": 7, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792572858.8962994, "context": 7, "completed": 128}
+{"event": "screen_context", "at_unix": 1792572859.0385969, "case": "gaussian_free_space", "context": 7, "transmit_power_dbm": -20, "training_received_snr_db": 5.546561005692499, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792572908.4085505, "context": 8, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792572940.1445723, "context": 8, "completed": 128}
+{"event": "screen_context", "at_unix": 1792572940.275572, "case": "gaussian_free_space", "context": 8, "transmit_power_dbm": -10, "training_received_snr_db": 15.546561005692501, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792573002.7801406, "context": 9, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792573210.8421566, "context": 9, "completed": 128}
+{"event": "screen_context", "at_unix": 1792573210.9797661, "case": "gaussian_free_space", "context": 9, "transmit_power_dbm": 0, "training_received_snr_db": 25.5465610056925, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792573358.5859656, "context": 10, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792573509.5776818, "context": 10, "completed": 128}
+{"event": "screen_context", "at_unix": 1792573509.7166362, "case": "gaussian_free_space", "context": 10, "transmit_power_dbm": 10, "training_received_snr_db": 35.546561005692496, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792573585.3322647, "context": 11, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792573700.8949704, "context": 11, "completed": 128}
+{"event": "screen_context", "at_unix": 1792573701.0331202, "case": "gaussian_free_space", "context": 11, "transmit_power_dbm": 20, "training_received_snr_db": 45.5465610056925, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792573727.3081381, "context": 12, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792573778.9516625, "context": 12, "completed": 128}
+{"event": "screen_context", "at_unix": 1792573779.0787272, "case": "gaussian_free_space", "context": 12, "transmit_power_dbm": -30, "training_received_snr_db": -14.83609769722505, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792573810.9346714, "context": 13, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792573828.6908488, "context": 13, "completed": 128}
+{"event": "screen_context", "at_unix": 1792573828.816048, "case": "gaussian_free_space", "context": 13, "transmit_power_dbm": -20, "training_received_snr_db": -4.83609769722505, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792573845.0095367, "context": 14, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792573863.3424525, "context": 14, "completed": 128}
+{"event": "screen_context", "at_unix": 1792573863.469512, "case": "gaussian_free_space", "context": 14, "transmit_power_dbm": -10, "training_received_snr_db": 5.16390230277495, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792573884.2573543, "context": 15, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792573906.4060273, "context": 15, "completed": 128}
+{"event": "screen_context", "at_unix": 1792573906.5337472, "case": "gaussian_free_space", "context": 15, "transmit_power_dbm": 0, "training_received_snr_db": 15.16390230277495, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792573959.9031804, "context": 16, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792573986.7291715, "context": 16, "completed": 128}
+{"event": "screen_context", "at_unix": 1792573986.8542173, "case": "gaussian_free_space", "context": 16, "transmit_power_dbm": 10, "training_received_snr_db": 25.16390230277495, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792574082.9271114, "context": 17, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792574142.459119, "context": 17, "completed": 128}
+{"event": "screen_context", "at_unix": 1792574142.5861337, "case": "gaussian_free_space", "context": 17, "transmit_power_dbm": 20, "training_received_snr_db": 35.16390230277495, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792574298.5335612, "context": 18, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792574427.946173, "context": 18, "completed": 128}
+{"event": "screen_context", "at_unix": 1792574428.079931, "case": "gaussian_free_space", "context": 18, "transmit_power_dbm": -30, "training_received_snr_db": -14.874899649041545, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792574486.461963, "context": 19, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792574534.0450356, "context": 19, "completed": 128}
+{"event": "screen_context", "at_unix": 1792574534.178585, "case": "gaussian_free_space", "context": 19, "transmit_power_dbm": -20, "training_received_snr_db": -4.874899649041543, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792574582.2441697, "context": 20, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792574629.6772635, "context": 20, "completed": 128}
+{"event": "screen_context", "at_unix": 1792574629.8106754, "case": "gaussian_free_space", "context": 20, "transmit_power_dbm": -10, "training_received_snr_db": 5.125100350958456, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792574699.7102113, "context": 21, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792574762.4145155, "context": 21, "completed": 128}
+{"event": "screen_context", "at_unix": 1792574762.5482597, "case": "gaussian_free_space", "context": 21, "transmit_power_dbm": 0, "training_received_snr_db": 15.125100350958455, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792574836.0874019, "context": 22, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792574933.4000342, "context": 22, "completed": 128}
+{"event": "screen_context", "at_unix": 1792574933.5334506, "case": "gaussian_free_space", "context": 22, "transmit_power_dbm": 10, "training_received_snr_db": 25.125100350958455, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792575163.8190584, "context": 23, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792575399.718347, "context": 23, "completed": 128}
+{"event": "screen_context", "at_unix": 1792575399.8518827, "case": "gaussian_free_space", "context": 23, "transmit_power_dbm": 20, "training_received_snr_db": 35.125100350958455, "converged": 128}
+{"event": "screen_context", "at_unix": 1792575400.3162448, "case": "physical_free_space", "context": 0, "transmit_power_dbm": -30, "training_received_snr_db": -9.216356196936431, "converged": 128}
+{"event": "screen_context", "at_unix": 1792575400.4303787, "case": "physical_free_space", "context": 1, "transmit_power_dbm": -20, "training_received_snr_db": 0.7836438030635706, "converged": 128}
+{"event": "screen_context", "at_unix": 1792575400.5444732, "case": "physical_free_space", "context": 2, "transmit_power_dbm": -10, "training_received_snr_db": 10.783643803063569, "converged": 128}
+{"event": "screen_context", "at_unix": 1792575400.6557896, "case": "physical_free_space", "context": 3, "transmit_power_dbm": 0, "training_received_snr_db": 20.783643803063573, "converged": 128}
+{"event": "screen_context", "at_unix": 1792575400.766896, "case": "physical_free_space", "context": 4, "transmit_power_dbm": 10, "training_received_snr_db": 30.783643803063573, "converged": 128}
+{"event": "screen_context", "at_unix": 1792575400.8778374, "case": "physical_free_space", "context": 5, "transmit_power_dbm": 20, "training_received_snr_db": 40.78364380306357, "converged": 128}
+{"event": "screen_context", "at_unix": 1792575401.0039763, "case": "physical_free_space", "context": 6, "transmit_power_dbm": -30, "training_received_snr_db": -9.165560640859852, "converged": 128}
+{"event": "screen_context", "at_unix": 1792575401.1323674, "case": "physical_free_space", "context": 7, "transmit_power_dbm": -20, "training_received_snr_db": 0.834439359140149, "converged": 128}
+{"event": "screen_context", "at_unix": 1792575401.2600152, "case": "physical_free_space", "context": 8, "transmit_power_dbm": -10, "training_received_snr_db": 10.834439359140148, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792575533.3769448, "context": 9, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792575661.6396022, "context": 9, "completed": 128}
+{"event": "screen_context", "at_unix": 1792575661.7854414, "case": "physical_free_space", "context": 9, "transmit_power_dbm": 0, "training_received_snr_db": 20.834439359140152, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792575770.6192808, "context": 10, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792576032.6347833, "context": 10, "completed": 128}
+{"event": "screen_context", "at_unix": 1792576032.769901, "case": "physical_free_space", "context": 10, "transmit_power_dbm": 10, "training_received_snr_db": 30.834439359140152, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792576161.8293686, "context": 11, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792576261.6193242, "context": 11, "completed": 128}
+{"event": "screen_context", "at_unix": 1792576261.7546513, "case": "physical_free_space", "context": 11, "transmit_power_dbm": 20, "training_received_snr_db": 40.83443935914015, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792576302.1037242, "context": 12, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792576336.6177561, "context": 12, "completed": 128}
+{"event": "screen_context", "at_unix": 1792576336.7407043, "case": "physical_free_space", "context": 12, "transmit_power_dbm": -30, "training_received_snr_db": -19.368793301714366, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792576360.436461, "context": 13, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792576379.2276046, "context": 13, "completed": 128}
+{"event": "screen_context", "at_unix": 1792576379.3502154, "case": "physical_free_space", "context": 13, "transmit_power_dbm": -20, "training_received_snr_db": -9.368793301714364, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792576391.4490347, "context": 14, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792576408.7955048, "context": 14, "completed": 128}
+{"event": "screen_context", "at_unix": 1792576408.915641, "case": "physical_free_space", "context": 14, "transmit_power_dbm": -10, "training_received_snr_db": 0.6312066982856358, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792576421.7368639, "context": 15, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792576443.1216261, "context": 15, "completed": 128}
+{"event": "screen_context", "at_unix": 1792576443.242637, "case": "physical_free_space", "context": 15, "transmit_power_dbm": 0, "training_received_snr_db": 10.631206698285638, "converged": 128}
+{"event": "coarse_batch", "at_unix": 1792576465.6370842, "context": 16, "completed": 64}
+{"event": "coarse_batch", "at_unix": 1792576502.0953064, "context": 16, "completed": 128}
+{"event": "screen_context", "at_unix": 1792576502.2599678, "case": "physical_free_space", "context": 16, "transmit_power_dbm": 10, "training_received_snr_db": 20.631206698285638, "converged": 128}
+{"event": "screen_context", "at_unix": 1792576502.4106514, "case": "physical_free_space", "context": 17, "transmit_power_dbm": 20, "training_received_snr_db": 30.631206698285638, "converged": 128}
+{"event": "screen_context", "at_unix": 1792576502.5777776, "case": "physical_free_space", "context": 18, "transmit_power_dbm": -30, "training_received_snr_db": -19.403328099970583, "converged": 128}
+{"event": "screen_context", "at_unix": 1792576502.743841, "case": "physical_free_space", "context": 19, "transmit_power_dbm": -20, "training_received_snr_db": -9.403328099970583, "converged": 128}
+{"event": "screen_context", "at_unix": 1792576502.909111, "case": "physical_free_space", "context": 20, "transmit_power_dbm": -10, "training_received_snr_db": 0.596671900029418, "converged": 128}
+{"event": "screen_context", "at_unix": 1792576503.0752468, "case": "physical_free_space", "context": 21, "transmit_power_dbm": 0, "training_received_snr_db": 10.596671900029417, "converged": 128}
+{"event": "screen_context", "at_unix": 1792576503.240369, "case": "physical_free_space", "context": 22, "transmit_power_dbm": 10, "training_received_snr_db": 20.59667190002942, "converged": 128}
+{"event": "screen_context", "at_unix": 1792576503.4071596, "case": "physical_free_space", "context": 23, "transmit_power_dbm": 20, "training_received_snr_db": 30.59667190002942, "converged": 128}
+{"event": "screen_context", "at_unix": 1792576504.0637727, "case": "physical_absorption", "context": 0, "transmit_power_dbm": -30, "training_received_snr_db": -9.21714959669395, "converged": 128}
+{"event": "screen_context", "at_unix": 1792576504.2138584, "case": "physical_absorption", "context": 1, "transmit_power_dbm": -20, "training_received_snr_db": 0.7828504033060517, "converged": 128}
+{"event": "screen_context", "at_unix": 1792576504.3640575, "case": "physical_absorption", "context": 2, "transmit_power_dbm": -10, "training_received_snr_db": 10.782850403306053, "converged": 128}
+{"event": "screen_context", "at_unix": 1792576504.5152578, "case": "physical_absorption", "context": 3, "transmit_power_dbm": 0, "training_received_snr_db": 20.782850403306053, "converged": 128}
+{"event": "screen_context", "at_unix": 1792576504.665395, "case": "physical_absorption", "context": 4, "transmit_power_dbm": 10, "training_received_snr_db": 30.782850403306053, "converged": 128}
+{"event": "screen_context", "at_unix": 1792576504.8161683, "case": "physical_absorption", "context": 5, "transmit_power_dbm": 20, "training_received_snr_db": 40.78285040330605, "converged": 128}
+{"event": "screen_context", "at_unix": 1792576504.9834793, "case": "physical_absorption", "context": 6, "transmit_power_dbm": -30, "training_received_snr_db": -9.166352475002027, "converged": 128}
+{"event": "screen_context", "at_unix": 1792576505.150297, "case": "physical_absorption", "context": 7, "transmit_power_dbm": -20, "training_received_snr_db": 0.8336475249979737, "converged": 128}
+{"event": "screen_context", "at_unix": 1792576505.3155487, "case": "physical_absorption", "context": 8, "transmit_power_dbm": -10, "training_received_snr_db": 10.833647524997973, "converged": 128}
+{"event": "screen_context", "at_unix": 1792576505.4821413, "case": "physical_absorption", "context": 9, "transmit_power_dbm": 0, "training_received_snr_db": 20.83364752499797, "converged": 128}
+{"event": "screen_context", "at_unix": 1792576505.6484444, "case": "physical_absorption", "context": 10, "transmit_power_dbm": 10, "training_received_snr_db": 30.833647524997975, "converged": 128}
+{"event": "screen_context", "at_unix": 1792576505.8151019, "case": "physical_absorption", "context": 11, "transmit_power_dbm": 20, "training_received_snr_db": 40.83364752499797, "converged": 128}
+{"event": "screen_context", "at_unix": 1792576505.9661012, "case": "physical_absorption", "context": 12, "transmit_power_dbm": -30, "training_received_snr_db": -19.369597467751603, "converged": 128}
+{"event": "screen_context", "at_unix": 1792576506.118426, "case": "physical_absorption", "context": 13, "transmit_power_dbm": -20, "training_received_snr_db": -9.369597467751603, "converged": 128}
+{"event": "screen_context", "at_unix": 1792576506.2680955, "case": "physical_absorption", "context": 14, "transmit_power_dbm": -10, "training_received_snr_db": 0.6304025322483958, "converged": 128}
+{"event": "screen_context", "at_unix": 1792576506.4210222, "case": "physical_absorption", "context": 15, "transmit_power_dbm": 0, "training_received_snr_db": 10.630402532248395, "converged": 128}
+{"event": "screen_context", "at_unix": 1792576506.573469, "case": "physical_absorption", "context": 16, "transmit_power_dbm": 10, "training_received_snr_db": 20.630402532248397, "converged": 128}
+{"event": "screen_context", "at_unix": 1792576506.7262745, "case": "physical_absorption", "context": 17, "transmit_power_dbm": 20, "training_received_snr_db": 30.630402532248397, "converged": 128}
+{"event": "screen_context", "at_unix": 1792576506.89243, "case": "physical_absorption", "context": 18, "transmit_power_dbm": -30, "training_received_snr_db": -19.404131609210683, "converged": 128}
+{"event": "screen_context", "at_unix": 1792576507.059613, "case": "physical_absorption", "context": 19, "transmit_power_dbm": -20, "training_received_snr_db": -9.404131609210681, "converged": 128}
+{"event": "screen_context", "at_unix": 1792576507.226064, "case": "physical_absorption", "context": 20, "transmit_power_dbm": -10, "training_received_snr_db": 0.5958683907893176, "converged": 128}
+{"event": "screen_context", "at_unix": 1792576507.3928232, "case": "physical_absorption", "context": 21, "transmit_power_dbm": 0, "training_received_snr_db": 10.595868390789319, "converged": 128}
+{"event": "screen_context", "at_unix": 1792576507.5606022, "case": "physical_absorption", "context": 22, "transmit_power_dbm": 10, "training_received_snr_db": 20.59586839078932, "converged": 128}
+{"event": "screen_context", "at_unix": 1792576507.726158, "case": "physical_absorption", "context": 23, "transmit_power_dbm": 20, "training_received_snr_db": 30.59586839078932, "converged": 128}
+{"event": "complete", "at_unix": 1792576515.7488174, "status": "passed", "metrics_recomputed": 46080, "maximum_nmse_difference": 0.0, "common_observation_checks": 9216, "independent_screen_geometries": 128, "physical_noise_fixed_across_power": true, "paired_geometries_across_cases": true, "maximum_pilot_normalization_equivalence_error": 1.5663235330976022e-07, "sbl_outputs": 9216, "sbl_nonconverged": 0, "sbl_solver": "convex_bound_kkt_v1", "elapsed_seconds": 4550.069933414459}

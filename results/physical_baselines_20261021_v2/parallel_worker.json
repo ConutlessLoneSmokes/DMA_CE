@@ -1,0 +1,8 @@
+{
+  "source_sha256": "2d1c57b077127a6655aad071feafd870c6dfc01f40dbc7975179488fbe28f334",
+  "source_path": "results/physical_baselines_20261021_v2/parallel_physical.py",
+  "gpu": "NVIDIA GeForce RTX 3090",
+  "visible_devices": "1",
+  "started_at_unix": 1792572268.407472,
+  "scope": "same frozen solver/settings; online latency is not compared"
+}

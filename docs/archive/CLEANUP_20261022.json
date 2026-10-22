@@ -1,0 +1,99 @@
+{
+  "date": "2026-10-22",
+  "scope": "Local generated implementation-check artifacts, temporary working copies and Python bytecode only; server and upstream repositories untouched.",
+  "git_before_cleanup": "ac632a5ff288ef3c7731d8637f3aa257b1943381",
+  "status": "verified",
+  "removal_method": "Windows Recycle Bin",
+  "removed_targets": [
+    {
+      "path": "results/multirf_smoke_20261022_v2",
+      "files": 16,
+      "bytes": 720857
+    },
+    {
+      "path": "results/multirf_shape_20261022_v2",
+      "files": 16,
+      "bytes": 630689
+    },
+    {
+      "path": "results/observation_smoke_20261022_3ghz_v1",
+      "files": 17,
+      "bytes": 1380781
+    },
+    {
+      "path": "results/observation_smoke_20261022_30ghz_v1",
+      "files": 17,
+      "bytes": 1332170
+    },
+    {
+      "path": "results/observation_shape_20261022_j64_v1",
+      "files": 17,
+      "bytes": 705201
+    },
+    {
+      "path": "results/physical_regression_20261022_v1",
+      "files": 21,
+      "bytes": 1556248
+    },
+    {
+      "path": "tmp",
+      "files": 130,
+      "bytes": 205963366
+    },
+    {
+      "path": "src/dma_ce/__pycache__",
+      "files": 14,
+      "bytes": 428772
+    },
+    {
+      "path": "src/dma_ce/_upstream/__pycache__",
+      "files": 5,
+      "bytes": 46215
+    },
+    {
+      "path": "tests/__pycache__",
+      "files": 2,
+      "bytes": 26627
+    },
+    {
+      "path": "scripts/__pycache__",
+      "files": 10,
+      "bytes": 108501
+    }
+  ],
+  "file_count": 265,
+  "bytes": 212899427,
+  "preserved_file_count": 399,
+  "preserved_path_sha256_digest": "e756204247e56fa2b82795533df1ffe3ac1dafce3655a8dda74c472ef331f339",
+  "digest_format": "SHA256 of UTF-8 JSON mapping repository-relative POSIX paths to SHA256, sort_keys=True, separators=(',', ':'). Roots: src,scripts,tests,configs,results,output; excludes removed_targets; includes pyproject.toml,.gitignore,.gitattributes.",
+  "implementation_archive": "docs/IMPLEMENTATION_CHECKS.json",
+  "implementation_record_count": 19,
+  "retained_validation_reports": [
+    "results/multirf_validation_20261022_v1/verification.json",
+    "results/observation_baselines_validation_20261022_v1/verification.json"
+  ],
+  "current_source_matches_previous_77_test_snapshot": {
+    "matched_files": 53,
+    "run_id": "multirf_shape_20261022_v2",
+    "source_zip_sha256": "89e20ca321d50c5ecf2153ec3d59694c08ab9e84aeda895eeeb08e023da2fd73",
+    "tests_record": "results/multirf_validation_20261022_v1/tests.txt"
+  },
+  "preserved_presentation": [
+    "output/THz_DMA信道估计_前三页_20261022.pptx"
+  ],
+  "empty_tmp_directory_retained": true,
+  "verification": {
+    "retained_hashes_unchanged": 399,
+    "local_link_targets": 256,
+    "broken_links": 0,
+    "python_syntax_checked": 36,
+    "historical_implementation_records_preserved": 13,
+    "added_implementation_records": 6,
+    "new_source_archives_checked_for_excluded_artifacts": 3,
+    "credential_pattern_findings": 0,
+    "unit_tests_rerun": false,
+    "unit_test_evidence": "Current source/config/tests match the archived run whose 77-test result is retained; local default Python has no PyTorch.",
+    "git_staged_whitespace_check": "passed for maintained code, configuration and documentation; frozen scientific exports retain original CRLF and generated SVG whitespace and are checked bytewise",
+    "git_staged_result_files_byte_identical": 340
+  }
+}

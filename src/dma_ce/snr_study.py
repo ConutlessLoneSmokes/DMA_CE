@@ -86,7 +86,7 @@ def sweep_cache(config, parent, split, count, snrs):
             truth, noise_count = original[:count], len(original)
         seed = config["data"]["screen_seed"] if split == "screen" else config["seed"]
         rng = np.random.default_rng(np.random.SeedSequence([seed, split_index, band_index, 811]))
-        shape = (noise_count, system["tones"], len(parent["state_bank"]))
+        shape = (noise_count, system["tones"], len(parent["state_bank"]) * system.get("rf_chains", 1))
         standard = torch.tensor((rng.normal(size=shape) + 1j * rng.normal(size=shape)) / np.sqrt(2), dtype=truth.dtype)[:count]
         for configurations, snr in itertools.product(system["configurations"], snrs):
             known = by_hardware[bandwidth, configurations]
@@ -94,7 +94,7 @@ def sweep_cache(config, parent, split, count, snrs):
             context = {**known, "snr_db": snr, "noise_complex_variance": variance,
                 "physical_element_noise_variance": variance * parent["channel_scale"] ** 2}
             clean = torch.einsum("kjn,bkn->bkj", known["matrix"], truth)
-            noise = standard[:, :, :configurations] * np.sqrt(variance)
+            noise = standard[:, :, :known["matrix"].shape[1]] * np.sqrt(variance)
             entry = {"truth": truth, "observation": clean + noise,
                 "variance": torch.full((count,), variance), "context_index": len(result["contexts"]),
                 "realized_snr_db": 10 * torch.log10(clean.abs().square().sum((1, 2)) / noise.abs().square().sum((1, 2)))}

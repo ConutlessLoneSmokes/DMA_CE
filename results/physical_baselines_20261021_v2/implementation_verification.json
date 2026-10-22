@@ -1,0 +1,29 @@
+{
+  "full_unit_suite": {
+    "status": "passed",
+    "tests": 69,
+    "elapsed_seconds": 17.516,
+    "command": "python -m unittest discover -s tests -v"
+  },
+  "smoke_run": "physical_smoke_20261021_v2",
+  "smoke_audit": {
+    "status": "passed",
+    "metrics_recomputed": 600,
+    "maximum_nmse_difference": 0.0,
+    "common_observation_checks": 120,
+    "independent_screen_geometries": 5,
+    "physical_noise_fixed_across_power": true,
+    "paired_geometries_across_cases": true,
+    "maximum_pilot_normalization_equivalence_error": 1.356667951313284e-07,
+    "sbl_outputs": 120,
+    "sbl_nonconverged": 120,
+    "sbl_solver": "convex_bound_kkt_v1",
+    "elapsed_seconds": 3.675886392593384
+  },
+  "formal_v1_status": {
+    "status": "stopped_implementation_fix",
+    "reason": "NumPy scalar in cache blocked weights_only resume; no scientific settings changed; replaced by v2",
+    "at_unix": 1792571832.4616175
+  },
+  "scope": "Implementation checks and workflow only; smoke SBL budget is intentionally insufficient and is not method-performance evidence."
+}

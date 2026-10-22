@@ -1,0 +1,15 @@
+{
+  "status": "complete",
+  "metrics_recomputed": 20480,
+  "maximum_nmse_difference": 0.0,
+  "common_observation_checks": 4096,
+  "independent_screen_geometries": 128,
+  "physical_noise_fixed_across_power": true,
+  "paired_geometries_across_cases": true,
+  "maximum_pilot_normalization_equivalence_error": 2.1755732859674026e-07,
+  "sbl_outputs": 4096,
+  "sbl_nonconverged": 1,
+  "sbl_solver": "convex_bound_kkt_v1",
+  "elapsed_seconds": 7352.159476041794,
+  "maximum_snr_calibration_error_db": 0.0
+}

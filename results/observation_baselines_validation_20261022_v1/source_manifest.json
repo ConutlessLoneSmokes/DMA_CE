@@ -1,0 +1,11 @@
+{
+  "src/dma_ce/physical_study.py": "5b1846ff86a91d97e18536fa5ad6ce19348bc0de7d8176e2f8eef61a455c04d9",
+  "scripts/run_physical_baselines.py": "f851595af9cb606bd1a0a435772f27381b5178f81317ecd195608e3d39f4dae4",
+  "configs/observation_baselines.json": "cf321facc8412e386e8e0274569dd56c4fbd4af38d4dd1f2de9bd300b52fdb80",
+  "configs/observation_baselines_smoke.json": "44dce3086806149ca8b5adc0a9d9ea8ec78f7e916c96c8f52aca1f73a24c09d9",
+  "tests/test_observations.py": "0b114de49c41f95d30062027e06335700d63ac727c06ccea4fb0e1593d9af714",
+  "docs/OBSERVATION_BASELINES.md": "0f9e21938e3f8aaebfbdd06789382273a0d9bc3bdff14332b808070820877ab9",
+  "docs/EXPERIMENT_LOG.md": "6ae61493c907be5ba140c9a46efc0d998917b3e61af9a5074f8529e90640094d",
+  "docs/IMPLEMENTATION_CHECKS.md": "a3ee3657a21a5511149d921e412202963d8655162f610a2d611fc2c2e7b1d876",
+  "README.md": "bbe6e125ae8b5e4fbc71f13a01e4a804da3d13079d8d6927169d5f6ca5b76e89"
+}
