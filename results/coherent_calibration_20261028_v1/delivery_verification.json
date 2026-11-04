@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "run_id": "coherent_calibration_20261028_v1",
+  "files_verified": 45,
+  "bytes_verified": 1250175123,
+  "manifest_sha256": "0488238480f08ad1e996181c330b61716f75346c41b68e351d024c24ebe2442c",
+  "source_members_verified": 123,
+  "source_note": "Original source archive and frozen retained; executed resume source additionally archived and hashed.",
+  "report_links": "passed",
+  "parent_inputs": "retained at original archive and hash-bound in input_provenance.json"
+}

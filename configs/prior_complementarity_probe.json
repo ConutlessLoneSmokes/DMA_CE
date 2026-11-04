@@ -1,0 +1,10 @@
+{
+  "label": "prior_complementarity_exploratory",
+  "parent_run": "multirf_snr_20261022_v1",
+  "run_storage_root": "/tmp/dma_ce_probe_runs",
+  "screen_geometries": 32,
+  "screen_seed": 2026102301,
+  "device": "cuda",
+  "timeout_seconds": 900,
+  "bootstrap_samples": 2000
+}

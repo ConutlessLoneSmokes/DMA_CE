@@ -1,0 +1,11 @@
+{
+  "status": "complete",
+  "elapsed_seconds": 472.5159999999996,
+  "scene_region_rows": 6720,
+  "new_controls": [
+    "zero_delay",
+    "offset_0.25_bin",
+    "offset_0.5_bin",
+    "offset_1_bin"
+  ]
+}

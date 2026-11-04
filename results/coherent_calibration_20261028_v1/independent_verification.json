@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "maximum_relative_score_error": 6.215263945539545e-16,
+  "maximum_direct_free_posterior_relative_squared_difference": 6.309795558804813e-16,
+  "maximum_policy_relative_squared_error": 0.0,
+  "maximum_augmented_LS_coefficient_difference": 1.1102230246251565e-15,
+  "train_only_feature_statistics": true,
+  "frozen_inputs_verified": true,
+  "freeze_before_new_observations": true,
+  "frozen_split_ids_disjoint": true,
+  "calibration_math_unchanged_across_resume": true,
+  "validation_ridge_selection_replayed": true,
+  "scope": "saved full-CSI rescoring and independent augmented least-squares/policy replay"
+}

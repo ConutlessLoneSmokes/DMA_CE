@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "run_id": "structured_prior_20261023_v1",
+  "remote_source_directory": "/tmp/dma_ce_structured_runs/structured_prior_20261023_v1",
+  "local_full_run_directory": "C:\\Users\\Milo\\Desktop\\DMA_CE\\runs\\structured_prior_20261023_v1",
+  "manifest_sha256": "e9f59b924017a59ebf75c2a0d93fb48c77465a6925e496422d1762ac9da38e3e",
+  "all_manifest_files_verified": true,
+  "verified_files": 51,
+  "verified_bytes": 881877320,
+  "result_exports_match_full_run": true,
+  "implementation_check_archive_verified_files": 15,
+  "temporary_remote_cleanup": "complete",
+  "remote_cleanup_record_sha256": "ac14786341406fa4225940eb82f474efe3d20b6b8c5f72989ac13c2376075d40",
+  "synced_document_and_result_files_verified": 74
+}

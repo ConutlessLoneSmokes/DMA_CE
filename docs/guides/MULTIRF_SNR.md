@@ -1,6 +1,8 @@
 # 密集多RF DMA：四方法SNR扫描
 
-本轮完成代码与实现检查。正式配置为300 GHz载频、30 GHz带宽、4条微带×256单元、4条RF链，J=32。横轴从−10至30 dB每5 dB一点；纵轴为mean scene NMSE（dB）。正式性能实验尚未启动，检查曲线不作为方法排名证据。
+正式配置已完成运行 `multirf_snr_20261022_v1`：300 GHz载频、30 GHz带宽、4条微带×256单元、4条RF链，J=32。横轴从−10至30 dB每5 dB一点；纵轴为mean scene NMSE（dB）。这是单种子探索性性能实验；[原始结果](../../results/multirf_snr_20261022_v1/report.md)与[粗估增量及配对分析](../../results/multirf_snr_analysis_20261023_v1/interpretation.md)已归档。此前短预算检查仍只作为实现证据。
+
+2026-10-26补充决定：一次两候选短验证后，保留本运行的原固定随机DMA状态库作为后续CE研究的共同采集设置，配置前置选择到此结束。[选择依据及边界](../../results/configuration_probe_20261026_v1/interpretation.md) · [冻结哈希](../../results/configuration_probe_20261026_v1/frozen.json)。这不改变本运行历史结果，也不将配置列为新CE方法的贡献。
 
 ## 架构依据及本轮选择
 

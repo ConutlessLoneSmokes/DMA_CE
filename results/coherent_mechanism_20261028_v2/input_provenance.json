@@ -1,0 +1,23 @@
+{
+  "parent_run": "coherent_delay_20261026_v1",
+  "files_sha256": {
+    "config_resolved.json": "f5fdf086572f75afba92455e83e6baba48608b936818efc4c47a62752023fd10",
+    "frozen.json": "2019e5fccb9c62b3e4095040a5485691a4e5fd4a23c7d3eb407a78e3ae07b80b",
+    "source.zip": "25710e4d3f61e0ae08ce535c5680e86a94e2141b86fc71994ee34d8768a0cbd4",
+    "inputs/physical_parent.pt": "770d36792ecccc6b5eaab114929cedc683412c79324964072b59d91983703697",
+    "inputs/absorption_table.txt": "3aa52bf00e30831c82b98b06d48ea8fdd8ebe7cc2da6e233ad2ed3238dc4dca8",
+    "predictions/new_observations.pt": "ff0bc339550385e2cbd39680459c7596a170d992d4895bb84b75c6226a4aacee",
+    "predictions/historical_observations.pt": "242b21d687fcffd75c86161e6c5efd314396266e237ce55759080996ae7115af",
+    "predictions/new_0.pt": "e961ba65c8cea0ae66301366d1e1dff354f7a9992f255acfcdb0ce3535aa974d",
+    "predictions/new_1.pt": "4980a9d36d6783b52a8312fb34025fb6f36958f46fea5c4e5f21c4ceff21146e",
+    "predictions/new_2.pt": "4adbe4ca3c1447bec3842fe755e15fa7bdf87573c8a434ec92b538095cc79ed4",
+    "predictions/new_3.pt": "cd6424a665764f0f139a0ba7d01fa3d4471997d9ba62a6cc0a9c0cce958d82e1",
+    "predictions/new_4.pt": "2582bce34ab09226b681b06b46185ed2a4d7ce9a0bba7d61dde9f3adec2efdd9",
+    "predictions/historical_0.pt": "c125b615d3c606a860b2e375e11be986a0e4fc33150746c786c7b39820ca0d89",
+    "predictions/historical_1.pt": "536c84e8f518b089e0f1785cf44f5d09a304a583b71b9ca71b1aefe35ce76930",
+    "predictions/historical_2.pt": "0107d3a94b7335859e2481fab49d603737052b9e9bd0cd96a022a8869bcb84aa",
+    "predictions/historical_3.pt": "88269591ecda3fadc0eb91cd2ea32413bbec461156ca1b98f41e602e0de15020",
+    "predictions/historical_4.pt": "37870b9899ef836c3adc9f85a75029fdcdf4dc50c9fafdf96c0312a528cff0bd"
+  },
+  "scope": "post-hoc paired diagnosis; no parameter selection or new geometry"
+}

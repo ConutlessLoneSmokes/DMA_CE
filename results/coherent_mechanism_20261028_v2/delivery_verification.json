@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "run_id": "coherent_mechanism_20261028_v2",
+  "files_verified": 30,
+  "bytes_verified": 172168511,
+  "manifest_sha256": "ca4d2c530aee9315a2abdd38cb65de1fffe063d571187fda4ad210720f5f246c",
+  "parent_inputs": "retained in parent run and bound by input_provenance.json",
+  "source_members_verified": 120,
+  "report_relative_links": "passed"
+}

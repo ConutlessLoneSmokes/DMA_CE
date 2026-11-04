@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "self_check_command": "python scripts/probe_coherent_calibration.py --self-check",
+  "self_check_scope": "known calibration solution, clipping, restored free Gaussian posterior, quadratic correction energy, finite delay score",
+  "resume_math_AST_unchanged": true,
+  "current_entry_matches_resume_source": true,
+  "analysis_repair": "Constant policy replay initially indexed a scalar; corrected vector broadcasting, then all independent checks passed; stored inference outputs unchanged."
+}

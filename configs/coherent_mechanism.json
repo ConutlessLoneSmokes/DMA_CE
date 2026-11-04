@@ -1,0 +1,12 @@
+{
+  "run_id": "coherent_mechanism_20261028_v2",
+  "parent_run": "coherent_delay_20261026_v1",
+  "bootstrap_seed": 2026102801,
+  "bootstrap_samples": 2000,
+  "control_strength": 0.5,
+  "delay_offset_bins": [0.25, 0.5, 1.0],
+  "include_zero_delay": true,
+  "device": "cuda",
+  "batch_size": 2,
+  "timeout_seconds": 1800
+}

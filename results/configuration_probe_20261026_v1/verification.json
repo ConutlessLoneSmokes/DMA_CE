@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "metric_rows": 576,
+  "maximum_relative_score_difference": 9.973686292147327e-14,
+  "maximum_ls_replay_relative_squared_error": 6.427681627643289e-16,
+  "maximum_paired_white_noise_relative_error": 1.7733084533667787e-05,
+  "maximum_matrix_absolute_error": 7.992251371883084e-09,
+  "selected_configuration": "random",
+  "scope": "Hardware/noise replay, LS normal-equation replay, saved scores, paired intervals and frozen validation selection; no independent screening or SBL rerun"
+}

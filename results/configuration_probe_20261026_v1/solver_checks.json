@@ -1,0 +1,17 @@
+[
+  {
+    "reference_snr_db": -10.0,
+    "random_nonconverged": 32,
+    "balanced_nonconverged": 32
+  },
+  {
+    "reference_snr_db": 10.0,
+    "random_nonconverged": 32,
+    "balanced_nonconverged": 32
+  },
+  {
+    "reference_snr_db": 30.0,
+    "random_nonconverged": 32,
+    "balanced_nonconverged": 32
+  }
+]

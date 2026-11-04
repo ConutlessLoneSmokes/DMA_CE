@@ -1,0 +1,23 @@
+{
+  "run_id": "coherent_delay_20261026_v1",
+  "parent_run": "multirf_snr_20261022_v1",
+  "configuration_reference": "configuration_probe_20261026_v1",
+  "snrs_db": [-10, 0, 10, 20, 30],
+  "validation_geometries": 32,
+  "screen_geometries": 32,
+  "screen_seed": 2026102603,
+  "historical_screen_geometries": 16,
+  "sbl_iterations": 100,
+  "coherent_atoms": 32,
+  "delay_grid": 128,
+  "delay_hypotheses": 2,
+  "delay_refinement_steps": 3,
+  "coefficient_variance_floor": 0.001,
+  "envelope_weights": [1, 0.1, 0.02],
+  "strengths": [0, 0.25, 0.5, 0.75, 0.95],
+  "fixed_strength": 0.5,
+  "shuffle_seed": 2026102602,
+  "bootstrap_samples": 2000,
+  "timeout_seconds": 1800,
+  "device": "cuda"
+}

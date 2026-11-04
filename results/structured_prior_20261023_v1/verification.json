@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "metric_rows_recomputed": 1440,
+  "maximum_metric_relative_difference": 2.3486773783444663e-15,
+  "maximum_physical_prediction_relative_squared_difference": 7.729455573076504e-16,
+  "physical_fits_replayed_with_original_numpy_propagation_and_augmented_lstsq": true,
+  "row_null_metrics_replayed_with_qr_projection": true,
+  "validation_choices_and_paired_intervals_recomputed": true,
+  "source_archive_and_frozen_inputs_verified": true,
+  "new_screen_geometry_disjoint_from_all_previous_splits": true,
+  "frozen_before_new_screen_observations": true,
+  "performance_acceptance_gate": false,
+  "inference_optimizers_rerun": false
+}

@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "scope": "Implementation checks before the two-candidate validation probe; no assertion of performance gain",
+  "script_self_checks": ["per-strip frequency coverage", "seed reproducibility", "different state permutations", "known NMSE", "conservative selection branch"],
+  "related_math_checks": ["test_factorization_matches_dense_joint_shrinkage_and_per_tone", "test_invalid_architecture_and_learning_budgets_rejected", "test_planar_los_uses_every_element_position", "test_rf_blocks_whitening_feed_reset_and_resource_counts"],
+  "commands": ["python scripts/probe_configurations.py --self-check", "python -m unittest discover -s tests -p test_multirf.py -v"],
+  "source_identity_verified_files": 8,
+  "runtime": "/home/lsy/miniconda3/envs/thz_dma/bin/python",
+  "date": "2026-10-26"
+}

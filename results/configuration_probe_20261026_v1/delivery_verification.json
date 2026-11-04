@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "run_id": "configuration_probe_20261026_v1",
+  "full_run_files": 27,
+  "bytes": 448465121,
+  "manifest_sha256": "cd8d23eb8a9b32a18cfbb8f82115121556bd81812c4d58e91fe387049cab411b",
+  "local_run": "C:\\Users\\Milo\\Desktop\\DMA_CE\\runs\\configuration_probe_20261026_v1",
+  "remote_run": "/home/lsy/DMA_CE/runs/configuration_probe_20261026_v1",
+  "remote_copy_retained": true
+}

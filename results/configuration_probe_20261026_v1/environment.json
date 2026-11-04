@@ -1,0 +1,13 @@
+{
+  "python": "3.10.21 (main, Aug 27 2026, 14:42:07) [GCC 14.3.0]",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "torch": "2.11.0+cu128",
+  "numpy": "1.26.4",
+  "cuda": "12.8",
+  "device": "cuda",
+  "gpu": "NVIDIA GeForce RTX 3090",
+  "source_zip_sha256": "a80eceec26a4f712ee05f8689bda616f7c260345699b0385257b3fc51eb9e7f0",
+  "command": [
+    "/home/lsy/DMA_CE/scripts/probe_configurations.py"
+  ]
+}

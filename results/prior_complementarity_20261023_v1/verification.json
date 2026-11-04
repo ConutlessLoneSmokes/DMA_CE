@@ -1,0 +1,69 @@
+{
+  "status": "passed",
+  "cpu_double_precision_replay": true,
+  "maximum_metric_relative_difference": 1.2463098954487701e-15,
+  "maximum_prediction_relative_squared_difference": 5.547670073835296e-26,
+  "source_archive_sha256_verified": true,
+  "new_geometry_disjoint_from_all_parent_splits": true,
+  "ls_recomputed_via_full_row_rank_inverse": true,
+  "validation_weights_refit_on_validation_only": true,
+  "oracle_normal_equations_match_saved_pseudoinverse": true,
+  "paired_intervals_recomputed": true,
+  "performance_acceptance_gate": false,
+  "solver_fixed_budget_diagnostics": [
+    {
+      "snr_db": -10.0,
+      "optimality_max": 0.3405958414077759,
+      "reached_stopping_threshold": 0,
+      "fixed_iterations": 100
+    },
+    {
+      "snr_db": -5.0,
+      "optimality_max": 0.04656016826629639,
+      "reached_stopping_threshold": 0,
+      "fixed_iterations": 100
+    },
+    {
+      "snr_db": 0.0,
+      "optimality_max": 0.07825469970703125,
+      "reached_stopping_threshold": 0,
+      "fixed_iterations": 100
+    },
+    {
+      "snr_db": 5.0,
+      "optimality_max": 0.1251891851425171,
+      "reached_stopping_threshold": 0,
+      "fixed_iterations": 100
+    },
+    {
+      "snr_db": 10.0,
+      "optimality_max": 0.15218675136566162,
+      "reached_stopping_threshold": 0,
+      "fixed_iterations": 100
+    },
+    {
+      "snr_db": 15.0,
+      "optimality_max": 0.12229418754577637,
+      "reached_stopping_threshold": 0,
+      "fixed_iterations": 100
+    },
+    {
+      "snr_db": 20.0,
+      "optimality_max": 0.1534041166305542,
+      "reached_stopping_threshold": 0,
+      "fixed_iterations": 100
+    },
+    {
+      "snr_db": 25.0,
+      "optimality_max": 0.1484013795852661,
+      "reached_stopping_threshold": 0,
+      "fixed_iterations": 100
+    },
+    {
+      "snr_db": 30.0,
+      "optimality_max": 0.136765718460083,
+      "reached_stopping_threshold": 0,
+      "fixed_iterations": 100
+    }
+  ]
+}

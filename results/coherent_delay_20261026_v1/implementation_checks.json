@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "scope": "Mathematical implementation and full-array short workflow before exploratory evaluation",
+  "new_checks": ["zero-strength Gaussian equivalence", "complex dense posterior and evidence", "posterior precision certificate", "known off-grid delay", "delay sampling period", "PSD and constant marginal powers", "invalid prior controls"],
+  "repository_tests": 91,
+  "repository_test_command": "PYTHONPATH=/home/lsy/DMA_CE:/home/lsy/DMA_CE/src python -m unittest discover -s /home/lsy/DMA_CE/tests -v",
+  "short_workflows": ["coherent_delay_checks_20261026_v2", "coherent_delay_checks_20261026_v3"],
+  "preserved_failure": {
+    "run_id": "coherent_delay_checks_20261026_v1",
+    "reason": "Training diagnostic regenerated only the subset count, changing RNG layout and failing equality with the parent CSI before evaluation",
+    "fix": "Regenerate the declared original 512 training geometries, then slice the diagnostic subset"
+  },
+  "initial_full_suite_invocation": "One scripts import failed when the project root was absent from PYTHONPATH; corrected invocation passed all 91 tests without changing existing code",
+  "mathematical_limit": "Checks validate the Gaussian covariance/update and workflow; they do not establish performance gains or calibrated delay probabilities"
+}

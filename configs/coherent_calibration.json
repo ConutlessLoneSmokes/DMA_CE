@@ -1,0 +1,18 @@
+{
+  "run_id": "coherent_calibration_20261028_v1",
+  "parent_run": "coherent_delay_20261026_v1",
+  "train_geometries": 32,
+  "validation_geometries": 32,
+  "screen_geometries": 32,
+  "training_noise_seed": 2026102803,
+  "screen_seed": 2026102804,
+  "bootstrap_seed": 2026102805,
+  "bootstrap_samples": 2000,
+  "sbl_iterations": 100,
+  "prior_strength": 0.95,
+  "ridge_grid": [0, 0.1, 1, 10],
+  "step_bounds": [0, 2],
+  "batch_size": 2,
+  "device": "cuda",
+  "timeout_seconds": 1800
+}

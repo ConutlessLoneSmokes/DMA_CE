@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "self_check_command": "python scripts/analyze_coherent_mechanism.py --self-check",
+  "self_check_result": "hand-calculated complex projections, sign, invalid zero truth, and shared-factor vs original posterior passed",
+  "related_test_command": "python -m unittest discover -s tests -p test_coherent.py -v",
+  "related_tests_passed": 4,
+  "run_script_and_config_match_snapshot": true
+}

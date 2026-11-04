@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "metrics_recomputed": 4608,
+  "maximum_relative_nmse_difference": 3.03456097587479e-07,
+  "independent_screen_geometries": 128,
+  "frozen_before_screen": true,
+  "physical_noise_fixed_across_snr": true,
+  "maximum_snr_calibration_error_db": 0.0,
+  "implementation_only": false,
+  "sbl_nonconverged": 8,
+  "elapsed_seconds": 45412.389865636826
+}

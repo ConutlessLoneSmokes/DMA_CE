@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "parent_inputs_unchanged": true,
+  "new_geometries_disjoint": true,
+  "freeze_before_screen_generation": true,
+  "quadratic_scores_match_full_CSI": true,
+  "train_only_feature_statistics": true,
+  "training_geometries": 32,
+  "validation_geometries": 32,
+  "screen_geometries": 32
+}

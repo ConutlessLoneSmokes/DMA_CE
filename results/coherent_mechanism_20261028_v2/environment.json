@@ -1,0 +1,13 @@
+{
+  "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.26300-SP0",
+  "torch": "2.11.0+cu128",
+  "numpy": "1.26.4",
+  "cuda": "12.8",
+  "device": "cuda",
+  "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+  "source_zip_sha256": "f5b2dc91bd709c56d4974a223520cbebdc33a877fc9699520e31a546cd9cf77a",
+  "command": [
+    "scripts/analyze_coherent_mechanism.py"
+  ]
+}

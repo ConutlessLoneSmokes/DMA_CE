@@ -1,0 +1,13 @@
+{
+  "parent_run": "multirf_snr_20261022_v1",
+  "files_sha256": {
+    "cache/physical.pt": "770d36792ecccc6b5eaab114929cedc683412c79324964072b59d91983703697",
+    "cache/coarse_validation_0.pt": "e81a900e9f13d68eebd652b65c5e50baaf8faa4b8f69cd447c4d60d2e36aa02e",
+    "cache/coarse_validation_4.pt": "75c8825f36c19ef33ae6def2b08425f8adc47f97338a7397b9b824133357e86c",
+    "cache/coarse_validation_8.pt": "96709fa66590a0e9268c8ebf80efdfcfebb8afcf021c48511f99fd53b99b082f",
+    "cache/lmmse_0.pt": "2fafb6d5de5452e86da4bbe34ba91c1cb37ca711a30573948b9501f4db28c4a1",
+    "cache/lmmse_4.pt": "b2ece5876f4caebd8f6f87108ff4f12385c0a1e3217b85158c5353d5aa7190ab",
+    "cache/lmmse_8.pt": "b48b65a395344ed73aca3a2733ae6350eef861793226790b82de7729e2422bd3"
+  },
+  "parent_frozen_sha256": "3cf588e69bfd6bd9f664fc8d86a73662e8af5c6350938915f88004c903325f2e"
+}

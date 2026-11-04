@@ -1,0 +1,13 @@
+{
+  "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.26300-SP0",
+  "torch": "2.11.0+cu128",
+  "numpy": "1.26.4",
+  "cuda": "12.8",
+  "device": "cuda",
+  "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+  "source_zip_sha256": "47a8b63afef4c6c06f12362784d96f5e67e847c096faff7a0cf17cc7480343a1",
+  "command": [
+    "scripts/probe_coherent_calibration.py"
+  ]
+}

@@ -1,0 +1,16 @@
+snr_db,target,reference,lower_observation_residual_scenes,better_csi_scenes,lower_residual_but_worse_csi_scenes
+-10.0,physical_refined_per_tone,physical_initial_per_tone,32,8,24
+-10.0,physical_refined_shared,physical_refined_per_tone,0,15,0
+-10.0,physical_joint_shared,physical_refined_shared,32,6,26
+0.0,physical_refined_per_tone,physical_initial_per_tone,32,24,8
+0.0,physical_refined_shared,physical_refined_per_tone,0,0,0
+0.0,physical_joint_shared,physical_refined_shared,32,20,12
+10.0,physical_refined_per_tone,physical_initial_per_tone,32,29,3
+10.0,physical_refined_shared,physical_refined_per_tone,0,0,0
+10.0,physical_joint_shared,physical_refined_shared,32,27,5
+20.0,physical_refined_per_tone,physical_initial_per_tone,32,32,0
+20.0,physical_refined_shared,physical_refined_per_tone,0,0,0
+20.0,physical_joint_shared,physical_refined_shared,32,30,2
+30.0,physical_refined_per_tone,physical_initial_per_tone,32,32,0
+30.0,physical_refined_shared,physical_refined_per_tone,0,0,0
+30.0,physical_joint_shared,physical_refined_shared,32,30,2

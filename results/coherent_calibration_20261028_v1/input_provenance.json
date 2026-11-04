@@ -1,0 +1,16 @@
+{
+  "parent_run": "coherent_delay_20261026_v1",
+  "files_sha256": {
+    "config_resolved.json": "f5fdf086572f75afba92455e83e6baba48608b936818efc4c47a62752023fd10",
+    "source.zip": "25710e4d3f61e0ae08ce535c5680e86a94e2141b86fc71994ee34d8768a0cbd4",
+    "parent_provenance.json": "efcfabdcfdaf240637710c78342832b2a99f1737b85cffaa29782dcaa18f8d35",
+    "frozen.json": "2019e5fccb9c62b3e4095040a5485691a4e5fd4a23c7d3eb407a78e3ae07b80b",
+    "inputs/physical_parent.pt": "770d36792ecccc6b5eaab114929cedc683412c79324964072b59d91983703697",
+    "inputs/absorption_table.txt": "3aa52bf00e30831c82b98b06d48ea8fdd8ebe7cc2da6e233ad2ed3238dc4dca8",
+    "cache/validation_0.pt": "a692afa61ab800351a7b54ca183a0c5ae4cb6cf9e1c44ce30a86bbd9a1ca4553",
+    "cache/validation_1.pt": "3802d0f0b23b631fdf0eedd0f51cdac471ff563f432ff8ef7539d71ff7e237d8",
+    "cache/validation_2.pt": "2bb0ef5ed07434f4fbc9c83f636ed95f2a7a6d060862fa02be27134413e4bcb2",
+    "cache/validation_3.pt": "8ec297bb498f9db94ed07be04d69b9cb0c08612386cdfda39a500e035afa899f",
+    "cache/validation_4.pt": "5800a93590feced82ff17f71caba4b5d58fc7a413712437e10168a31983e8e4f"
+  }
+}

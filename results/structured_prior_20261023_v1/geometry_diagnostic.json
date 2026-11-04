@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "purpose": "post_hoc_truth_diagnostic_only",
+  "geometry_frozen_to_actual_outputs": true,
+  "coefficients_fit_to_full_true_csi_not_observations": true,
+  "interpretation": "Minimum full-CSI error within each fixed geometry coefficient subspace; not an attainable observation-only result or a bound for other geometries.",
+  "rows": [
+    {
+      "stage": "initial",
+      "snr_db": 30,
+      "scenes": 32,
+      "mean_abs_declared_los_angle_error_deg": 0.24493801941343035,
+      "median_abs_declared_los_range_error_m": 0.08738278241072317,
+      "fixed_geometry_csi_projection_floor_db": {
+        "per_tone": -16.984707455697666,
+        "shared": -0.264164822415815
+      }
+    },
+    {
+      "stage": "refined_per_tone",
+      "snr_db": 30,
+      "scenes": 32,
+      "mean_abs_declared_los_angle_error_deg": 0.2685879950149665,
+      "median_abs_declared_los_range_error_m": 0.02398875462164396,
+      "fixed_geometry_csi_projection_floor_db": {
+        "per_tone": -19.276820131037514,
+        "shared": -0.8837900319046912
+      }
+    },
+    {
+      "stage": "joint_shared",
+      "snr_db": 30,
+      "scenes": 32,
+      "mean_abs_declared_los_angle_error_deg": 0.270836929236395,
+      "median_abs_declared_los_range_error_m": 0.025075750399833785,
+      "fixed_geometry_csi_projection_floor_db": {
+        "per_tone": -16.627756172260522,
+        "shared": -2.0247425554071756
+      }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "run_id": "configuration_probe_20261026_v1",
+  "parent_run": "multirf_snr_20261022_v1",
+  "candidate_seed": 20261026,
+  "validation_geometries": 32,
+  "reference_snrs_db": [-10, 10, 30],
+  "sbl_iterations": 100,
+  "bootstrap_samples": 2000,
+  "timeout_seconds": 600,
+  "device": "cuda",
+  "selection_rule": "Use balanced tiling only when its paired SBL100 mean-NMSE improvement has positive bootstrap 95% lower bound at all three powers; otherwise retain the original random bank. Validation selection only; no screening or further candidate search."
+}

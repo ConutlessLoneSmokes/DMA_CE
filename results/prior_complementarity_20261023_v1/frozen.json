@@ -1,0 +1,76 @@
+{
+  "selection_split": "validation",
+  "screening_used": false,
+  "frozen_at_unix": 1792724089.857624,
+  "weights_by_context": {
+    "0": {
+      "fuse_ls": 0.0228274961387604,
+      "fuse_selected": 0.12226248605720719,
+      "fuse_per_tone": 0.12092672917916436,
+      "fuse_selected_null": 0.124878453263439
+    },
+    "1": {
+      "fuse_ls": 0.014749975997538,
+      "fuse_selected": 0.0,
+      "fuse_per_tone": 0.0,
+      "fuse_selected_null": 0.0
+    },
+    "2": {
+      "fuse_ls": 0.006554776793160529,
+      "fuse_selected": 0.0,
+      "fuse_per_tone": 0.0,
+      "fuse_selected_null": 0.0
+    },
+    "3": {
+      "fuse_ls": 0.0021406354269044928,
+      "fuse_selected": 0.0,
+      "fuse_per_tone": 0.0,
+      "fuse_selected_null": 0.0
+    },
+    "4": {
+      "fuse_ls": 0.00048028319339143044,
+      "fuse_selected": 0.0,
+      "fuse_per_tone": 0.0,
+      "fuse_selected_null": 0.0
+    },
+    "5": {
+      "fuse_ls": 9.208628191981346e-06,
+      "fuse_selected": 0.0,
+      "fuse_per_tone": 0.0,
+      "fuse_selected_null": 0.0
+    },
+    "6": {
+      "fuse_ls": 0.0,
+      "fuse_selected": 0.0,
+      "fuse_per_tone": 0.0,
+      "fuse_selected_null": 0.0
+    },
+    "7": {
+      "fuse_ls": 0.0,
+      "fuse_selected": 0.0,
+      "fuse_per_tone": 0.0,
+      "fuse_selected_null": 0.0
+    },
+    "8": {
+      "fuse_ls": 0.0,
+      "fuse_selected": 0.0,
+      "fuse_per_tone": 0.0,
+      "fuse_selected_null": 0.0
+    }
+  },
+  "frequency_shrinkage": 0.9,
+  "sbl_iterations": 100,
+  "files_sha256": {
+    "source.zip": "dcd86d41c24fa53ff37b0670aaca7e8032ea3869033c376b84def825548605f8",
+    "inputs/physical_parent.pt": "770d36792ecccc6b5eaab114929cedc683412c79324964072b59d91983703697",
+    "cache/validation_0.pt": "3b0dae9ae72ef9e10b46ef4ee32d8cf1dd259453d1efddd3d25a596d712bb831",
+    "cache/validation_1.pt": "062875d1a547e534dc70b35836c4a5761a8e172efd64e1677f5a64e8a00ed1a3",
+    "cache/validation_2.pt": "20af9c6c4625c15c4bf71c4cd4588bc1442fb467b006a9b6a853ad9de11cf10c",
+    "cache/validation_3.pt": "aac3573a4df6ffe6041128067110f4a8b3150520c8fe9e63ef794d8192c572e8",
+    "cache/validation_4.pt": "c82f126c1b502a2b5279f3983ce4285f42292588cc0c79c85340c5b6d20b0a90",
+    "cache/validation_5.pt": "345c4d2c607f56ed572d58f4569a3d2e5db08045c6e134ac8df60b1642cce2ab",
+    "cache/validation_6.pt": "2b2d2e966721ce8bdb2ef90cd94d9d9524982102fa224b7d8dfdc1f0e07c3654",
+    "cache/validation_7.pt": "2a51aab6c37c56ac9a966dd5405eef09a9f134aa0e536e41abe3e14ccf318c63",
+    "cache/validation_8.pt": "711d7b3082003f7962143e8d693fd0b89560c724f09cda88d03a53ae062ef659"
+  }
+}

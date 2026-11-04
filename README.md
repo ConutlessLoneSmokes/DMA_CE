@@ -2,7 +2,7 @@
 
 物理宽带 DMA 压缩观测下的完整信道估计研究。复用 [THz_DMA](https://github.com/ConutlessLoneSmokes/THz_DMA) 的球面波、Lorentzian/馈线响应与轻量 CNN，来源及原始哈希见 [复用清单](docs/UPSTREAM_REUSE.json)。
 
-当前主线为密集多 RF 阵列上的 LS、LMMSE、SBL 与条件 DDPM 比较；正式实验状态、已有单 RF 探索结论和失败记录统一见 [实验日志](docs/EXPERIMENT_LOG.md)。
+已完成密集多 RF 阵列上的 LS、LMMSE、SBL 与条件 DDPM 比较，以及同观测下的相干跨频后验、机制对照和输出步长标定。当前结果与已采纳决定见 [阶段总结](docs/EXPERIMENT_LOG.md#阶段总结)；各轮状态、单 RF 探索及失败记录保留在同一实验日志。
 
 | 需要做什么 | 入口 |
 |---|---|

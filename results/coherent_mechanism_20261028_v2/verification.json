@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "maximum_relative_score_error": 6.145490912515898e-16,
+  "maximum_replay_relative_squared_difference": 7.667754961391743e-16,
+  "row_rank_each_tone": 128,
+  "orthogonal_decomposition_checked": true,
+  "hand_calculated_self_check": true,
+  "parent_inputs_unchanged": true,
+  "posthoc_existing_geometries": true,
+  "bootstrap_seed": 2026102801,
+  "bootstrap_samples": 2000
+}

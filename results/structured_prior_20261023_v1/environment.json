@@ -1,0 +1,17 @@
+{
+  "python": "3.10.21 (main, Aug 27 2026, 14:42:07) [GCC 14.3.0]",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.43",
+  "torch": "2.11.0+cu128",
+  "numpy": "1.26.4",
+  "cuda": "12.8",
+  "device": "cuda",
+  "gpu": "NVIDIA GeForce RTX 3090",
+  "source_zip_sha256": "7558c2900c31edddaf41630b433199720ac5010c7d4347d7968e82913865ab5e",
+  "command": [
+    "scripts/probe_structured_priors.py",
+    "--config",
+    "configs/structured_prior_probe.json",
+    "--run-id",
+    "structured_prior_20261023_v1"
+  ]
+}

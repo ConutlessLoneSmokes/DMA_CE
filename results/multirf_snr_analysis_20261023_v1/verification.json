@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "analysis_source_ast_parsed": 2,
+  "markdown_local_link_targets_checked": 108,
+  "original_exports_sha256_matched": 16,
+  "source_unchanged": true,
+  "new_model_or_solver_runs": false,
+  "checks": "Tensor double-precision recomputation, paired geometry bootstrap, raw export/archive hashes and validation selection are recorded in analysis_summary.json and cached_diagnostics.json.",
+  "analysis_files_byte_identical_to_server": {
+    "analysis_summary.json": "59afce97e2c3bba9a75437a8f60531c10f040db21eca06d463ccbbf3fad84067",
+    "analyze.py": "e0b8da5c29a6d126012810a46f697f4344e1b4e0a2b3db4f780222526e2413c8",
+    "cached_diagnostics.json": "d7f05db22690bd6b8448fb11fe045cf7daa9f47ab9bafcd5ad8de416f1a00fbc",
+    "coarse_and_ddpm.png": "2bd43fded4b714db6292b576cbe5642117792d498affae54f7b452bf5d2457b2",
+    "coarse_and_ddpm.svg": "76575f7b26c919851477f1ff82fa0b55dab0056cad6bcb28d26622a7dc4c0ed4",
+    "diagnostics.csv": "42eee017aa6d9fa1ffc4473eacc1f86bd7d2ebe1bbbeee61ed4475e304600e6e"
+  },
+  "server_temporary_directory_removed": true
+}

@@ -1,0 +1,169 @@
+{
+  "label": "coherent_delay_exploratory",
+  "seed": 20261016,
+  "device": "cuda",
+  "timeout_seconds": 1800,
+  "system": {
+    "carrier_hz": 300000000000.0,
+    "bandwidths_hz": [
+      30000000000.0
+    ],
+    "antennas": 1024,
+    "tones": 32,
+    "spacing_wavelengths": 0.2,
+    "configurations": [
+      32
+    ],
+    "snrs_db": [
+      -10,
+      0,
+      10,
+      20,
+      30
+    ],
+    "quality_factor": 50.0,
+    "tuning_bandwidth_hz": 30000000000.0,
+    "waveguide_effective_index": 1.4,
+    "waveguide_end_power_fraction": 0.8,
+    "thermal_noise": {
+      "antenna_temperature_k": 296.0,
+      "receiver_reference_temperature_k": 290.0,
+      "noise_figure_db": 6.0
+    },
+    "rf_chains": 4,
+    "elements_per_strip": 256,
+    "strip_spacing_wavelengths": 0.5
+  },
+  "channel": {
+    "paths": 3,
+    "range_min_m": 0.5,
+    "range_max_m": 4.0,
+    "angle_limit_deg": 60.0,
+    "model": "li2026",
+    "include_absorption": true,
+    "antenna_gain_dbi": 15.0,
+    "reflection_refractive_index": 1.5,
+    "surface_roughness_m": 8.8e-05,
+    "absorption_table_path": "C:\\Users\\Milo\\Desktop\\DMA_CE\\runs\\coherent_delay_20261026_v1\\inputs\\absorption_table.txt",
+    "absorption_table_sha256": "3aa52bf00e30831c82b98b06d48ea8fdd8ebe7cc2da6e233ad2ed3238dc4dca8",
+    "elevation_deg": 30.0
+  },
+  "data": {
+    "train": 512,
+    "validation": 64,
+    "screen": 32,
+    "screen_seed": 2026102603
+  },
+  "sbl": {
+    "angle_points": 193,
+    "range_points": 25,
+    "iterations": 32000,
+    "tolerance": 0.001,
+    "batch_size": 4,
+    "early_stopping": true
+  },
+  "frequency_shrinkage_grid": [
+    0.0,
+    0.1,
+    0.25,
+    0.5,
+    0.75,
+    0.9,
+    1.0
+  ],
+  "bootstrap_samples": 1000,
+  "cases": [
+    {
+      "name": "physical_absorption",
+      "model": "li2026",
+      "include_absorption": true
+    }
+  ],
+  "assumptions": {
+    "snr": "Training-average whitened receive SNR per complex measurement, calibrated by pilot power; not per-scene or accumulated pilot SNR.",
+    "budget": "Increasing J increases pilot duration and energy; this is not a fixed-total-energy comparison.",
+    "covariance": "512 independent training geometries fixed for all J and SNR; joint sample LMMSE is not an oracle population-covariance baseline.",
+    "propagation": "Same declared physical model as physical_baselines_20261021_v2: assumed refractive index 1.5 and receiver noise figure 6 dB; absorption-table atmospheric metadata unknown.",
+    "architecture": "4 microstrips x 256 elements, one RF chain per strip, intra-strip lambda/5 and inter-strip lambda/2; structure follows Gavras and Alexandropoulos 2025, not a reproduction of their narrowband experiment.",
+    "geometry": "Planar x-z array; all direct and reflector points have fixed known elevation 30 degrees and random azimuth/range. No mutual coupling.",
+    "ddpm": "Newly trained SBL-conditioned residual DDPM, 16 independent DDIM draws averaged before one observation consistency update; not the unconditional DDPM or learned-variance variant."
+  },
+  "ddpm": {
+    "seed": 201,
+    "prior_steps": 20000,
+    "prior_checkpoints": [
+      2000,
+      8000,
+      20000
+    ],
+    "batch_size": 16,
+    "log_every": 500,
+    "width": 32,
+    "diffusion_steps": 100,
+    "sampling_steps": 20,
+    "averages": 16,
+    "coarse_iterations": 100,
+    "dc_multipliers": [
+      0.0,
+      0.1,
+      1.0,
+      10.0
+    ]
+  },
+  "implementation_only": false,
+  "probe": {
+    "run_id": "coherent_delay_20261026_v1",
+    "parent_run": "multirf_snr_20261022_v1",
+    "configuration_reference": "configuration_probe_20261026_v1",
+    "snrs_db": [
+      -10,
+      0,
+      10,
+      20,
+      30
+    ],
+    "validation_geometries": 32,
+    "screen_geometries": 32,
+    "screen_seed": 2026102603,
+    "historical_screen_geometries": 16,
+    "sbl_iterations": 100,
+    "coherent_atoms": 32,
+    "delay_grid": 128,
+    "delay_hypotheses": 2,
+    "delay_refinement_steps": 3,
+    "coefficient_variance_floor": 0.001,
+    "envelope_weights": [
+      1,
+      0.1,
+      0.02
+    ],
+    "strengths": [
+      0,
+      0.25,
+      0.5,
+      0.75,
+      0.95
+    ],
+    "fixed_strength": 0.5,
+    "shuffle_seed": 2026102602,
+    "bootstrap_samples": 2000,
+    "timeout_seconds": 1800,
+    "device": "cuda"
+  },
+  "mechanism": {
+    "run_id": "coherent_mechanism_20261028_v2",
+    "parent_run": "coherent_delay_20261026_v1",
+    "bootstrap_seed": 2026102801,
+    "bootstrap_samples": 2000,
+    "control_strength": 0.5,
+    "delay_offset_bins": [
+      0.25,
+      0.5,
+      1.0
+    ],
+    "include_zero_delay": true,
+    "device": "cuda",
+    "batch_size": 2,
+    "timeout_seconds": 1800
+  }
+}

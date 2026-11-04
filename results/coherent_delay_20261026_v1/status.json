@@ -1,0 +1,9 @@
+{
+  "status": "complete",
+  "run_id": "coherent_delay_20261026_v1",
+  "seconds": 1049.7558932304382,
+  "new_geometries": 32,
+  "historical_geometries": 16,
+  "implementation_only": false,
+  "frozen_before_evaluation": true
+}

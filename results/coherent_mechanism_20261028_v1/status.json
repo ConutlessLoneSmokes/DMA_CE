@@ -1,0 +1,4 @@
+{
+  "status": "stopped",
+  "reason": "Direct repeated full-dictionary controls approached local GPU memory capacity and did not meet bounded throughput; saved decomposition retained. Continue identical controls with shared fixed-marginal factors in v2."
+}

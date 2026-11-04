@@ -1,0 +1,6 @@
+{
+  "absorption_table_sha256": "3aa52bf00e30831c82b98b06d48ea8fdd8ebe7cc2da6e233ad2ed3238dc4dca8",
+  "source_path": "/home/lsy/DMA_CE/upstream/THz_DMA/data/atmosphere/data_freq_abscoe.txt",
+  "archived_path": "inputs/absorption_table.txt",
+  "atmospheric_conditions": "unknown in supplied table; not verified as 296 K / 1 atm"
+}

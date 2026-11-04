@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "run_id": "prior_complementarity_20261023_v1",
+  "independent_screen_geometries": 32,
+  "new_screen_disjoint_from_parent": true,
+  "frozen_before_screen": true,
+  "same_physical_noise_across_snr": true,
+  "same_observation_across_methods": true,
+  "metric_rows": 3168,
+  "maximum_null_projection_relative_residual": 3.332575826569403e-16,
+  "oracle_truth_reconstruction_relative_error": 8.449264442915787e-08,
+  "oracle_not_a_main_method": true,
+  "validation_only_weight_selection": true,
+  "performance_acceptance_gate": false,
+  "elapsed_seconds": 270.99950313568115
+}

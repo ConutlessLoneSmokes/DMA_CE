@@ -1,0 +1,85 @@
+{
+  "status": "passed",
+  "metric_rows": 1280,
+  "maximum_relative_score_error": 5.913804848286446e-16,
+  "maximum_relative_physical_mse_error": 4.999711397262324e-16,
+  "forward_certificates": [
+    {
+      "context": 0,
+      "method": "free",
+      "forward_covariance_residual": 1.2779730798703518e-14,
+      "posterior_relative_squared_error": 5.974348982626114e-16
+    },
+    {
+      "context": 0,
+      "method": "coherent_half",
+      "forward_covariance_residual": 1.019893577788542e-14,
+      "posterior_relative_squared_error": 5.883207191511648e-16
+    },
+    {
+      "context": 0,
+      "method": "shuffled_half",
+      "forward_covariance_residual": 1.014286386927615e-14,
+      "posterior_relative_squared_error": 5.878314162329041e-16
+    },
+    {
+      "context": 0,
+      "method": "coherent_selected",
+      "forward_covariance_residual": 8.125899783095543e-15,
+      "posterior_relative_squared_error": 5.878500110122004e-16
+    },
+    {
+      "context": 2,
+      "method": "free",
+      "forward_covariance_residual": 1.831273408895432e-13,
+      "posterior_relative_squared_error": 6.286584768654371e-16
+    },
+    {
+      "context": 2,
+      "method": "coherent_half",
+      "forward_covariance_residual": 1.1572005124572786e-13,
+      "posterior_relative_squared_error": 6.289385139000409e-16
+    },
+    {
+      "context": 2,
+      "method": "shuffled_half",
+      "forward_covariance_residual": 1.1619110888398012e-13,
+      "posterior_relative_squared_error": 6.241657155556202e-16
+    },
+    {
+      "context": 2,
+      "method": "coherent_selected",
+      "forward_covariance_residual": 6.17312435574342e-14,
+      "posterior_relative_squared_error": 6.252698241803686e-16
+    },
+    {
+      "context": 4,
+      "method": "free",
+      "forward_covariance_residual": 2.4979059613365324e-12,
+      "posterior_relative_squared_error": 6.257372601392366e-16
+    },
+    {
+      "context": 4,
+      "method": "coherent_half",
+      "forward_covariance_residual": 1.3608628130462202e-12,
+      "posterior_relative_squared_error": 6.239298829970147e-16
+    },
+    {
+      "context": 4,
+      "method": "shuffled_half",
+      "forward_covariance_residual": 1.3628638215284392e-12,
+      "posterior_relative_squared_error": 6.297282920474953e-16
+    },
+    {
+      "context": 4,
+      "method": "coherent_selected",
+      "forward_covariance_residual": 6.436280969371839e-13,
+      "posterior_relative_squared_error": 6.24699373951189e-16
+    }
+  ],
+  "validation_selection_recomputed": true,
+  "new_geometry_independent": true,
+  "cohorts_not_pooled": true,
+  "frozen_before_new_observations": true,
+  "scope": "Saved scoring, split/freeze and independent forward Gaussian equations; no SBL rerun or calibrated-delay claim"
+}

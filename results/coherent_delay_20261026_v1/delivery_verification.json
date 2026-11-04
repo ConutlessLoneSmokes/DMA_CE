@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "run_id": "coherent_delay_20261026_v1",
+  "full_run_files": 40,
+  "full_run_bytes": 1227261948,
+  "manifest_sha256": "ce20b7ab99c2d70d8561e3e25a13dcc50731347ec3d8bbd08121498d66378c4c",
+  "local_run": "C:\\Users\\Milo\\Desktop\\DMA_CE\\runs\\coherent_delay_20261026_v1",
+  "remote_run": "/home/lsy/DMA_CE/runs/coherent_delay_20261026_v1",
+  "result_exports_match": true,
+  "implementation_run_archives": {
+    "coherent_delay_checks_20261026_v1": {
+      "status": "failed",
+      "files": 15,
+      "manifest_sha256": "a61e5b85cfee489379eaeae2108e277538bd01b5093f93397d3170db79862e01"
+    },
+    "coherent_delay_checks_20261026_v2": {
+      "status": "complete",
+      "files": 28,
+      "manifest_sha256": "8142cd91499c206a649219f5be5765932e71373d64a1f64e19cac15b25f0c8b8"
+    },
+    "coherent_delay_checks_20261026_v3": {
+      "status": "complete",
+      "files": 28,
+      "manifest_sha256": "0ed5dc110580410689b77ec7e802abcc9e5eb03fca3a4b1db9443e9f8bb974ec"
+    }
+  },
+  "remote_copies_retained": true
+}

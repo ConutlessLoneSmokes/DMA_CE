@@ -1,0 +1,55 @@
+{
+  "status": "passed",
+  "full_size_check": {
+    "status": "complete",
+    "purpose": "implementation_only",
+    "full_shape": [
+      1,
+      32,
+      1024
+    ],
+    "measurement_shape": [
+      1,
+      32,
+      128
+    ],
+    "training_geometries": 512,
+    "unit_checks_passed": 9,
+    "physical_gradients_finite": true,
+    "covariance_component_finite": true,
+    "physical_best_observation_objective_preserved": true,
+    "elapsed_seconds": 1.4929049015045166,
+    "parent_physical_sha256": "770d36792ecccc6b5eaab114929cedc683412c79324964072b59d91983703697",
+    "full_suite_returncode": 0,
+    "full_suite_summary": [
+      "  \"incomplete_stages\": [",
+      "    \"final\"",
+      "  ],",
+      "  \"message\": \"Use --validation-only after diffusion completes or reaches its declared budget boundary.\"",
+      "}"
+    ]
+  },
+  "implementation_archive_files_verified": 15,
+  "full_suite_before_boundary_fix": {
+    "tests": 86,
+    "returncode": 0,
+    "log_sha256": "3eafe47244ff2cc0cc78907e274a55a791856af234377c2bb2a41d30208d3af2"
+  },
+  "affected_suite_after_boundary_fix": {
+    "tests": 10,
+    "returncode": 0,
+    "regression": "Original NumPy model and Torch model both reject a reflector coinciding with the transmitter",
+    "red_before_green_observed": true
+  },
+  "review": {
+    "standards_findings": 0,
+    "spec_findings": 1,
+    "spec_findings_resolved": 1
+  },
+  "final_relevant_source_sha256": {
+    "src/dma_ce/prior_probe.py": "35744edb2f56e0a346b7026d933f63e9861ce84569acea64c37869d7bc1b871e",
+    "tests/test_prior_probe.py": "e89989b911b0d0758b85fb33ddb6803aa9909f09be5107601907fb345ddeeb57",
+    "scripts/probe_structured_priors.py": "f8f8381e34012d81853620b6721dab7eb3cc6e8dfe88738ef183eaa23f52bec9",
+    "configs/structured_prior_probe.json": "53eba512b83c6858eeb74034ff8a0d8a2002849355df530d3eca69447f53b915"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "checked_scene_region_rows": 6720,
+  "Gram_projection_checks": [
+    {
+      "context": 0,
+      "scene": 0,
+      "region": "row",
+      "maximum_absolute_Gram_vs_SVD_difference": 2.636779683484747e-16
+    },
+    {
+      "context": 0,
+      "scene": 0,
+      "region": "null",
+      "maximum_absolute_Gram_vs_SVD_difference": 1.3877787807814457e-17
+    },
+    {
+      "context": 4,
+      "scene": 0,
+      "region": "row",
+      "maximum_absolute_Gram_vs_SVD_difference": 8.936197593532869e-20
+    },
+    {
+      "context": 4,
+      "scene": 0,
+      "region": "null",
+      "maximum_absolute_Gram_vs_SVD_difference": 6.776263578034403e-21
+    }
+  ],
+  "maximum_control_marginal_difference": 4.561234287365988e-16,
+  "scope": "CSV identities, independent Gram projection on two saved scenes; no selection"
+}

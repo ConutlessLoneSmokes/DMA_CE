@@ -1,0 +1,16 @@
+{
+  "status": "complete",
+  "cleanup_scope": "Only individually hashed files in manifests already verified against complete local copies; directories removed only when empty.",
+  "removed_temporary_directories": [
+    "/tmp/dma_ce_structured_runs/structured_prior_20261023_v1",
+    "/tmp/dma_ce_structured_runs/structured_prior_checks_20261023_v1"
+  ],
+  "removed_outer_log": "/tmp/dma_ce_structured_runs/structured_prior_20261023_v1.log",
+  "local_copy_verified_manifest_sha256": {
+    "structured_prior_20261023_v1": "e9f59b924017a59ebf75c2a0d93fb48c77465a6925e496422d1762ac9da38e3e",
+    "structured_prior_checks_20261023_v1": "d99089fb5aed92fe51b6c14433686dd6030b38b0c910cfba08dcc20376cd7a85"
+  },
+  "synced_document_and_result_files_verified": 74,
+  "parent_run_and_caches_retained": true,
+  "at_unix": 1792744974.2037737
+}

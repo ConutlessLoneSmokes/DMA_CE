@@ -1,0 +1,82 @@
+[
+  {
+    "snr_db": -10.0,
+    "selected_strength": 0.1,
+    "solver": {
+      "sbl100": {
+        "fixed_iterations": 100,
+        "reached_original_threshold": 0,
+        "optimality_max": 0.05711066722869873
+      },
+      "covariance_sbl": {
+        "fixed_iterations": 100,
+        "reached_original_threshold": 0,
+        "optimality_max": 0.06154990196228027
+      }
+    }
+  },
+  {
+    "snr_db": 0.0,
+    "selected_strength": 0.01,
+    "solver": {
+      "sbl100": {
+        "fixed_iterations": 100,
+        "reached_original_threshold": 0,
+        "optimality_max": 0.08963847160339355
+      },
+      "covariance_sbl": {
+        "fixed_iterations": 100,
+        "reached_original_threshold": 0,
+        "optimality_max": 0.09736835956573486
+      }
+    }
+  },
+  {
+    "snr_db": 10.0,
+    "selected_strength": 0,
+    "solver": {
+      "sbl100": {
+        "fixed_iterations": 100,
+        "reached_original_threshold": 0,
+        "optimality_max": 0.15283870697021484
+      },
+      "covariance_sbl": {
+        "fixed_iterations": 100,
+        "reached_original_threshold": 0,
+        "optimality_max": 0.15283870697021484
+      }
+    }
+  },
+  {
+    "snr_db": 20.0,
+    "selected_strength": 0,
+    "solver": {
+      "sbl100": {
+        "fixed_iterations": 100,
+        "reached_original_threshold": 0,
+        "optimality_max": 0.10199332237243652
+      },
+      "covariance_sbl": {
+        "fixed_iterations": 100,
+        "reached_original_threshold": 0,
+        "optimality_max": 0.10199332237243652
+      }
+    }
+  },
+  {
+    "snr_db": 30.0,
+    "selected_strength": 0,
+    "solver": {
+      "sbl100": {
+        "fixed_iterations": 100,
+        "reached_original_threshold": 0,
+        "optimality_max": 0.12266945838928223
+      },
+      "covariance_sbl": {
+        "fixed_iterations": 100,
+        "reached_original_threshold": 0,
+        "optimality_max": 0.12266945838928223
+      }
+    }
+  }
+]
